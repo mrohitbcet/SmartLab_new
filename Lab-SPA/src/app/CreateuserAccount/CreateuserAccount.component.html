@@ -1,0 +1,107 @@
+<!-- <form #createaccount="ngForm" (ngSubmit)="CreateuserAccount(userInfo)">
+<h2 class="text-center">Create Account(s)</h2>
+<div class="form-group">
+  <label for="GroupName" class="col-sm-5 control-label">Pathalogy Name*</label>
+    <div class="col-sm-9">
+      <select class="form-control" required name="GroupList" [(ngModel)]="userInfo.cid"  >
+          <option *ngFor="let item of ClientList" [value]="item.cid" >{{item.cName}}</option>
+     </select> 
+       </div>
+</div>
+<div class="form-group">
+  <label for="GroupName" class="col-sm-5 control-label">Email Id*</label>
+    <div class="col-sm-9">
+      <input type="text"  name="Name" required    placeholder="Email Id" [(ngModel)]="userInfo.Email" class="form-control" autofocus>
+       </div>
+</div>
+<div class="form-group">
+  <label for="GroupName" class="col-sm-5 control-label">User Name*</label>
+    <div class="col-sm-9">
+      <input type="text"  name="UserName" required    placeholder="User Name" [(ngModel)]="userInfo.username" class="form-control" autofocus>
+       </div>
+</div>
+<div class="form-group">
+  <label for="GroupName" class="col-sm-5 control-label">Password*</label>
+    <div class="col-sm-9">
+      <input type="password" id="password  name="password" required    placeholder="password" [(ngModel)]="userInfo.password" class="form-control" autofocus>
+       </div>
+</div>
+
+<div class="form-group">
+  <label for="GroupName" class="col-sm-5 control-label">Confirm Password*</label>
+    <div class="col-sm-9">
+      <input type="password"  name="confirmPassword" id="confirmPassword"  required  appConfirmEqualValidator="password" [(ngModel)]="userInfo.confirmpassword"  placeholder="confirm password" class="form-control" autofocus>
+       </div>
+
+       
+</div>
+
+<div class="form-group">
+ <div class="col-sm-9">
+  <button type="submit" [disabled]="!createaccount.valid" class="btn btn-primary btn-block" >Create Account</button>
+ </div>
+</div>
+</form> -->
+
+
+
+<!-- main app container -->
+
+<div class="jumbotron">
+  <div class="container">
+      <div class="row">
+          <div class="col-md-8 offset-md-2">
+          
+              <form name="form" (ngSubmit)="f.form.valid && onSubmit(userInfo)" #f="ngForm" [mustMatch]="['password', 'confirmPassword']" novalidate>
+                
+                <h2 class="text-center">Create Account(s)</h2>
+                <div class="form-group">
+                  <label for="PathalogyName" class="col-sm-5 control-label">Pathalogy Name*</label>
+                    
+                      <select class="form-control" required name="GroupList" [(ngModel)]="userInfo.cid"  >
+                         <option *ngFor="let item of ClientList" [value]="item.cid" >{{item.cName}}</option>
+                     </select> 
+                    
+                </div>
+                  <div class="form-group">
+                      <label for="email">Email</label>
+                      <input type="text" class="form-control" name="email" [(ngModel)]="userInfo.Email" #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required email />
+                      <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+                          <div *ngIf="email.errors.required">Email is required</div>
+                          <div *ngIf="email.errors.email">Email must be a valid email address</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="username">User Name</label>
+                    <input type="text" class="form-control" name="username" [(ngModel)]="userInfo.username" #username="ngModel" [ngClass]="{ 'is-invalid': f.submitted && username.invalid }" required />
+                    <div *ngIf="f.submitted && username.invalid" class="invalid-feedback">
+                        <div *ngIf="username.errors.required">User Name is required</div>
+                    </div>
+                </div>
+
+                  <div class="form-group">
+                      <label for="password">Password</label>
+                      <input type="password" class="form-control" name="password" [(ngModel)]="userInfo.password" #password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.invalid }" required minlength="6" />
+                      <div *ngIf="f.submitted && password.invalid" class="invalid-feedback">
+                          <div *ngIf="password.errors.required">Password is required</div>
+                          <div *ngIf="password.errors.minlength">Password must be at least 6 characters</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label for="confirmPassword">Confirm Password</label>
+                      <input type="password" class="form-control" name="confirmPassword" [(ngModel)]="userInfo.confirmpassword" #confirmPassword="ngModel" [ngClass]="{ 'is-invalid': f.submitted && confirmPassword.invalid }" required />
+                      <div *ngIf="f.submitted && confirmPassword.invalid" class="invalid-feedback">
+                          <div *ngIf="confirmPassword.errors.required">Confirm Password is required</div>
+                          <div *ngIf="confirmPassword.errors.mustMatch">Passwords must match</div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <button class="btn btn-primary">Register</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- credits -->

@@ -1,0 +1,147 @@
+
+<!-- <form >
+<h2 class="text-center text-primary">New patient Register</h2>
+<hr>
+<div class="form-group">
+    <label class="radio-inline">
+  <input type="text" class="form-control" required name="Name" [(ngModel)]="model.Name" placeholder="name">
+    </label>
+</div>
+<div class="form-group">
+  <input type="text" class="form-control" required name="DOB" [(ngModel)]="model.DOB" placeholder="DOB">
+</div>
+<div class="form-group">
+    <label class="radio-inline">
+        <input type="radio" value="Male" name="genderradio" [(ngModel)]="model.gender">Male
+      </label>
+      <label class="radio-inline">
+          <input type="radio" value="Female" name="genderradio" [(ngModel)]="model.gender">Female
+        </label>
+ 
+</div>
+<div class="form-group">
+    <input type="text" class="form-control" required name="contactno" [(ngModel)]="model.contactno" placeholder="contact no">
+  </div> -->
+  <!-- <div class="form-group">
+      <input type="text" class="form-control" required name="PIN" [(ngModel)]="model.PIN" placeholder="PIN No" (keyup)="GetCityStatebyPIN($event)">
+    </div>
+    <div class="form-group">
+        <input type="text" class="form-control"  name="city" [(ngModel)]="model.city" placeholder="City">
+      </div>
+      <div class="form-group">
+          <input type="text" class="form-control"  name="state" [(ngModel)]="model.State" placeholder="State">
+        </div> -->
+<!--   
+    <div class="form-group">
+        <input type="text" class="form-control"  name="Address" [(ngModel)]="model.address" placeholder="Address">
+     
+
+      </div>
+      <div class="form-group text-center">
+        <button class="btn btn-success" type="submit">Register</button>
+        <button class="btn btn-default" type="submit" (click)="cancel()">Cancel</button>
+      </div> -->
+<!-- </form> -->
+<form class="form-horizontal"  #register="ngForm" (ngSubmit)="Patientregister(patient)">
+<div class="container">
+ 
+      <div class="row">
+          <div class="col-lg-6 col-xs-6"><h2>Patient Registration</h2></div>
+          <div class="col-lg-6 col-xs-6"><span class="control-label pull-right"><b>Date:{{CurrentDatestr}} </b></span></div>
+          
+        </div>
+      
+      <div class="form-group">
+          <label for="firstName" class="col-sm-3 control-label">OPD No</label>
+          <div class="col-sm-9">
+              <input type="text" name="OPD" [(ngModel)]="patient.OPD"  placeholder="OPD No"  class="form-control" autofocus>
+          </div>
+      </div>
+      <div class="form-group">
+          <label for="lastName" class="col-sm-3 control-label">Patient Name*</label>
+          <div class="col-sm-9">
+              <input type="text"  name="name" required   [(ngModel)]="patient.name"  placeholder="Patient Name" pattern="[a-zA-Z\s]+" class="form-control" autofocus>
+             
+            </div>
+      </div>
+      <div class="form-group">
+          <label for="birthDate" class="col-sm-3 control-label" >Date of Birth* <span>Age:{{GetAge(patient.dateofbirth)}}</span></label>
+          <div class="col-sm-9">
+              <input type="date"  name="dateofbirth" required max={{MaxdateFordatePicker}} [(ngModel)]="patient.dateofbirth"   class="form-control"> 
+          </div>
+      </div>
+      <div class="form-group">
+          <label class="control-label col-sm-3">Gender*</label>
+          <div class="col-sm-6">
+              <div class="row">
+                 
+                  <div class="col-sm-2">
+                      <label class="radio-inline">
+                          
+                          <input type="radio" required name="gender" [(ngModel)]="patient.gender" value="Male">Male
+                      </label>
+                  </div>
+                  <div class="col-sm-4">
+                    <label class="radio-inline">
+                        <input type="radio" required  name="gender" [(ngModel)]="patient.gender" value="Female"  >Female
+                    </label>
+                </div>
+              </div>
+          </div>
+      </div>
+      <div class="form-group">
+          <label for="Re By" class="col-sm-3 control-label">Ref By</label>
+          <div class="col-sm-9">
+        
+             
+              <select class="form-control" name="DRrefby" [(ngModel)]="patient.DRrefby">
+
+              <option *ngFor="let doct of Doctors" [value]="doct.doctorID" >{{doct.doctorname}}</option>
+              </select> 
+          </div>
+      </div>
+      <div class="form-group">
+        <label for="email" class="col-sm-3 control-label">Email </label>
+        <div class="col-sm-9">
+            <input type="email" name="email" required email [(ngModel)]="patient.email" placeholder="Email" class="form-control" >
+           
+        </div>
+    </div>
+    
+      <div class="form-group">
+          <label for="Address" class="col-sm-3 control-label">Address </label>
+          <div class="col-sm-9">
+              <input type="text" name="address" required [(ngModel)]="patient.address" placeholder="Address" class="form-control" >
+          </div>
+      </div>
+
+ 
+
+    
+      <div class="form-group">
+          <label for="City" class="col-sm-3 control-label">City </label>
+          <div class="col-sm-9">
+              <input type="text" name="city" required [(ngModel)]="patient.city" placeholder="City" class="form-control" >
+          </div>
+      </div>
+     
+
+      <div class="form-group">
+          <label for="phoneNumber" class="col-sm-3 control-label">Phone number </label>
+          <div class="col-sm-9">
+              <input type="phoneNumber" name="contactNo" required [(ngModel)]="patient.contactNo" placeholder="contact number" class="form-control" pattern="[7-9]{1}[0-9]{9}">
+              <span class="help-block">Your phone number won't be disclosed anywhere </span>
+          </div>
+      </div>
+    
+   
+   
+      <div class="form-group">
+          <div class="col-sm-9 col-sm-offset-3">
+              <span class="help-block">*Required fields</span>
+          </div>
+      </div>
+      <button type="submit" [disabled]="!register.valid" class="btn btn-primary btn-block">Register</button>
+
+</div> 
+</form> 

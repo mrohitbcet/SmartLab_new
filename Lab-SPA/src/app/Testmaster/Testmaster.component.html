@@ -1,0 +1,162 @@
+<h2 class="text-center">Test Master</h2>
+
+<form #AddGroup="ngForm" (ngSubmit)="AddTestGroup(GroupMaster)">
+<div class="form-group">
+    <div class="row">
+        <div class="col-sm-3">
+            <button type="submit" [disabled]="!AddGroup.valid" class="btn btn-primary btn-block" >Add Test Group</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-3">
+            <input type="text" required name="TestGroup" [(ngModel)]="GroupMaster.groupName"   placeholder="Enter Test Group" class="form-control">
+        </div>
+        <div class="col-sm-3">
+            <button type="button" (click)="OpenTestModelDialog()" class="btn btn-primary btn-block" >Add Test</button>
+        </div>
+        
+    </div>
+    
+   
+</div>
+
+</form>
+<div class="row">
+<div class="col-sm-3">
+<table border="1" class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th></th>
+        <th scope="col">Id</th>
+        <th scope="col">Test Group Name</th>
+       </tr>
+    </thead>
+    <tr *ngFor="let item of Grouplist" [attr.groupId]="item.groupId">
+        <td>
+            
+            <i title="Edit" class="fa fa-edit" style="font-size:18px" (click)="GroupinfoById(item.groupId);"></i>
+            <i title="Delete"  class="fa fa-trash" aria-hidden="true" style="font-size:18px" (click)="DeleteGroupByID(item.groupId);"></i>
+            
+        </td>
+        <td>{{item.groupId}}</td>
+        <td>{{item.groupName}}</td>
+    </tr>
+    </table>
+</div>
+<div class="col-sm-9">
+  <table border="1" class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th></th>
+        <th scope="col">TestId</th>
+        <th scope="col">TestName</th>
+        <!-- <th scope="col">Unit</th> -->
+        <th scope="col">GroupName</th>
+        <th scope="col">NormalRange</th>
+        <th scope="col">price</th>
+       </tr>
+    </thead>
+    <tr *ngFor="let item of TestList" [attr.groupId]="item.testId">
+        <td>
+            
+            <i title="Edit" class="fa fa-edit" style="font-size:18px" (click)="TestinfoById(item.testId);" ></i>
+            <i title="Delete"  class="fa fa-trash" aria-hidden="true" style="font-size:18px" (click)="DeleteTestByID(item.testId);"></i>
+            
+        </td>
+        <td>{{item.testId}}</td>
+        <td>{{item.testName}}</td>
+        <!-- <td>{{item.unit}}</td> -->
+        <td>{{item.groupName}}</td>
+        <td>{{item.normalRange}}</td>
+        <td>{{item.price}}</td>
+    </tr>
+    </table>
+</div>
+</div>
+
+<!-- After clicking the button open the modal dialog using open/close event binding methods -->
+
+  
+
+<!-- modal -->
+<div class="modal"  role="dialog"  [ngStyle]="{'display':display}">
+    <!-- modal-dialog -->
+    <div class="modal-dialog" role="document">
+      <!-- modal-content -->
+      <form *ngIf="GroupModel" #EditForm="ngForm" (ngSubmit)="UpdateTestGroupByID(GroupMasterEdit)">
+      <div class="modal-content">
+        <!-- modal-header -->
+        <div class="modal-header">
+            <h4 class="modal-title">Modify Test Group</h4>
+          <button type="button" class="close" aria-label="Close" (click)="closeModalDialog()"><span aria-hidden="true">&times;</span></button>
+          <!-- <h4 class="modal-title">Login</h4> -->
+        </div>
+  
+        <!-- modal-body -->
+        <div class="modal-body">
+       
+        <div class="form-group">
+            <label for="lastName" class="col-sm-5 control-label">Group Name*</label>
+            <div class="col-sm-9">
+                <input type="text"  name="Groupname" required    placeholder="Group Name" [(ngModel)]="GroupMasterEdit.groupName"   class="form-control" autofocus>
+               
+              </div>
+        </div>
+  
+  
+        <!-- modal-footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" (click)="closeModalDialog()" >Close</button>
+          <button type="submit" class="btn btn-success" >Save</button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <form *ngIf="TestModel" #FormTestMaster="ngForm" (ngSubmit)="SaveTestMaster(TestInfo)" >
+      <div class="modal-content">
+        <!-- modal-header -->
+        <div class="modal-header">
+            <h4 class="modal-title">Add Test</h4>
+          <button type="button" class="close" aria-label="Close" (click)="closeModalDialog()"><span aria-hidden="true">&times;</span></button>
+          <!-- <h4 class="modal-title">Login</h4> -->
+        </div>
+  
+        <!-- modal-body -->
+        <div class="modal-body">
+ 
+        <div class="form-group">
+            <label for="GroupName" class="col-sm-5 control-label">Group Name*</label>
+              <div class="col-sm-9">
+                <select class="form-control" required name="GroupList" [(ngModel)]="TestInfo.groupId" >
+                    <option *ngFor="let item of Grouplist" [value]="item.groupId" >{{item.groupName}}</option>
+               </select> 
+                 </div>
+                 
+            <label for="lastName" class="col-sm-5 control-label">Test Name*</label>
+            <div class="col-sm-9">
+                <input type="text"  name="TestName" required    placeholder="Test Name" [(ngModel)]="TestInfo.testName" class="form-control" autofocus>
+             </div>
+            
+                <label for="NormalRange" class="col-sm-5 control-label">Normal Range*</label>
+                  <div class="col-sm-9">
+                      <input type="text"  name="NormalRange"  [(ngModel)]="TestInfo.normalRange"  class="form-control" autofocus>
+                   </div>
+                   <label for="Price" class="col-sm-5 control-label">Price*</label>
+                   <div class="col-sm-9">
+                       <input type="text"  name="price" required   [(ngModel)]="TestInfo.price" class="form-control" autofocus>
+                    </div>
+        </div>
+      <!-- modal-footer -->
+        <div class="modal-footer">
+          <button type="button"   class="btn btn-default" (click)="closeModalDialog()" >Close</button>
+          <button type="submit" [disabled]="!FormTestMaster.valid" class="btn btn-success" >Save</button>
+        </div>
+      </div>
+    </div>
+  </form>
+  </div>
+
+ <!-- modal -->
+

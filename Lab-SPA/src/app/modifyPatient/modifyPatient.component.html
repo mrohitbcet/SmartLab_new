@@ -1,0 +1,105 @@
+<div class="container">
+
+<table border="1" class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th></th>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">DOB</th>
+        <th scope="col">Gender</th>
+        <th scope="  col">Email</th>
+        <th scope="col">ContactNo</th>
+        <th scope="col">Address</th>
+      </tr>
+    </thead>
+    <tr *ngFor="let item of Plist" [attr.id]="item.id">
+      <td>
+        <i title="Edit" class="fa fa-edit" style="font-size:18px" (click)="PatientinfoById(item.id);"></i>
+            <i title="Delete"  class="fa fa-trash" aria-hidden="true" style="font-size:18px" (click)="DeletePatient(item.id);"></i>
+            
+
+      </td>
+
+      <td scope="col">{{ item.id }}</td>
+      <td>{{item.name}}</td>
+      <td>{{item.dateofbirth}}</td>
+      <td>{{item.gender}}</td>
+      <td>{{item.email}}</td>
+      <td>{{item.contactNo}}</td>
+      <td>{{item.address}}</td>
+    </tr>
+  </table>
+</div>
+<!-- After clicking the button open the modal dialog using open/close event binding methods -->
+
+<!-- modal -->
+<div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':display}">
+  <!-- modal-dialog -->
+  <div class="modal-dialog" role="document">
+    <!-- modal-content -->
+    <form #EditForm="ngForm" (ngSubmit)="UpdatePatientInfo(patient)">
+    <div class="modal-content">
+      <!-- modal-header -->
+      <div class="modal-header">
+          <h4 class="modal-title">Modify patient Info</h4>
+        <button type="button" class="close" aria-label="Close" (click)="closeModalDialog()"><span aria-hidden="true">&times;</span></button>
+        <!-- <h4 class="modal-title">Login</h4> -->
+      </div>
+
+      <!-- modal-body -->
+      <div class="modal-body">
+     
+      <div class="form-group">
+          <label for="lastName" class="col-sm-5 control-label">Patient Name*</label>
+          <div class="col-sm-9">
+              <input type="text"  name="name" required    placeholder="Patient Name" [(ngModel)]="patient.name"  pattern="[a-zA-Z\s]+" class="form-control" autofocus>
+             </div>
+      </div>
+
+      <div class="form-group">
+        <label for="lastName" class="col-sm-5 control-label">DOB*</label>
+        <div class="col-sm-9">
+          <input type="date"  name="dateofbirth" required max={{MaxdateFordatePicker}} [(ngModel)]="patient.dateofbirth"   class="form-control">
+          </div>
+    </div>
+    <div class="form-group">
+        <label for="lastName" class="col-sm-5 control-label">Gender*</label>
+        <div class="row">
+            <div class="col-sm-2">
+             <input type="radio" required name="gender" [(ngModel)]="patient.gender" value="Male">Male
+               </div>
+            <div class="col-sm-4">
+             <input type="radio" required  name="gender" [(ngModel)]="patient.gender" value="Female"  >Female
+           </div>
+        </div>
+     </div>
+     <div class="form-group">
+        <label for="lastName" class="col-sm-5 control-label">Email*</label>
+        <div class="col-sm-9">
+            <input type="text"  name="Email"  required email   placeholder="Email" [(ngModel)]="patient.email"  class="form-control" autofocus>
+           </div>
+    </div>
+    <div class="form-group">
+        <label for="lastName" class="col-sm-5 control-label">ContactNo*</label>
+        <div class="col-sm-9">
+            <input type="text"  name="ContactNo" required    placeholder="ContactNo" [(ngModel)]="patient.contactNo" pattern="[7-9]{1}[0-9]{9}"  class="form-control" autofocus>
+           </div>
+    </div>
+    <div class="form-group">
+        <label for="lastName" class="col-sm-5 control-label">Address*</label>
+        <div class="col-sm-9">
+            <input type="text"  name="Address" required    placeholder="Address" [(ngModel)]="patient.address"   class="form-control" autofocus>
+           </div>
+    </div>
+
+
+      <!-- modal-footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="closeModalDialog()" >Close</button>
+        <button type="submit" [disabled]="!EditForm.valid" class="btn btn-success" >Save</button>
+      </div>
+    </div>
+  </div>
+</form>
+</div>

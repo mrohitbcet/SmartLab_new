@@ -1,0 +1,82 @@
+
+<form #frmPathalogy="ngForm" (ngSubmit)="CreatePathalogy(Clients)">
+        <div class="form-group">
+                <div class="row">
+                        <div class="col-sm-3">
+                            <button type="submit" [disabled]="!frmPathalogy.valid" class="btn btn-primary btn-block" >Add Pathalogy</button>
+                        </div>
+                 </div>
+             <div class="row">
+            <br>
+            <div class="col-sm-3">
+                <input type="text" required name="Add Pathalogy" [(ngModel)]="Clients.cName"   class="form-control">
+            </div>
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        <div class="col-sm-3">
+        <table border="1" class="table">
+            <thead class="thead-dark">
+              <tr>
+             <th></th>
+             <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                </tr>
+            </thead>
+            <tr *ngFor="let item of ClientList" [attr.groupId]="item.cid">
+                <td>
+             <i title="Edit" class="fa fa-edit" style="font-size:18px" (click)="PathalogyinfoById(item.cid);" ></i>
+             </td>
+                <td>{{item.cid}}</td>
+                <td>{{item.cName}}</td>
+            </tr>
+            </table>
+        </div>
+    </div>
+ 
+    
+    <!-- After clicking the button open the modal dialog using open/close event binding methods -->
+
+  
+
+<!-- modal -->
+<div class="modal"  role="dialog"  [ngStyle]="{'display':display}">
+        <!-- modal-dialog -->
+        <div class="modal-dialog" role="document">
+          <!-- modal-content -->
+          <form  #EditForm="ngForm" (ngSubmit)="UpdatePathalogyByID(ClientsEdit)" >
+          <div class="modal-content">
+            <!-- modal-header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Modify Pathalogy</h4>
+              <button type="button" class="close" aria-label="Close" (click)="closeModalDialog()"><span aria-hidden="true">&times;</span></button>
+              <!-- <h4 class="modal-title">Login</h4> -->
+            </div>
+            <!-- modal-body -->
+            <div class="modal-body">
+            <div class="form-group">
+                <label for="lastName" class="col-sm-5 control-label">Pathalogy Name*</label>
+                <div class="col-sm-9">
+                    <input type="text"  name="Name" required    placeholder="Group Name" [(ngModel)]="ClientsEdit.cName"   class="form-control" autofocus>
+                    </div>
+            </div>
+       <!-- modal-footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" (click)="closeModalDialog()" >Close</button>
+              <button type="submit" [disabled]="!EditForm.valid"  class="btn btn-success" >Save</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    
+      </div>
+    
+     <!-- modal -->
+    
+    
+  
+      
+     
+  
+
