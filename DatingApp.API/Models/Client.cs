@@ -12,6 +12,9 @@ namespace DatingApp.API.Models
         public string CName { get; set; }
         public List<Doctor> Doctor {get;set;}
         public List<User> User {get;set;}
+        public List<Report> Report{get;set;}
+       }
+        
     }
-}
+
 

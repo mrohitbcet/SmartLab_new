@@ -181,6 +181,22 @@ return StatusCode(201);
 {
  var TestMaster =await _labrep.GetTestinfoById(TestId);
 return Ok(TestMaster);
-            
 }
-}}
+ [HttpPost("SaveReports")]
+ public async Task<IActionResult> SaveReports( [FromBody] ReportData ReportData )
+{
+ Report Report=ReportData.Report;
+ var createGroup =await _labrep.SaveReports(ReportData);
+return StatusCode(201);
+}
+
+ [HttpGet("GetAllReport/{CID:int}")]
+ public async Task<IActionResult> GetAllReport(int CID)
+{
+ var AllReports= await _labrep.GetReportsInfo(CID);
+return Ok(AllReports);
+
+ }
+}
+
+}

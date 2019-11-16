@@ -18,7 +18,7 @@
       <a class="nav-link" [routerLink]="['/NewReports']" >New Reports</a>
     </li>
     <li *ngIf="loggedIn()" class="nav-item" routerLinkActive="active">
-      <a class="nav-link" >All Reports</a>
+      <a class="nav-link"  [routerLink]="['/AllReports']" >All Reports</a>
     </li>
  
     <!-- <div *ngIf="loggedIn()" class="btn-group bg-dark" dropdown>

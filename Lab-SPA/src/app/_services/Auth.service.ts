@@ -53,6 +53,7 @@ getAllPathalogy():Observable<Clients[]>{
      const user=response;
      if(user){
        localStorage.setItem('token',user.token);
+       localStorage.setItem('CID',user.cid);
        }
    }));
  }

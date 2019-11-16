@@ -51,20 +51,6 @@ namespace DatingApp.API.Migrations
                     b.ToTable("Doctors");
                 });
 
-            modelBuilder.Entity("DatingApp.API.Models.Employee", b =>
-                {
-                    b.Property<int>("employee_number")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("employee_name")
-                        .HasMaxLength(100);
-
-                    b.HasKey("employee_number");
-
-                    b.ToTable("Employee");
-                });
-
             modelBuilder.Entity("DatingApp.API.Models.GroupMaster", b =>
                 {
                     b.Property<int>("GroupId")
@@ -84,6 +70,8 @@ namespace DatingApp.API.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CID");
 
                     b.Property<int>("DRrefby");
 
@@ -114,6 +102,61 @@ namespace DatingApp.API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Patients");
+                });
+
+            modelBuilder.Entity("DatingApp.API.Models.Report", b =>
+                {
+                    b.Property<int>("ReportID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CID");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(100);
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<int>("DoctorID");
+
+                    b.Property<int>("PatientID");
+
+                    b.Property<string>("Status")
+                        .HasMaxLength(50);
+
+                    b.HasKey("ReportID");
+
+                    b.HasIndex("CID");
+
+                    b.HasIndex("PatientID");
+
+                    b.ToTable("Reports");
+                });
+
+            modelBuilder.Entity("DatingApp.API.Models.ReportDetails", b =>
+                {
+                    b.Property<int>("RptDetailsID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("GroupId");
+
+                    b.Property<int>("ReportID");
+
+                    b.Property<int>("TestId");
+
+                    b.Property<string>("TestValue")
+                        .HasMaxLength(100);
+
+                    b.Property<bool>("isHighlight");
+
+                    b.HasKey("RptDetailsID");
+
+                    b.HasIndex("GroupId");
+
+                    b.HasIndex("ReportID");
+
+                    b.ToTable("ReportDetails");
                 });
 
             modelBuilder.Entity("DatingApp.API.Models.TestMaster", b =>
@@ -173,24 +216,37 @@ namespace DatingApp.API.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("DatingApp.API.Models.Value", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Values");
-                });
-
             modelBuilder.Entity("DatingApp.API.Models.Doctor", b =>
                 {
                     b.HasOne("DatingApp.API.Models.Client", "Client")
                         .WithMany("Doctor")
                         .HasForeignKey("CID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("DatingApp.API.Models.Report", b =>
+                {
+                    b.HasOne("DatingApp.API.Models.Client")
+                        .WithMany("Report")
+                        .HasForeignKey("CID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("DatingApp.API.Models.Patient", "Patient")
+                        .WithMany("Report")
+                        .HasForeignKey("PatientID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("DatingApp.API.Models.ReportDetails", b =>
+                {
+                    b.HasOne("DatingApp.API.Models.GroupMaster", "GroupMaster")
+                        .WithMany("ReportDetails")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("DatingApp.API.Models.Report", "Report")
+                        .WithMany("ReportDetails")
+                        .HasForeignKey("ReportID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema; 
+using System.Collections.Generic;
 namespace DatingApp.API.Models
 {
     public class TestMaster
@@ -16,5 +17,6 @@ namespace DatingApp.API.Models
     public string NormalRange { get; set; }
      public decimal Price{get;set;}
      public GroupMaster GroupMaster{get;set;}
-    }
+ 
+   }
 }

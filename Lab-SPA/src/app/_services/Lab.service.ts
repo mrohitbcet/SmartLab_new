@@ -5,6 +5,7 @@ import { Patient } from '../models/Patient.model';
 import { GroupMaster } from '../models/GroupMaster';
 import { Observable, throwError } from 'rxjs';
 import { TestMaster } from '../models/TestMaster';
+import { ReportData, Report, ReportDetails, AllReportsInfo } from '../models/Report';
 @Injectable({
   providedIn: 'root'
 })
@@ -23,6 +24,10 @@ export class LabService {
    var body = JSON.stringify(Patient);
   return this.http.post(this.baseUrl+'Patientregister',body,httpOptions);
   
+  }
+  getDoctors()
+  {
+    return this.http.get(this.baseUrl+'Doctors');
   }
   getAllPatients():Observable<Patient[]>{
   return this.http.get<Patient[]>(this.baseUrl+"patientinfo");
@@ -111,6 +116,21 @@ GetPatientinfoById(Id:number):Observable<Patient>{
     return this.http.get<TestMaster>(this.baseUrl+"GetTestinfoById/"+TestId);
 
   }
+  SaveReports(ReportData: ReportData)
+  {
+   const httpOptions={
+     headers: new HttpHeaders({
+       'Content-Type': 'application/json'
+     })
+   };
+  var body = JSON.stringify(ReportData);
+ 
+  return this.http.post(this.baseUrl+'SaveReports',body,httpOptions);
+  
+  }
+  getAllReports(CID:number):Observable<AllReportsInfo[]>{
+    return this.http.get<AllReportsInfo[]>(this.baseUrl+"GetAllReport/"+CID);
+}
 
 
 }

@@ -22,6 +22,7 @@ export class ModifyPatientComponent implements OnInit {
   display='none'; //default Variable
   patient: Patient = {
     id: 0,
+    CID:0,
     OPD:null,
     name: null,
     dateofbirth: null,
@@ -47,8 +48,7 @@ Plist:Patient[];
  getPatientInfo()
  {
   this.labService.getAllPatients().subscribe((PatientList:Patient[])=>{
-  console.log(PatientList);
-  this.Plist=PatientList;
+   this.Plist=PatientList;
   });
  }
  PatientinfoById(Id)

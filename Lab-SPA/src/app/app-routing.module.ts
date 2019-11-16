@@ -9,6 +9,7 @@ import { CreatePathologyComponent } from './CreatePathology/CreatePathology.comp
 import {CreateuserAccountComponent  } from './CreateuserAccount/CreateuserAccount.component';
 import { UserManagementComponent } from './UserManagement/UserManagement.component';
 import { NewReportsComponent } from './NewReports/NewReports.component';
+import { AllReportsComponent } from './AllReports/AllReports.component';
 
 const routes: Routes = [
   {path:'Home',component:HomeComponent},
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path:'CreateuserAccount',component:CreateuserAccountComponent},
   {path:'UserManagement',component:UserManagementComponent},
   {path:'NewReports',component:NewReportsComponent},
+  {path:'AllReports',component:AllReportsComponent},
 {path:'**',component:HomeComponent,pathMatch:'full'}
 ];
 

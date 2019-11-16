@@ -22,6 +22,7 @@ import { UserManagementComponent } from './UserManagement/UserManagement.compone
 import { TokenInterceptorService } from './_services/token-interceptor.service';
 import { MustMatchDirective } from './_helpers/must-match.directive';
 import { NewReportsComponent } from './NewReports/NewReports.component';
+import { AllReportsComponent } from './AllReports/AllReports.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { NewReportsComponent } from './NewReports/NewReports.component';
       CreateuserAccountComponent,
       UserManagementComponent,
       MustMatchDirective,
-      NewReportsComponent
+      NewReportsComponent,
+      AllReportsComponent
    ],
    imports: [
       BrowserModule,
@@ -52,15 +54,15 @@ import { NewReportsComponent } from './NewReports/NewReports.component';
       AlertifyService,
       DatePipe,
       {
-    provide: HTTP_INTERCEPTORS,
-     useClass: HttpErrorInterceptor,
-     multi: true
-      },
+         provide: HTTP_INTERCEPTORS,
+          useClass: HttpErrorInterceptor,
+          multi: true
+       },
       {
-      provide:HTTP_INTERCEPTORS,
+       provide:HTTP_INTERCEPTORS,
        useClass:TokenInterceptorService,
        multi:true
-      } 
+      }     
    ],
    bootstrap: [
       AppComponent

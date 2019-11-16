@@ -23,16 +23,17 @@ export class PatientComponent implements OnInit {
   PIN: string;
   Doctors: any;
   patient: Patient = {
-    id: 0,
-    OPD: null,
-    name: null,
-    dateofbirth: null,
-    gender: "Male",
-    DRrefby:null,
-    email: null,
-    address: null,
-    city: null,
-    contactNo: null
+  id: 0,
+  CID:0,
+  OPD: null,
+  name: null,
+  dateofbirth: null,
+  gender: "Male",
+  DRrefby:null,
+  email: null,
+ address: null,
+  city: null,
+  contactNo: null
   }
 
   constructor(private ThirdPartService: ThirdPartyService, private authService: AuthService, private datePipe: DatePipe, private http: HttpClient,private alertify:AlertifyService,private labService:LabService) {
@@ -47,6 +48,7 @@ export class PatientComponent implements OnInit {
 
   }
   Patientregister(NewPatient:Patient) {
+    NewPatient.CID=parseInt(localStorage.getItem('CID'));
     this.labService.Patientregister(NewPatient).subscribe(() => {
       this.alertify.success('Patient Info added succssfully!')
       NewPatient.id=0;
@@ -92,16 +94,14 @@ export class PatientComponent implements OnInit {
     });
   }
   getDoctors() {
-    this.http.get('http://localhost:5000/api/Lab/Doctors').subscribe(Response => {
-      console.log(Response);
-      this.Doctors = Response;
-
+    this.labService.getDoctors().subscribe(Response => {
+     this.Doctors = Response;
     }, error => {
       console.log(error);
     }
     );
 
-  }
+}
 }
 
 export class Doctor {

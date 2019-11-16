@@ -11,5 +11,7 @@ namespace DatingApp.API.Models
         [MaxLength(100)]
         public string GroupName{get;set;}
         public List<TestMaster> TestMaster{get;set;}
+        public List<ReportDetails> ReportDetails{get;set;}
+        
     }
 }

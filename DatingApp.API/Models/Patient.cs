@@ -1,11 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.Generic;
 namespace DatingApp.API.Models
 {
     public class Patient
     {
-     
+     [Key]
      public int Id { get; set; }
+    public int CID { get; set; }
      [MaxLength(100)]
     public string OPD{get;set;}
     [MaxLength(100)]
@@ -23,5 +26,8 @@ namespace DatingApp.API.Models
      public string city{get;set;}
      [MaxLength(40)]
      public string contactNo{get;set;}
+    [ForeignKey("PatientID")]
+     public List<Report> Report{get;set;}
+ 
     }
 }

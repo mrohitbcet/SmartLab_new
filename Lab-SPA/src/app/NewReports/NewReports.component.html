@@ -41,6 +41,18 @@
         </tr>
       </table>
       <div class="form-group">
+        <div class="row">
+          <div class="col-sm-2 control-label pull-right">
+            Doctor Ref By
+        </div>
+        <div class="col-sm-6">
+          <select class="form-control" name="DRrefby" (change)="DoctorSelected(DoctorId)" [(ngModel)]="DoctorId">
+            <option *ngFor="let doct of Doctors" [value]="doct.doctorID" >{{doct.doctorname}}</option>
+              </select> 
+        </div>
+        </div>
+      </div>
+      <div class="form-group">
           <div class="row">
               <div class="col-sm-2 control-label pull-right">
                   Group Name
@@ -52,7 +64,7 @@
                  </select> 
                 </div>
                 <div class="col-sm-3">
-                        <button class="btn btn-primary" (click)="SaveNewReports()">Save Report</button>
+                        <button class="btn btn-primary" (click)="previewReport()">Preview Report</button>
                  </div>
                 
           </div>
@@ -67,14 +79,14 @@
                           <!-- <th scope="col">TestId</th> -->
                           <th scope="col">TestName</th>
                           <th scope="col">GroupName</th>
-                          <th scope="col">NormalRange</th>
+                          <th scope="col">Reference Range</th>
                           <th scope="col">price</th>
                          </tr>
                       </thead>
-                      <tr *ngFor="let item of SelectedTestList" [attr.groupId]="item.testId">
+                      <tr *ngFor="let item of FliteredTestList" [attr.groupId]="item.testId">
                           <td><input type="checkbox" [(ngModel)]="item.isSelected"></td>
                           <!-- <td>{{item.testId}}</td> -->
-                          <td>{{item.testName}} {{item.isSelected}}</td>
+                          <td>{{item.testName}}</td>
                          <td>{{item.groupName}}</td>
                           <td>{{item.normalRange}}</td>
                           <td>{{item.price}}</td>
@@ -90,35 +102,78 @@
     <div class="modal-dialog" role="document">
       <!-- modal-content -->
      
-      <div class="modal-content">
+      <div class="modal-content" style="width:700px;">
         <!-- modal-header -->
         <div class="modal-header">
-            <h4 class="modal-title">Patient Info</h4>
+            <h4 *ngIf="!TestModel" class="modal-title">Patient Info</h4>
+            <h4 *ngIf="TestModel" class="modal-title">New Reports</h4>
           <button type="button" class="close" aria-label="Close" (click)="closeModalDialog()"><span aria-hidden="true">&times;</span></button>
           <!-- <h4 class="modal-title">Login</h4> -->
         </div>
        <!-- modal-body -->
         <div class="modal-body">
-            <table border="1" class="table">
+          <table *ngIf="!TestModel" border="1" class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Patient Name</th>
+                <th scope="col">Contact No</th>
+               <th scope="col">Gender</th>
+                <th scope="col">City</th>
+               
+               </tr>
+            </thead>
+            
+            <tr *ngFor="let item of Plist" [attr.id]="item.id">
+              <td><button type="button" class="btn btn-link" (click)="PatientinfoById(item.id);">{{item.name}}</button></td>
+              <td>{{item.contactNo}}</td>
+              <td>{{item.gender}}</td>
+              <td>{{item.city}}</td>
+              
+            </tr>
+        </table>
+            <div *ngIf="TestModel">
+            <table  border="1" class="table">
                 <thead class="thead-dark">
                   <tr>
-                    
-                    <th scope="col">Name</th>
+                    <th scope="col">Pat.Name</th>
                     <th scope="col">Contact No</th>
                    <th scope="col">Gender</th>
-                    <th scope="col">City</th>
-                   
+                    <th scope="col">Ref.By Dr</th>
+                   <th scope="col">Collected At</th>
                    </tr>
                 </thead>
                 
                 <tr *ngFor="let item of Plist" [attr.id]="item.id">
-                  <td><button type="button" class="btn btn-link" (click)="PatientinfoById(item.id);">{{item.name}}</button></td>
+                  <td>{{item.name}}</td>
                   <td>{{item.contactNo}}</td>
                   <td>{{item.gender}}</td>
-                  <td>{{item.city}}</td>
+                  <td>{{SelectedDoctor[0].doctorname}}</td>
+                  <td>{{today | date: 'medium'}}</td>
                   
                 </tr>
             </table>
+            <h6>Test Details</h6>
+            <table border="1" class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">TestName</th>
+                    <th scope="col">GroupName</th>
+                    <th scope="col">Reference Range</th>
+                    
+                    <th scope="col">price</th>
+                   </tr>
+                </thead>
+                <tr *ngFor="let item of SelectedTestList" [attr.groupId]="item.testId">
+                     <td>{{item.testName}}</td>
+                   <td>{{item.groupName}}</td>
+                    <td>{{item.normalRange}}</td>
+                    <td>{{item.price}}</td>
+                </tr>
+                </table>
+                <div class="col-sm-3 pull-right">
+                  <button class="btn btn-primary" [disabled]="Report.isbtnDisabled" (click)="SaveReport()">Save Report</button>
+           </div>
+         </div>
   </div>
     </div>
   

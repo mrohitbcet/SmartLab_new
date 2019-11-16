@@ -1,5 +1,6 @@
 export class Patient{
     id:number;
+    CID:number;
     OPD:string;
     name:string;
     dateofbirth:Date;

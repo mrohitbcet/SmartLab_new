@@ -17,7 +17,8 @@ namespace DatingApp.API.Data
         Task<bool> SaveTestMaster(TestMaster TestMaster);
          Task<string> DeleteTestById(int id);
          Task <TestMaster> GetTestinfoById(int TestId);
-          Task<bool> Patientregister(Patient Patient);
-         
+        Task<bool> Patientregister(Patient Patient);
+        Task<bool> SaveReports(ReportData ReportData);
+        Task<IEnumerable<AllReportsInfo>> GetReportsInfo(int CID);
     }
 }
