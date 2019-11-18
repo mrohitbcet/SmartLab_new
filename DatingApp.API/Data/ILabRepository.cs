@@ -19,6 +19,9 @@ namespace DatingApp.API.Data
          Task <TestMaster> GetTestinfoById(int TestId);
         Task<bool> Patientregister(Patient Patient);
         Task<bool> SaveReports(ReportData ReportData);
-        Task<IEnumerable<AllReportsInfo>> GetReportsInfo(int CID);
+          Task<bool> UpdateReportValues(ReportDetails[] Details);
+          Task<bool> CompleteReport(int ReportID);
+       Task<IEnumerable<AllReportsInfo>> GetReportsInfo(int CID);
+         Task<IEnumerable<ReportInfo>> getReportDetailsInfo(int ReportID);
     }
 }

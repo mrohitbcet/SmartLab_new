@@ -1,3 +1,7 @@
+<div class="row">
+        <div class="col-lg-4 col-xs-4"><h2>All Reports</h2></div>
+
+</div>
 <div class="form-group">
     <div class="row">
         <div class="col-sm-6">
@@ -5,16 +9,16 @@
                 <thead class="thead-dark">
                   <tr>
                    
-                   <th scope="col">ReportID</th>
+                   <th scope="col">SN</th>
                     <th scope="col">PatientName</th>
                     <th scope="col">DoctorName</th>
                     <th scope="col">Status</th>
                     <th scope="col">CreatedDate</th>
                    </tr>
                 </thead>
-                <tr *ngFor="let item of AllReportsInfo" [attr.groupId]="item.reportID">
+                <tr *ngFor="let item of AllReportsInfo;let i = index" [attr.groupId]="item.reportID">
                     
-                    <td title="Click to view test details"><button type="button" class="btn btn-primary" >{{item.reportID}}</button></td>
+                    <td title="Click to view test details"><button type="button" class="btn btn-primary" (click)="GetReportDetailsInfo(item.reportID,item.status)" >#{{i+1}}</button></td>
                    <td>{{item.patientName}}</td>
                     <td>{{item.doctorName}}</td>
                     <td>{{item.status}}</td>
@@ -22,7 +26,91 @@
                 </tr>
                 </table>
         </div>
-        <div class="col-sm-6">
+        <div *ngIf="DispayRptDet" class="col-sm-6">
+               <div id="DivprintReport" class="row">
+                   <div style="margin-left:100px">    
+                       <h3>BCM DIAGNOSTIC LABORATORY</h3>
+                       <div style="text-align: center;">
+                            <h6>
+                                    School More Jhalda,Purulia<br>
+                                    Purulia - 723202 <br>
+                                    Contact No:+8989
+                                    Email:
+                                   </h6>
+                       </div>
+                     
+                   </div>
+                        <table border="1" class="table">
+                                <thead class="thead-dark">
+                                  <tr>
+                                  
+                                    <th scope="col">PatientName</th>
+                                    <th scope="col">Age/Gender</th>
+                                    <th scope="col">Ref. By</th>
+                                     <th scope="col">Collected At</th>
+                                   </tr>
+                                </thead>
+                                <tr *ngFor="let item of SelectedReport;let i = index" [attr.reportID]="item.reportID">
+                                    <td>{{item.patientName}}</td>
+                                    <td>{{GetAge(item.patientDOB)}}/{{item.patientGender}}</td>
+                                    <td>{{item.doctorName}}</td>
+                                    <td>{{item.createdDate | date: 'medium'}}</td>
+                                </tr>
+                                </table>
+
+                                <table   border="1" class="table">
+                    
+                                    <thead class="thead-dark">
+                                      <tr>
+                                          <th>SN</th>
+                                        <th scope="col">Group Name</th>
+                                        <th scope="col">Test Name</th>
+                                        <th scope="col">Result</th>
+                                        <th scope="col">References</th>
+                                       </tr>
+                                    </thead>
+                                    <tr *ngFor="let item of ReportInfo;let i = index" [attr.groupId]="item.rptDetailsID">
+                                        <td>{{i+1}}</td>
+                                        <td>{{item.groupName}}</td>
+                                            <td *ngIf="item.isHighlight" style="background-color:yellow; font-weight: bold;">{{item.testName}}</td>
+                                            <td *ngIf="!item.isHighlight">{{item.testName}}</td>
+                                            <td>{{item.result}}</td>
+                                            <td>{{item.normalRange}}</td>
+                                     </tr>
+                                    </table>
+                            <div style="margin-left:20px;">Note: Home collection available</div>
+                </div>
+                <div class="row" >
+                        <div *ngIf="!isSubmitted"  class="col-lg-3 col-xs-3"><button type="button" class="btn btn-primary btn-block" (click)="UpdateReportValues()" >Save</button></div>
+                        <div *ngIf="!isSubmitted" class="col-lg-3 col-xs-3"><button type="button" class="btn btn-primary btn-block" (click)="CompleteReport()">Complete</button></div>
+                        <div *ngIf="isSubmitted" class="col-lg-3 col-xs-3"><button type="button" class="btn btn-primary btn-block" (click)="onExportclick()">Print</button></div>
+                        <div *ngIf="isSubmitted"  class="col-lg-3 col-xs-3"><button type="button" class="btn btn-primary btn-block">SendMail</button></div>
+                 
+                </div>
+                <div class="row" style="margin-top:10px;">
+                        <table id="printableTable" border="1" class="table">
+                    
+                                <thead class="thead-dark">
+                                  <tr>
+                                      <th>SN</th>
+                                    <th scope="col">Group Name</th>
+                                    <th scope="col">Test Name</th>
+                                    <th scope="col">Color</th>
+                                    <th scope="col">Result</th>
+                                    <th scope="col">References</th>
+                                   </tr>
+                                </thead>
+                                <tr *ngFor="let item of ReportInfo;let i = index" [attr.groupId]="item.rptDetailsID">
+                                    <td>{{i+1}}</td>
+                                    <td>{{item.groupName}}</td>
+                                        <td>{{item.testName}}</td>
+                                        <td><input [disabled]="isSubmitted" type="checkbox" [(ngModel)]="item.isHighlight"></td>
+                                        <td> <input [disabled]="isSubmitted" type="text" style="width:100px;" [(ngModel)]="item.result"></td>
+                                        <td>{{item.normalRange}}</td>
+                                 </tr>
+                                </table>
+             </div>
+                
           </div>
     </div>
 </div>

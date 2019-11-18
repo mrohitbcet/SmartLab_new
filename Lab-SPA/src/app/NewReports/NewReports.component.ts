@@ -43,7 +43,8 @@ ReportTest:ReportDetails={
   ReportID:0,
   GroupId:0,
   TestId:0,
-  TestValue:""
+  TestValue:"",
+  isHighlight:false
 }
 ReportTestList:ReportDetails[]
 ReportData:ReportData={
@@ -133,7 +134,7 @@ previewReport()
 this.TestModel=true;
  this.openModalDialog();
 this.SelectedTestList= this.FliteredTestList.filter(
-    test => test.isSelected ==true);
+  test => test.isSelected ==true);
 
 }
 SaveReport()
@@ -144,7 +145,7 @@ SaveReport()
     return;
   }
   this.Report.isbtnDisabled=true;
-  this.Report.PatientID=this.Plist[0].id;
+  this.Report.PatientID=this.selectedPatient[0].id;
   this.Report.DoctorID =this.DoctorId;
   this.Report.CID =parseInt(localStorage.getItem('CID'));
   this.Report.CreatedBy=localStorage.getItem('Uname');
@@ -152,11 +153,20 @@ SaveReport()
   this.Report.CreatedDate=new Date();
   this.ReportTestList =[];
   this.ReportTestList.length=0;
-  for (let entry of this.SelectedTestList) {
-   this.ReportTest.GroupId=entry.groupId;
-   this.ReportTest.TestId=entry.testId;
-   this.ReportTestList.push(this.ReportTest);
-  }
+  console.log(this.SelectedTestList);
+  for(let i=0; i<this.SelectedTestList.length; i++){
+    var local:ReportDetails={
+      RptDetailsID:0,
+      ReportID:0,
+      GroupId: this.SelectedTestList[i].groupId,
+      TestId:this.SelectedTestList[i].testId,
+      TestValue:"",
+      isHighlight:false
+    }
+   this.ReportTestList.push(local);
+  console.log(local);
+}
+
 
   this.ReportData.Report=this.Report;
   this.ReportData.ReportDetails=this.ReportTestList;

@@ -180,26 +180,58 @@ namespace DatingApp.API.Data
             return false;
             }
 
-         }
+         }}
+          public async Task<bool> UpdateReportValues(ReportDetails[] Details)
+         {
+              foreach (var item in Details)
+                {
+                     var ReportDetails = new ReportDetails{RptDetailsID =item.RptDetailsID,TestValue=item.TestValue,isHighlight=item.isHighlight};
+                    _context.Entry(ReportDetails).Property(x => x.TestValue).IsModified = true;
+                    _context.Entry(ReportDetails).Property(x => x.isHighlight).IsModified = true;
+                }
+             await _context.SaveChangesAsync();
+             return true;
 
-           
         }
+         
+         public async Task<bool> CompleteReport(int ReportID)
+        {
+            try{
+            var Report = new Report{ReportID =ReportID};
+            Report.Status="Completed";
+           _context.Entry(Report).Property(x => x.Status).IsModified = true;
+             await _context.SaveChangesAsync();
+             return true;
+            }
+            catch
+            {
+                return false;
 
+            }
+ }
         public async Task<IEnumerable<AllReportsInfo>> GetReportsInfo(int CID)
         {
-            var AllReports=await (_context.Reports.Join(_context.Patients,
+            // var frmdatate = DateTime.Now.AddDays(-LastDays);
+            //  var AllReports=await (_context.Reports.Where(xx=>xx.CID==CID
+            // && LastDays>0||xx.CreatedDate>=frmdatate).Join(_context.Patients,
+            // Rpt=>Rpt.PatientID,
+            // Pat=>Pat.Id,
+
+            var AllReports=await (_context.Reports.Where(xx=>xx.CID==CID
+           ).Join(_context.Patients,
             Rpt=>Rpt.PatientID,
             Pat=>Pat.Id,
             (Rpt,Pat)=>new AllReportsInfo{ ReportID=Rpt.ReportID,
                                             PatientName=Pat.name,
+                                            PatientDOB=Pat.dateofbirth,
+                                            PatientGender=Pat.gender,
                                             DoctorID=Rpt.DoctorID,
                                             Status=Rpt.Status,
                                            CreatedDate=Rpt.CreatedDate
                                           
                                             
             })
-            .Where(Rpt=>_context.Reports.Any(xx => xx.CID == CID)
-            )
+            .OrderByDescending(xx=>xx.CreatedDate)
             ).ToListAsync();
             
             var Result=await (_context.Doctors.Join(AllReports,
@@ -207,6 +239,8 @@ namespace DatingApp.API.Data
             AllRept=>AllRept.DoctorID,
             (Doc,AllRept)=>new AllReportsInfo{ ReportID=AllRept.ReportID,
                                             PatientName=AllRept.PatientName,
+                                            PatientDOB=AllRept.PatientDOB,
+                                            PatientGender=AllRept.PatientGender,
                                             DoctorID=AllRept.DoctorID,
                                             DoctorName=Doc.Doctorname,
                                             Status=AllRept.Status,
@@ -216,6 +250,42 @@ namespace DatingApp.API.Data
             })
             
             ).ToListAsync();
+            return Result;
+
+        }
+         public async Task<IEnumerable<ReportInfo>> getReportDetailsInfo(int ReportID)
+        { 
+            var AllReportInfo=await (_context.ReportDetails.Where(xx=>xx.ReportID==ReportID).Join(_context.GroupMasters,
+            Rpt=>Rpt.GroupId,
+            Group=>Group.GroupId,
+            (Rpt,Group)=>new ReportInfo{ RptDetailsID=Rpt.RptDetailsID,
+                                            groupName=Group.GroupName,
+                                            TestId=Rpt.TestId,
+                                            result=Rpt.TestValue,
+                                           isHighlight=Rpt.isHighlight
+                                          
+                                            
+            })
+      
+            ).ToListAsync();
+
+          var Result=await (_context.TestMasters.Join(AllReportInfo,
+            Test=>Test.TestId,
+            AllRpts=>AllRpts.TestId,
+
+            (Test,AllRpts)=>new ReportInfo{ RptDetailsID=AllRpts.RptDetailsID,
+                                            groupName=AllRpts.groupName,
+                                            TestId=Test.TestId,
+                                            testName=Test.TestName,
+                                            result=AllRpts.result,
+                                           normalRange=Test.NormalRange,
+                                           isHighlight=AllRpts.isHighlight
+                                          
+                                            
+            })
+            
+            ).ToListAsync();
+            
             return Result;
 
         }

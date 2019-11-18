@@ -143,7 +143,7 @@
                    </tr>
                 </thead>
                 
-                <tr *ngFor="let item of Plist" [attr.id]="item.id">
+                <tr *ngFor="let item of selectedPatient" [attr.id]="item.id">
                   <td>{{item.name}}</td>
                   <td>{{item.contactNo}}</td>
                   <td>{{item.gender}}</td>

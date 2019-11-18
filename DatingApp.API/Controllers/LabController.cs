@@ -189,6 +189,31 @@ return Ok(TestMaster);
  var createGroup =await _labrep.SaveReports(ReportData);
 return StatusCode(201);
 }
+ [HttpPost("UpdateReportValues")]
+ public async Task<IActionResult> UpdateReportValues( [FromBody] ReportDetails[] Details)
+{
+try{
+var UpdateValues =await _labrep.UpdateReportValues(Details);
+return StatusCode(201);
+}
+catch{
+    return StatusCode(500);
+}
+
+}
+
+[HttpPut("CompleteReport")]
+    public async Task<IActionResult> CompleteReport([FromBody] int ReportID)
+    {
+        try{
+        await _labrep.CompleteReport(ReportID);
+        return StatusCode(201);
+        }
+        catch{
+        return StatusCode(500);
+        }
+ 
+}
 
  [HttpGet("GetAllReport/{CID:int}")]
  public async Task<IActionResult> GetAllReport(int CID)
@@ -197,6 +222,15 @@ return StatusCode(201);
 return Ok(AllReports);
 
  }
+[AllowAnonymous]
+[HttpGet("getReportDetailsInfo/{ReportID:int}")]
+ public async Task<IActionResult> getReportDetailsInfo(int ReportID)
+{
+ var AllReports= await _labrep.getReportDetailsInfo(ReportID);
+return Ok(AllReports);
+
+ }
+
 }
 
 }

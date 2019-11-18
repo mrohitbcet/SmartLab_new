@@ -5,7 +5,7 @@ import { Patient } from '../models/Patient.model';
 import { GroupMaster } from '../models/GroupMaster';
 import { Observable, throwError } from 'rxjs';
 import { TestMaster } from '../models/TestMaster';
-import { ReportData, Report, ReportDetails, AllReportsInfo } from '../models/Report';
+import { ReportData, Report, ReportDetails, AllReportsInfo,ReportInfo } from '../models/Report';
 @Injectable({
   providedIn: 'root'
 })
@@ -128,9 +128,35 @@ GetPatientinfoById(Id:number):Observable<Patient>{
   return this.http.post(this.baseUrl+'SaveReports',body,httpOptions);
   
   }
+  UpdateReportValues(ReportDeatails:ReportDetails[])
+  {
+    const httpOptions={
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+   var body = JSON.stringify(ReportDeatails);
+  
+   return this.http.post(this.baseUrl+'UpdateReportValues',body,httpOptions);
+
+  }
+ CompleteReport(ReportID: number)
+  {
+   const httpOptions={
+     headers: new HttpHeaders({
+       'Content-Type': 'application/json'
+     })
+   };
+  var body = JSON.stringify(ReportID);
+ 
+  return this.http.put(this.baseUrl+'CompleteReport',body,httpOptions);
+  
+  }
+
   getAllReports(CID:number):Observable<AllReportsInfo[]>{
     return this.http.get<AllReportsInfo[]>(this.baseUrl+"GetAllReport/"+CID);
 }
-
-
+getTestInfo(ReportID:number):Observable<ReportInfo[]>{
+  return this.http.get<ReportInfo[]>(this.baseUrl+"getReportDetailsInfo/"+ReportID);
+}
 }
