@@ -72,7 +72,7 @@ return Ok(patient);
  return Ok(patient);
 
 }
- [HttpPut("UpdatePatientinfoById")]
+ [HttpPost("UpdatePatientinfoById")]
     public async Task<IActionResult> UpdatePatientinfoById([FromBody] Patient Patient)
     {
     if (Patient.Id==null)
@@ -133,7 +133,7 @@ return Ok(GroupMaster);
         return Unauthorized(msg);
   }
 
-[HttpPut("UpdateTestGroupByID")]
+[HttpPost("UpdateTestGroupByID")]
 public async Task<IActionResult> UpdateTestGroupByID([FromBody] GroupMaster GroupMaster)
     {
      try
@@ -202,8 +202,8 @@ catch{
 
 }
 
-[HttpPut("CompleteReport")]
-    public async Task<IActionResult> CompleteReport([FromBody] int ReportID)
+    [HttpPost("CompleteReport")]
+   public async Task<IActionResult> CompleteReport([FromBody] int ReportID)
     {
         try{
         await _labrep.CompleteReport(ReportID);

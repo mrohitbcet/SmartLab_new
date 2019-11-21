@@ -1,3 +1,7 @@
+<div class="row">
+    <div class="col-lg-4 col-xs-4"><h2>New Reports</h2></div>
+
+</div>
 <form name="form" (ngSubmit)="f.form.valid && SearchPatient()" #f="ngForm"  novalidate>
     <div class="form-group">
 
@@ -132,6 +136,7 @@
             </tr>
         </table>
             <div *ngIf="TestModel">
+                <div class="table-responsive">
             <table  border="1" class="table">
                 <thead class="thead-dark">
                   <tr>
@@ -152,7 +157,9 @@
                   
                 </tr>
             </table>
+                </div>
             <h6>Test Details</h6>
+            <div class="table-responsive"></div>
             <table border="1" class="table">
                 <thead class="thead-dark">
                   <tr>
@@ -170,8 +177,18 @@
                     <td>{{item.price}}</td>
                 </tr>
                 </table>
-                <div class="col-sm-3 pull-right">
-                  <button class="btn btn-primary" [disabled]="Report.isbtnDisabled" (click)="SaveReport()">Save Report</button>
+            </div>
+                <div class="col-sm-4 pull-right">
+                  <table>
+                    <tr>
+                      <td><button type="button" class="btn btn-primary" (click)="closeModalDialog()" >Close</button></td>
+                      <td>
+                          <button class="btn btn-primary" [disabled]="Report.isbtnDisabled" (click)="SaveReport()">Save Report</button>
+                      </td>
+                    </tr>
+                  </table>
+                    
+                  
            </div>
          </div>
   </div>

@@ -10,7 +10,7 @@ import { AuthService } from './_services/Auth.service';
 import { HomeComponent } from './home/home.component';
 import { PatientComponent } from './Patient/Patient.component';
 import { ThirdPartyService } from './_services/ThirdParty.service';
-import { DatePipe } from '@angular/common';
+import { DatePipe, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { ModifyPatientComponent } from './modifyPatient/modifyPatient.component';
 import { LabService } from './_services/Lab.service';
 import { AlertifyService } from './_services/alertify.service';
@@ -23,8 +23,9 @@ import { TokenInterceptorService } from './_services/token-interceptor.service';
 import { MustMatchDirective } from './_helpers/must-match.directive';
 import { NewReportsComponent } from './NewReports/NewReports.component';
 import { AllReportsComponent } from './AllReports/AllReports.component';
-
-
+import {Ng2SearchPipeModule} from 'ng2-search-filter';
+import {NgxPaginationModule} from 'ngx-pagination'
+import { ExportReportComponent } from './ExportReport/ExportReport.component';
 @NgModule({
    declarations: [
       AppComponent,
@@ -38,13 +39,16 @@ import { AllReportsComponent } from './AllReports/AllReports.component';
       UserManagementComponent,
       MustMatchDirective,
       NewReportsComponent,
-      AllReportsComponent
+      AllReportsComponent,
+      ExportReportComponent
    ],
    imports: [
       BrowserModule,
       AppRoutingModule,
       HttpClientModule,
       FormsModule,
+      Ng2SearchPipeModule,
+      NgxPaginationModule,
       BsDropdownModule.forRoot()
    ],
    providers: [
@@ -62,7 +66,8 @@ import { AllReportsComponent } from './AllReports/AllReports.component';
        provide:HTTP_INTERCEPTORS,
        useClass:TokenInterceptorService,
        multi:true
-      }     
+      },
+      {provide: LocationStrategy, useClass: HashLocationStrategy}
    ],
    bootstrap: [
       AppComponent

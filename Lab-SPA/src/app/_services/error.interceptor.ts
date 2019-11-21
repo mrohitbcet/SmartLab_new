@@ -23,10 +23,7 @@ import {
               // server-side error
               errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
             }
-            if(error.status==400)
-            {
-              errorMessage='UserName alreday Exists';
-            }
+          
             window.alert(errorMessage);
             return throwError(errorMessage);
           })

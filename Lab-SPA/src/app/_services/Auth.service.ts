@@ -12,7 +12,7 @@ import { AppErrorHandler } from '../models/AppErrorHandler';
   providedIn: 'root'
 })
 export class AuthService {
-baseUrl='http://localhost:5000/api/auth/'
+baseUrl='http://bansaruli.in/api/auth/'
 constructor(private http: HttpClient) { }
 CreateUserAccount(userInfo:userInfo)
 {
@@ -61,6 +61,4 @@ getToken()
 {
   return localStorage.getItem('token');
 }
-
-
 }

@@ -29,7 +29,7 @@ export class PatientComponent implements OnInit {
   name: null,
   dateofbirth: null,
   gender: "Male",
-  DRrefby:null,
+  DRrefby:0,
   email: null,
  address: null,
   city: null,

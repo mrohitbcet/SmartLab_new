@@ -24,6 +24,7 @@ export class NavComponent implements OnInit {
     
     this.authService.login(this.model).subscribe(next => {
       localStorage.setItem("Uname",this.model.username)
+      this.LoggedUsername=localStorage.getItem("Uname");
       this.alertify.success('Logged in successfully')
     }, (error) =>{
       this.alertify.error("Invalid userName/Password")

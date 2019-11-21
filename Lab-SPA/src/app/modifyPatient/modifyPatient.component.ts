@@ -18,6 +18,8 @@ import { DatePipe } from '@angular/common';
 })
 
 export class ModifyPatientComponent implements OnInit {
+  SearchText:string="";
+  PageNo:number=1;
   MaxdateFordatePicker: string;
   display='none'; //default Variable
   patient: Patient = {

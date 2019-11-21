@@ -1,5 +1,13 @@
-<div class="container">
+<div class="row">
+  <div class="col-lg-4 col-xs-4"><h2 class="pull-right">Patient(s) Info</h2></div>
+  
+  <div class="col-lg-4 col-xs-4">
+      <input type="text" placeholder="Enter Search Text" class="form-control" [(ngModel)]="SearchText">
+   </div>
+</div>
 
+<div class="container">
+  <div class="table-responsive">
 <table border="1" class="table">
     <thead class="thead-dark">
       <tr>
@@ -13,13 +21,11 @@
         <th scope="col">Address</th>
       </tr>
     </thead>
-    <tr *ngFor="let item of Plist" [attr.id]="item.id">
+    <tr *ngFor="let item of Plist | filter:SearchText | paginate:{itemsPerPage:10, currentPage:PageNo}" [attr.id]="item.id">
       <td>
         <i title="Edit" class="fa fa-edit" style="font-size:18px" (click)="PatientinfoById(item.id);"></i>
             <i title="Delete"  class="fa fa-trash" aria-hidden="true" style="font-size:18px" (click)="DeletePatient(item.id);"></i>
-            
-
-      </td>
+     </td>
 
       <td scope="col">{{ item.id }}</td>
       <td>{{item.name}}</td>
@@ -29,7 +35,9 @@
       <td>{{item.contactNo}}</td>
       <td>{{item.address}}</td>
     </tr>
-  </table>
+</table>
+  <pagination-controls (pageChange)="PageNo=$event"></pagination-controls>
+  </div>
 </div>
 <!-- After clicking the button open the modal dialog using open/close event binding methods -->
 

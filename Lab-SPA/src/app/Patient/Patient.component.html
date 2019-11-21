@@ -92,10 +92,12 @@
       <div class="form-group">
           <label for="Re By" class="col-sm-3 control-label">Ref By</label>
           <div class="col-sm-9">
-          <select class="form-control" name="DRrefby" [(ngModel)]="patient.DRrefby">
-            <option *ngFor="let doct of Doctors" [value]="doct.doctorID" >{{doct.doctorname}}</option>
+          <select class="form-control" name="DRrefby" [(ngModel)]="patient.DRrefby" required>
+              <option [value]="0">Self</option>
+         <option *ngFor="let doct of Doctors" [value]="doct.doctorID" >{{doct.doctorname}}</option>
               </select> 
           </div>
+          
       </div>
       <div class="form-group">
         <label for="email" class="col-sm-3 control-label">Email </label>

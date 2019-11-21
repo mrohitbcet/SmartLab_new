@@ -1,0 +1,14 @@
+G:\SmartLab\DatingApp.API\bin\Release\netcoreapp2.2\DatingApp.API.deps.json
+G:\SmartLab\DatingApp.API\bin\Release\netcoreapp2.2\DatingApp.API.runtimeconfig.json
+G:\SmartLab\DatingApp.API\bin\Release\netcoreapp2.2\DatingApp.API.runtimeconfig.dev.json
+G:\SmartLab\DatingApp.API\bin\Release\netcoreapp2.2\DatingApp.API.dll
+G:\SmartLab\DatingApp.API\bin\Release\netcoreapp2.2\DatingApp.API.pdb
+G:\SmartLab\DatingApp.API\obj\Release\netcoreapp2.2\DatingApp.API.csprojAssemblyReference.cache
+G:\SmartLab\DatingApp.API\obj\Release\netcoreapp2.2\DatingApp.API.csproj.CoreCompileInputs.cache
+G:\SmartLab\DatingApp.API\obj\Release\netcoreapp2.2\DatingApp.API.RazorAssemblyInfo.cache
+G:\SmartLab\DatingApp.API\obj\Release\netcoreapp2.2\DatingApp.API.RazorAssemblyInfo.cs
+G:\SmartLab\DatingApp.API\obj\Release\netcoreapp2.2\DatingApp.API.AssemblyInfoInputs.cache
+G:\SmartLab\DatingApp.API\obj\Release\netcoreapp2.2\DatingApp.API.AssemblyInfo.cs
+G:\SmartLab\DatingApp.API\obj\Release\netcoreapp2.2\DatingApp.API.RazorTargetAssemblyInfo.cache
+G:\SmartLab\DatingApp.API\obj\Release\netcoreapp2.2\DatingApp.API.dll
+G:\SmartLab\DatingApp.API\obj\Release\netcoreapp2.2\DatingApp.API.pdb

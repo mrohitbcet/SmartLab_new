@@ -11,7 +11,7 @@ import { ReportData, Report, ReportDetails, AllReportsInfo,ReportInfo } from '..
 })
 export class LabService {
   
-  baseUrl = 'http://localhost:5000/api/Lab/'
+  baseUrl = 'http://bansaruli.in/api/Lab/'
   constructor(private http: HttpClient) { }
   Patientregister(Patient:Patient)
   {
@@ -46,7 +46,7 @@ GetPatientinfoById(Id:number):Observable<Patient>{
      })
    };
   var body = JSON.stringify(Patient);
- return this.http.put(this.baseUrl+'UpdatePatientinfoById',body,httpOptions);
+ return this.http.post(this.baseUrl+'UpdatePatientinfoById',body,httpOptions);
   
   }
   AddTestGroup(GroupMaster: GroupMaster)
@@ -90,7 +90,7 @@ GetPatientinfoById(Id:number):Observable<Patient>{
      };
     var body = JSON.stringify(GroupMaster);
    
-    return this.http.put(this.baseUrl+'UpdateTestGroupByID',body,httpOptions);
+    return this.http.post(this.baseUrl+'UpdateTestGroupByID',body,httpOptions);
     
     }
     getTestMaster():Observable<TestMaster[]>{
@@ -149,7 +149,7 @@ GetPatientinfoById(Id:number):Observable<Patient>{
    };
   var body = JSON.stringify(ReportID);
  
-  return this.http.put(this.baseUrl+'CompleteReport',body,httpOptions);
+  return this.http.post(this.baseUrl+'CompleteReport',body,httpOptions);
   
   }
 

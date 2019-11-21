@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import * as jspdf from 'jspdf'; 
+ import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-home',
@@ -12,19 +14,12 @@ export class HomeComponent implements OnInit {
   constructor(private http:HttpClient) { }
 
   ngOnInit() {
-    this.getEmployees();
+   
   }
   RegisterToggle()
   {
     this.registerMode=!this.registerMode;
   }
-  getEmployees()
-  {
-    this.http.get('http://localhost:5000/api/values').subscribe(Response=>{
-    this.employees=Response;
-    }, error=>{
-console.log(error);
-    }
-    );
-  }
+
+  
 }

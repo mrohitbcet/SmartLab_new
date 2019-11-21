@@ -10,6 +10,7 @@ import {CreateuserAccountComponent  } from './CreateuserAccount/CreateuserAccoun
 import { UserManagementComponent } from './UserManagement/UserManagement.component';
 import { NewReportsComponent } from './NewReports/NewReports.component';
 import { AllReportsComponent } from './AllReports/AllReports.component';
+import { ExportReportComponent } from './ExportReport/ExportReport.component';
 
 const routes: Routes = [
   {path:'Home',component:HomeComponent},
@@ -21,6 +22,7 @@ const routes: Routes = [
   {path:'UserManagement',component:UserManagementComponent},
   {path:'NewReports',component:NewReportsComponent},
   {path:'AllReports',component:AllReportsComponent},
+  {path:'ExportReports',component:ExportReportComponent},
 {path:'**',component:HomeComponent,pathMatch:'full'}
 ];
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { AllReportsInfo,ReportInfo, ReportDetails } from '../models/Report';
 import { AlertifyService } from '../_services/alertify.service';
 import { AuthService } from '../_services/Auth.service';
@@ -6,6 +6,8 @@ import { LabService } from '../_services/Lab.service';
 import { DatePipe } from '@angular/common';
 import { TestMaster } from '../models/TestMaster';
 import * as html2pdf from 'html2pdf.js'
+import * as jspdf from 'jspdf'; 
+import html2canvas from 'html2canvas';  
 
 @Component({
   selector: 'app-AllReports',
@@ -13,7 +15,9 @@ import * as html2pdf from 'html2pdf.js'
   styleUrls: ['./AllReports.component.css']
 })
 export class AllReportsComponent implements OnInit {
-
+  display='none';
+  SearchText:string="";
+  PageNo:number=1;
   AllReportsInfo:AllReportsInfo[]=[]
   ReportInfo:ReportInfo[]=[]
   SelectedReport:AllReportsInfo[]=[]
@@ -23,12 +27,15 @@ export class AllReportsComponent implements OnInit {
   CurrentReportID:number;
   LastDaysReports:number=10;
   CurrentReportList:ReportDetails[]=[]
+   FilterStatus:number=0;
+  CurrentDate = new Date();
   constructor(private alertify:AlertifyService,private labService:LabService,private datePipe: DatePipe) { }
 
   ngOnInit() {
     this.DispayRptDet=false;
    this.getAllReports(this.CID);
   }
+
   onExportclick()
   {
     const opt = {
@@ -38,11 +45,13 @@ export class AllReportsComponent implements OnInit {
       html2canvas: { scale: 2 },
       jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
     };
-const content:Element=document.getElementById('DivprintReport');
+  const content:Element=document.getElementById('CnvasPrint');
+
   html2pdf().from(content).set(opt).save();
+ 
 
   }
-
+ 
   getAllReports(CID:number) {
    this.labService.getAllReports(CID).subscribe((ReportInfo:AllReportsInfo[])=>{
    this.AllReportsInfo=ReportInfo;
@@ -94,8 +103,10 @@ this.labService.getTestInfo(ReportID).subscribe((ReportInfo:ReportInfo[])=>{
   }
   CompleteReport()
   {
-    if(confirm('Are you sure to complete this report?'))
+    
+    if(confirm('Please do not forget to save the test results  before complete it.Are you sure to complete this report?'))
     {
+     
     this.labService.CompleteReport(this.CurrentReportID).subscribe(() => {
       this.alertify.success('Report Completed succssfully!')
       this.ngOnInit()
@@ -118,5 +129,12 @@ this.labService.getTestInfo(ReportID).subscribe((ReportInfo:ReportInfo[])=>{
     }
     return age;
 
+  }
+  openModalDialog(){
+    this.display='block';
+  }
+  
+  closeModalDialog(){
+    this.display='none'; 
   }
 }
