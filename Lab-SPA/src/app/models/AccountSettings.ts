@@ -1,6 +1,9 @@
 export class Clients{
     cid:number;
     cName:string; 
+    address:string;
+    email:string;
+    contact:string;
 }
 
 export class userInfo{

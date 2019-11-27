@@ -227,7 +227,9 @@ namespace DatingApp.API.Data
                                             PatientGender=Pat.gender,
                                             DoctorID=Rpt.DoctorID,
                                             Status=Rpt.Status,
-                                           CreatedDate=Rpt.CreatedDate
+                                           CreatedDate=Rpt.CreatedDate,
+                                           Specimen=Rpt.Specimen
+                                          
                                           
                                             
             })
@@ -244,11 +246,13 @@ namespace DatingApp.API.Data
                                             DoctorID=AllRept.DoctorID,
                                             DoctorName=Doc.Doctorname,
                                             Status=AllRept.Status,
-                                           CreatedDate=AllRept.CreatedDate
+                                           CreatedDate=AllRept.CreatedDate,
+                                           Specimen=AllRept.Specimen
+                                          
                                           
                                             
             })
-            
+            .OrderByDescending(xx=>xx.CreatedDate)
             ).ToListAsync();
             return Result;
 

@@ -23,7 +23,11 @@ export class ExportReportComponent implements OnInit {
   ReportInfo:ReportInfo[]=[]
   SelectedReport:AllReportsInfo[]=[]
   CID:number =parseInt(localStorage.getItem('CID'));
-  DispayRptDet:boolean=false;
+  cname:string =localStorage.getItem('cname');
+  caddress:string =localStorage.getItem('caddress')+",(M)-"+localStorage.getItem('ccontact');
+  ccontact:string =localStorage.getItem('ccontact');
+  cemail:string =localStorage.getItem('cemail');
+   DispayRptDet:boolean=false;
   isSubmitted:boolean=false;
   CurrentReportID:number;
   LastDaysReports:number=10;
@@ -36,19 +40,7 @@ export class ExportReportComponent implements OnInit {
     this.DispayRptDet=false;
    this.getAllReports(this.CID);
   }
-  onExportclick2()
-  {
-    const opt = {
-      margin: 1,
-      filename: 'LaboratoryReport.pdf',
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
-    };
-  const content:Element=document.getElementById('div1');
 
-  html2pdf().from(content).set(opt).save();
-  }
   onExportclick()
   {
     const opt = {
@@ -90,7 +82,8 @@ this.labService.getTestInfo(ReportID).subscribe((ReportInfo:ReportInfo[])=>{
       }
       
   });
-
+  //let element: HTMLElement = document.getElementById('headingOne')[0] as HTMLElement;
+  document.getElementById('btnToggle').click();
   }
   UpdateReportValues()
   {

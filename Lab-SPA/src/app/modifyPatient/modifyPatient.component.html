@@ -59,53 +59,90 @@
       <div class="modal-body">
      
       <div class="form-group">
-          <label for="lastName" class="col-sm-5 control-label">Patient Name*</label>
-          <div class="col-sm-9">
-              <input type="text"  name="name" required    placeholder="Patient Name" [(ngModel)]="patient.name"  pattern="[a-zA-Z\s]+" class="form-control" autofocus>
-             </div>
-      </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <label for="lastName" class="col-sm-5 control-label">Name*</label>
+            </div>
+            <div class="col-sm-9">
+                <input type="text"  name="name" required    placeholder="Patient Name" [(ngModel)]="patient.name"  pattern="[a-zA-Z\s]+" class="form-control" autofocus>
+               </div>
+        </div>
+  </div>
 
       <div class="form-group">
-        <label for="lastName" class="col-sm-5 control-label">DOB*</label>
-        <div class="col-sm-9">
-          <input type="date"  name="dateofbirth" required max={{MaxdateFordatePicker}} [(ngModel)]="patient.dateofbirth"   class="form-control">
+          <div class="row">
+              <div class="col-sm-3">
+                  <label for="DOB" class="col-sm-5 control-label">DOB*</label>
+              </div>
+              <div class="col-sm-9">
+                  <input type="date"  name="dateofbirth" required max={{MaxdateFordatePicker}} [(ngModel)]="patient.dateofbirth"   class="form-control">
+                 </div>
           </div>
+
     </div>
     <div class="form-group">
-        <label for="lastName" class="col-sm-5 control-label">Gender*</label>
         <div class="row">
+            <div class="col-sm-3">
+                <label for="Gender" class="col-sm-5 control-label">Gender*</label>
+            </div>
             <div class="col-sm-2">
-             <input type="radio" required name="gender" [(ngModel)]="patient.gender" value="Male">Male
+                <input type="radio" required name="gender" [(ngModel)]="patient.gender" value="Male">Male
+              </div>
+               <div class="col-sm-3">
+                  <input type="radio" required  name="gender" [(ngModel)]="patient.gender" value="Female"  >Female
                </div>
-            <div class="col-sm-4">
-             <input type="radio" required  name="gender" [(ngModel)]="patient.gender" value="Female"  >Female
-           </div>
         </div>
+
      </div>
      <div class="form-group">
-        <label for="lastName" class="col-sm-5 control-label">Email*</label>
-        <div class="col-sm-9">
-            <input type="text"  name="Email"  required email   placeholder="Email" [(ngModel)]="patient.email"  class="form-control" autofocus>
-           </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <label for="Email" class="col-sm-5 control-label">Email*</label>
+            </div>
+            <div class="col-sm-9">
+                <input type="text"  name="Email"  required email   placeholder="Email" [(ngModel)]="patient.email"  class="form-control" autofocus>
+               </div>
+        </div>
+
     </div>
     <div class="form-group">
-        <label for="lastName" class="col-sm-5 control-label">ContactNo*</label>
-        <div class="col-sm-9">
-            <input type="text"  name="ContactNo" required    placeholder="ContactNo" [(ngModel)]="patient.contactNo" pattern="[7-9]{1}[0-9]{9}"  class="form-control" autofocus>
-           </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <label for="ContactNo" class="col-sm-5 control-label">Contact No*</label>
+            </div>
+            <div class="col-sm-9">
+                <input type="text"  name="ContactNo" required    placeholder="ContactNo" [(ngModel)]="patient.contactNo" pattern="[7-9]{1}[0-9]{9}"  class="form-control" autofocus>
+               </div>
+        </div>
+
     </div>
     <div class="form-group">
-        <label for="lastName" class="col-sm-5 control-label">Address*</label>
-        <div class="col-sm-9">
-            <input type="text"  name="Address" required    placeholder="Address" [(ngModel)]="patient.address"   class="form-control" autofocus>
-           </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <label for="Address" class="col-sm-5 control-label">Address*</label>
+            </div>
+            <div class="col-sm-9">
+                <input type="text"  name="Address" required    placeholder="Address" [(ngModel)]="patient.address"   class="form-control" autofocus>
+               </div>
+        </div>
+
     </div>
 
 
       <!-- modal-footer -->
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" (click)="closeModalDialog()" >Close</button>
-        <button type="submit" [disabled]="!EditForm.valid" class="btn btn-success" >Save</button>
+          <div class="row">
+              <div class="col-sm-4">
+                  <button type="button" class="btn btn-default" (click)="closeModalDialog()" >Close</button>
+              </div>
+              <div class="col-sm-4">
+                
+                  <button type="submit" [disabled]="!EditForm.valid" class="btn btn-success" >Save</button>
+               </div>
+              <div class="col-sm-4">
+                </div>
+            </div>
+     
       </div>
     </div>
   </div>

@@ -44,9 +44,8 @@ export class CreateuserAccountComponent implements OnInit {
    this.ngOnInit();
   }, 
   (error) =>{
-    //let errorMessage = '';
-    //errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-    this.alertify.error(error)
+    debugger;
+     this.alertify.error(error.error);
     }
    
    );

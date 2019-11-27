@@ -1,0 +1,168 @@
+<div id="accordion">
+        <div class="card">
+            <div class="card-header" id="headingOne" style="padding:0px;">
+              <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  Doctor(s) Profile :Collapse/Expand
+                  </button>
+              </h5>
+            </div>
+        
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion" style="padding:0px;">
+              <div class="card-body">
+                
+                 
+                  <div class="row" >
+                      <div class="col-sm-12">
+                          <div class="jumbotron">
+                              <div class="container">
+                                  <div class="row">
+                                      <div class="col-md-8 offset-md-2">
+                                      
+                                          <form name="form" (ngSubmit)="f.form.valid && CreateDocProfiles(Doctors)" #f="ngForm"  novalidate>
+                                            
+                                            <h2 class="text-center">Create Doctor(s) Profile</h2>
+                                            <div class="form-group">
+                                              <label for="doctorname" class="col-sm-5 control-label">Name*</label>
+                                              <input type="text" class="form-control" name="doctorname" [(ngModel)]="Doctors.doctorname" #doctorname="ngModel" [ngClass]="{ 'is-invalid': f.submitted && doctorname.invalid }" required />
+                                              <div *ngIf="f.submitted && doctorname.invalid" class="invalid-feedback">
+                                                  <div *ngIf="doctorname.errors.required">Name is required</div>
+                                              </div>
+                                             </div>
+                                             <div class="form-group">
+                                              <label for="registrationNo" class="col-sm-5 control-label">Registration number*</label>
+                                              <input type="text" class="form-control" name="registrationNo" [(ngModel)]="Doctors.registrationNo" #registrationNo="ngModel" [ngClass]="{ 'is-invalid': f.submitted && registrationNo.invalid }" required />
+                                              <div *ngIf="f.submitted && registrationNo.invalid" class="invalid-feedback">
+                                                  <div *ngIf="registrationNo.errors.required">Registration number is required</div>
+                                              </div>
+                                             </div>
+                            
+                                              <div class="form-group">
+                                                  <label for="email">Email</label>
+                                                  <input type="text" class="form-control" name="email" [(ngModel)]="Doctors.email" #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required email />
+                                                  <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+                                                      <div *ngIf="email.errors.required">Email is required</div>
+                                                      <div *ngIf="email.errors.email">Email must be a valid email address</div>
+                                                  </div>
+                                              </div>
+                                              <div class="form-group">
+                                                <label for="ContactNo" class="col-sm-5 control-label">ContactNo*</label>
+                                                <input type="text" class="form-control" name="contact" [(ngModel)]="Doctors.contact" #contact="ngModel" [ngClass]="{ 'is-invalid': f.submitted && contact.invalid }" required />
+                                                <div *ngIf="f.submitted && contact.invalid" class="invalid-feedback">
+                                                    <div *ngIf="contact.errors.required">Contact no is required</div>
+                                                </div>
+                                               </div>
+                            
+                            
+                                              <div class="form-group">
+                                                  <button class="btn btn-primary">Register</button>
+                                              </div>
+                                          </form>
+                                      </div>
+                                  </div>
+                              </div>
+                            </div>
+                      </div>
+                    </div>
+              </div>
+            </div>
+          </div>
+    </div>
+    
+    
+    
+    <!-- credits -->
+    
+        <div class="row" >
+            <div class="col-sm-12">
+              <div class="table-responsive">
+            <table border="1" class="table">
+                <thead class="thead-dark">
+                  <tr>
+                 <th></th>
+                 <!-- <th scope="col">Id</th> -->
+                    <th scope="col">Name</th>
+                    <th scope="col">Reg No</th>
+                    <th scope="col">Contact</th>
+                    <th scope="col">Email</th>
+                    </tr>
+                </thead>
+                <tr *ngFor="let item of Doctorlist" [attr.groupId]="item.doctorID">
+                    <td>
+                 <i title="Edit" class="fa fa-edit" style="font-size:18px" (click)="DoctorinfoById(item.doctorID);" ></i>
+                 </td>
+                    <!-- <td>{{item.doctorID}}</td> -->
+                    <td>{{item.doctorname}}</td>
+                    <td>{{item.registrationNo}}</td>
+                    <td>{{item.contact}}</td>
+                    <td>{{item.email}}</td>
+                </tr>
+                </table>
+              </div>
+            </div>
+        </div>
+     
+        
+        <!-- After clicking the button open the modal dialog using open/close event binding methods -->
+    
+      
+    
+    <!-- modal -->
+    <div class="modal"  role="dialog"  [ngStyle]="{'display':display}">
+            <!-- modal-dialog -->
+            <div class="modal-dialog" role="document">
+              <!-- modal-content -->
+              <form  #EditForm="ngForm" (ngSubmit)="UpdateDocProfileByID(DoctorsEdit)" >
+              <div class="modal-content">
+                <!-- modal-header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Modify Doctor Proile</h4>
+                  <button type="button" class="close" aria-label="Close" (click)="closeModalDialog()"><span aria-hidden="true">&times;</span></button>
+                  <!-- <h4 class="modal-title">Login</h4> -->
+                </div>
+                <!-- modal-body -->
+                <div class="modal-body">
+                <div class="form-group">
+                    <label for="lastName" class="col-sm-5 control-label">Name*</label>
+                    <div class="col-sm-9">
+                        <input type="text"  name="Name" required    placeholder="Name" [(ngModel)]="DoctorsEdit.doctorname"   class="form-control" autofocus>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Address" class="col-sm-5 control-label">Reg No*</label>
+                    <div class="col-sm-9">
+                        <input type="text"  name="RegNo" required    placeholder="Reg No" [(ngModel)]="DoctorsEdit.registrationNo" class="form-control" autofocus>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Contact" class="col-sm-5 control-label">Contact*</label>
+                    <div class="col-sm-9">
+                        <input type="text"  name="contact" required    placeholder="contact" [(ngModel)]="DoctorsEdit.contact" class="form-control" autofocus>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Email" class="col-sm-5 control-label">Email*</label>
+                    <div class="col-sm-9">
+                        <input type="text"  name="email" required    placeholder="Email" [(ngModel)]="DoctorsEdit.email" class="form-control" autofocus>
+                    </div>
+                </div>
+           <!-- modal-footer -->
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" (click)="closeModalDialog()" >Close</button>
+                  <button type="submit" [disabled]="!EditForm.valid"  class="btn btn-success" >Save</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        
+          </div>
+        
+         <!-- modal -->
+        
+        
+      
+          
+         
+      
+    
+    

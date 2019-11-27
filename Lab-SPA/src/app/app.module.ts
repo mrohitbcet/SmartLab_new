@@ -26,6 +26,7 @@ import { AllReportsComponent } from './AllReports/AllReports.component';
 import {Ng2SearchPipeModule} from 'ng2-search-filter';
 import {NgxPaginationModule} from 'ngx-pagination'
 import { ExportReportComponent } from './ExportReport/ExportReport.component';
+import { DoctorsComponent } from './doctors/doctors.component';
 @NgModule({
    declarations: [
       AppComponent,
@@ -40,7 +41,8 @@ import { ExportReportComponent } from './ExportReport/ExportReport.component';
       MustMatchDirective,
       NewReportsComponent,
       AllReportsComponent,
-      ExportReportComponent
+      ExportReportComponent,
+      DoctorsComponent
    ],
    imports: [
       BrowserModule,

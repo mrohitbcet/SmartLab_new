@@ -11,6 +11,7 @@ namespace DatingApp.API.Data
          Task<User> Login(string username,string password);
          Task<bool> UserExists(string username);
          Task<bool> CreatePathalogy(Client Client);
+          Task<bool> CreateDocProfiles(Doctor Doctor);
          Task<IEnumerable<ClientsDto>> getAllPathalogy();
         Task <Client> GetPathalogyinfoById(int cid);
        

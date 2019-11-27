@@ -21,7 +21,8 @@ export class ModifyPatientComponent implements OnInit {
   SearchText:string="";
   PageNo:number=1;
   MaxdateFordatePicker: string;
-  display='none'; //default Variable
+  display='none'; 
+  CID:number =parseInt(localStorage.getItem('CID'));
   patient: Patient = {
     id: 0,
     CID:0,
@@ -45,11 +46,11 @@ Plist:Patient[];
   
 
   ngOnInit() {
-  this.getPatientInfo();
+  this.getPatientInfo(this.CID);
 }
- getPatientInfo()
+ getPatientInfo(CID:number)
  {
-  this.labService.getAllPatients().subscribe((PatientList:Patient[])=>{
+  this.labService.getAllPatients(CID).subscribe((PatientList:Patient[])=>{
    this.Plist=PatientList;
   });
  }

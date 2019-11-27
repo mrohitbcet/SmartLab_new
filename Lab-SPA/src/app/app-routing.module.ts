@@ -11,12 +11,13 @@ import { UserManagementComponent } from './UserManagement/UserManagement.compone
 import { NewReportsComponent } from './NewReports/NewReports.component';
 import { AllReportsComponent } from './AllReports/AllReports.component';
 import { ExportReportComponent } from './ExportReport/ExportReport.component';
-
+import { DoctorsComponent } from './doctors/doctors.component';
 const routes: Routes = [
   {path:'Home',component:HomeComponent},
   {path:'NewPatient',component:PatientComponent},
   {path:'ModifyPatient',component:ModifyPatientComponent},
-  {path:'TestMaster',component:TestmasterComponent},
+  {path:'Doctors',component:DoctorsComponent},
+   {path:'TestMaster',component:TestmasterComponent},
   {path:'CreatePathology',component:CreatePathologyComponent},
   {path:'CreateuserAccount',component:CreateuserAccountComponent},
   {path:'UserManagement',component:UserManagementComponent},

@@ -53,6 +53,7 @@ export class AllReportsComponent implements OnInit {
   }
  
   getAllReports(CID:number) {
+    debugger;
    this.labService.getAllReports(CID).subscribe((ReportInfo:AllReportsInfo[])=>{
    this.AllReportsInfo=ReportInfo;
     });

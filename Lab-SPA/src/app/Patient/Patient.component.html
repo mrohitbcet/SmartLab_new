@@ -42,10 +42,9 @@
         <button class="btn btn-default" type="submit" (click)="cancel()">Cancel</button>
       </div> -->
 <!-- </form> -->
-<form class="form-horizontal"  #register="ngForm" (ngSubmit)="Patientregister(patient)">
+<form class="form-horizontal"  #register="ngForm" (ngSubmit)="register.form.valid && Patientregister(patient)">
 <div class="container">
- 
-      <div class="row">
+ <div class="row">
           <div class="col-lg-6 col-xs-6"><h2>Patient Registration</h2></div>
           <div class="col-lg-6 col-xs-6"><span class="control-label pull-right"><b>Date:{{CurrentDatestr}} </b></span></div>
           
@@ -60,15 +59,21 @@
       <div class="form-group">
           <label for="lastName" class="col-sm-3 control-label">Patient Name*</label>
           <div class="col-sm-9">
-              <input type="text"  name="name" required   [(ngModel)]="patient.name"  placeholder="Patient Name" pattern="[a-zA-Z\s]+" class="form-control" autofocus>
-             
+              <input type="text"  name="name" required   [(ngModel)]="patient.name"  placeholder="Patient Name" pattern="[a-zA-Z\s]+" class="form-control" #name="ngModel" [ngClass]="{ 'is-invalid': register.submitted && name.invalid }">
+              <div *ngIf="register.submitted && register.invalid" class="invalid-feedback">
+                    <div *ngIf="name.errors.required" >Patient name is required</div>
+                    <div *ngIf="name.errors.pattern">Invalid Charcter(s)</div>
+               </div>
             </div>
       </div>
       <div class="form-group">
           <label for="birthDate" class="col-sm-3 control-label" >Date of Birth* <span>Age:{{GetAge(patient.dateofbirth)}}</span></label>
           <div class="col-sm-9">
-              <input type="date"  name="dateofbirth" required max={{MaxdateFordatePicker}} [(ngModel)]="patient.dateofbirth"   class="form-control"> 
-          </div>
+              <input type="date"  name="dateofbirth" required max={{MaxdateFordatePicker}} [(ngModel)]="patient.dateofbirth"   class="form-control" #dateofbirth="ngModel" [ngClass]="{ 'is-invalid': register.submitted && dateofbirth.invalid }"> 
+              <div *ngIf="register.submitted && register.invalid" class="invalid-feedback">
+                    <div *ngIf="dateofbirth.errors.required">Date of Birth is required</div>
+               </div>
+            </div>
       </div>
       <div class="form-group">
           <label class="control-label col-sm-3">Gender*</label>
@@ -100,35 +105,49 @@
           
       </div>
       <div class="form-group">
-        <label for="email" class="col-sm-3 control-label">Email </label>
+        <label for="email" class="col-sm-3 control-label">Email* </label>
         <div class="col-sm-9">
-            <input type="email" name="email" required email [(ngModel)]="patient.email" placeholder="Email" class="form-control" >
+            <input type="email" name="email" required email [(ngModel)]="patient.email" placeholder="Email" class="form-control" #email="ngModel" [ngClass]="{ 'is-invalid': register.submitted && email.invalid }">
+            <div *ngIf="register.submitted && register.invalid" class="invalid-feedback">
+                <div *ngIf="email.errors.required">Email is required</div>
+                <div *ngIf="email.errors.email">Invalid Email</div>
+           </div>
            
         </div>
     </div>
     
       <div class="form-group">
-          <label for="Address" class="col-sm-3 control-label">Address </label>
+          <label for="Address" class="col-sm-3 control-label">Address* </label>
           <div class="col-sm-9">
-              <input type="text" name="address" required [(ngModel)]="patient.address" placeholder="Address" class="form-control" >
-          </div>
+              <input type="text" name="address" required [(ngModel)]="patient.address" placeholder="Address" class="form-control"#address="ngModel" [ngClass]="{ 'is-invalid': register.submitted && address.invalid }">
+              <div *ngIf="register.submitted && register.invalid" class="invalid-feedback">
+                <div *ngIf="address.errors.required">Address is required</div>
+           </div>
+            </div>
       </div>
 
  
 
     
       <div class="form-group">
-          <label for="City" class="col-sm-3 control-label">City </label>
+          <label for="City" class="col-sm-3 control-label">City* </label>
           <div class="col-sm-9">
-              <input type="text" name="city" required [(ngModel)]="patient.city" placeholder="City" class="form-control" >
-          </div>
+              <input type="text" name="city" required [(ngModel)]="patient.city" placeholder="City" class="form-control"#city="ngModel" [ngClass]="{ 'is-invalid': register.submitted && city.invalid }" >
+              <div *ngIf="register.submitted && register.invalid" class="invalid-feedback">
+                <div *ngIf="city.errors.required">City is required</div>
+           </div>
+            </div>
       </div>
      
 
       <div class="form-group">
-          <label for="phoneNumber" class="col-sm-3 control-label">Phone number </label>
+          <label for="phoneNumber" class="col-sm-3 control-label">Contact number* </label>
           <div class="col-sm-9">
-              <input type="phoneNumber" name="contactNo" required [(ngModel)]="patient.contactNo" placeholder="contact number" class="form-control" pattern="[7-9]{1}[0-9]{9}">
+              <input type="phoneNumber" name="contactNo" required [(ngModel)]="patient.contactNo" placeholder="contact number" class="form-control" pattern="[7-9]{1}[0-9]{9}" #contactNo="ngModel" [ngClass]="{ 'is-invalid': register.submitted && contactNo.invalid }">
+              <div *ngIf="register.submitted && register.invalid" class="invalid-feedback">
+                <div *ngIf="contactNo.errors.required">Contact number is required</div>
+                <div *ngIf="contactNo.errors.pattern">Invalid Contact number</div>
+           </div>
               <span class="help-block">Your phone number won't be disclosed anywhere </span>
           </div>
       </div>
@@ -140,7 +159,7 @@
               <span class="help-block">*Required fields</span>
           </div>
       </div>
-      <button type="submit" [disabled]="!register.valid" class="btn btn-primary btn-block">Register</button>
+      <button [disabled]="!isbtnEnabled" type="submit"  class="btn btn-primary btn-block">Register</button>
 
 </div> 
 </form> 

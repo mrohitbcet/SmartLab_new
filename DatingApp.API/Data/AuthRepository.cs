@@ -77,7 +77,26 @@ namespace DatingApp.API.Data
             return false;
         }
    
-   public async Task<bool> CreatePathalogy(Client Client)
+   public async Task<bool> CreateDocProfiles(Doctor Doctor)
+        {
+             if(Doctor.DoctorID>0)
+            {
+                if(await _context.Doctors.AnyAsync(xx=>xx.DoctorID==Doctor.DoctorID))
+                {
+                _context.Entry(Doctor).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+                }
+            }
+            else
+            {
+            var user = await _context.Doctors.AddAsync(Doctor);
+            await _context.SaveChangesAsync(); 
+            }
+            
+            return true;
+        }
+
+  public async Task<bool> CreatePathalogy(Client Client)
         {
              if(Client.CID>0)
             {
@@ -95,10 +114,14 @@ namespace DatingApp.API.Data
             
             return true;
         }
-
      public async Task<IEnumerable<ClientsDto>> getAllPathalogy()
         {
-         var ClientsDto=await (_context.Clients.Select(xx=>new ClientsDto{CID=xx.CID,CName=xx.CName})).ToListAsync();
+         var ClientsDto=await (_context.Clients.Select(xx=>new ClientsDto{CID=xx.CID,
+         CName=xx.CName,
+         address=xx.Address,
+         email=xx.Email,
+         contact=xx.Contact
+         })).ToListAsync();
          return ClientsDto;
 
         }

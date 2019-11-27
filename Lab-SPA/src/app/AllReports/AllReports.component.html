@@ -14,7 +14,7 @@
                     <thead class="thead-dark">
                       <tr>
                        <th>Action</th>
-                        <th scope="col">SN</th>
+                        <th scope="col">Lab No</th>
                         <th scope="col">PatientName</th>
                         <th scope="col">DoctorName</th>
                         <th scope="col">Status</th>
@@ -26,7 +26,7 @@
                         <button title="Click to view test details" type="button" class="btn btn-link" (click)="GetReportDetailsInfo(item.reportID,item.status)">Details</button>
                          </td>
                          <td>
-                        #{{i+1}}
+                        #{{item.reportID}}
                          </td>
                        <td>{{item.patientName}}</td>
                         <td>{{item.doctorName}}</td>

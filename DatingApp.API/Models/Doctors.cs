@@ -9,9 +9,15 @@ namespace DatingApp.API.Models
          [Key]
         public int DoctorID { get; set; }
         public int CID { get; set; }
-         [MaxLength(100)]
+         [MaxLength(200)]
         public string Doctorname { get; set; }
-       public Client Client{get;set;}
+         [MaxLength(100)]
+         public string RegistrationNo { get; set; }
+        [MaxLength(200)]
+        public string Email{get;set;}
+         [MaxLength(100)]
+        public string Contact{get;set;}
+         public Client Client{get;set;}
   
     }
 }

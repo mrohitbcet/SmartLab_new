@@ -1,27 +1,90 @@
-
-<form #frmPathalogy="ngForm" (ngSubmit)="CreatePathalogy(Clients)">
-        <div class="form-group">
-                <div class="row">
-                        <div class="col-sm-3">
-                            <button type="submit" [disabled]="!frmPathalogy.valid" class="btn btn-primary btn-block" >Add Pathalogy</button>
-                        </div>
-                 </div>
-             <div class="row">
-            <br>
-            <div class="col-sm-3">
-                <input type="text" required name="Add Pathalogy" [(ngModel)]="Clients.cName"   class="form-control">
-            </div>
-            </div>
+<div id="accordion">
+    <div class="card">
+        <div class="card-header" id="headingOne" style="padding:0px;">
+          <h5 class="mb-0">
+            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              Create Pathalogy
+              </button>
+          </h5>
         </div>
-    </form>
+    
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion" style="padding:0px;">
+          <div class="card-body">
+            
+             
+              <div class="row" >
+                  <div class="col-sm-12">
+                      <div class="jumbotron">
+                          <div class="container">
+                              <div class="row">
+                                  <div class="col-md-8 offset-md-2">
+                                  
+                                      <form name="form" (ngSubmit)="f.form.valid && CreatePathalogy(Clients)" #f="ngForm"  novalidate>
+                                        
+                                        <h2 class="text-center">Create Pathalogy</h2>
+                                        <div class="form-group">
+                                          <label for="PathalogyName" class="col-sm-5 control-label">Pathalogy Name*</label>
+                                          <input type="text" class="form-control" name="cName" [(ngModel)]="Clients.cName" #cName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && cName.invalid }" required />
+                                          <div *ngIf="f.submitted && cName.invalid" class="invalid-feedback">
+                                              <div *ngIf="cName.errors.required">Name is required</div>
+                                          </div>
+                                         </div>
+                                         <div class="form-group">
+                                          <label for="PathalogyAddress" class="col-sm-5 control-label">Address*</label>
+                                          <input type="text" class="form-control" name="address" [(ngModel)]="Clients.address" #address="ngModel" [ngClass]="{ 'is-invalid': f.submitted && address.invalid }" required />
+                                          <div *ngIf="f.submitted && address.invalid" class="invalid-feedback">
+                                              <div *ngIf="address.errors.required">Address is required</div>
+                                          </div>
+                                         </div>
+                        
+                                          <div class="form-group">
+                                              <label for="email">Email</label>
+                                              <input type="text" class="form-control" name="email" [(ngModel)]="Clients.email" #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required email />
+                                              <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+                                                  <div *ngIf="email.errors.required">Email is required</div>
+                                                  <div *ngIf="email.errors.email">Email must be a valid email address</div>
+                                              </div>
+                                          </div>
+                                          <div class="form-group">
+                                            <label for="ContactNo" class="col-sm-5 control-label">ContactNo*</label>
+                                            <input type="text" class="form-control" name="contact" [(ngModel)]="Clients.contact" #contact="ngModel" [ngClass]="{ 'is-invalid': f.submitted && contact.invalid }" required />
+                                            <div *ngIf="f.submitted && contact.invalid" class="invalid-feedback">
+                                                <div *ngIf="contact.errors.required">Contact no is required</div>
+                                            </div>
+                                           </div>
+                        
+                        
+                                          <div class="form-group">
+                                              <button class="btn btn-primary">Register</button>
+                                          </div>
+                                      </form>
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
+                  </div>
+                </div>
+          </div>
+        </div>
+      </div>
+</div>
+
+
+
+<!-- credits -->
+
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-12">
+          <div class="table-responsive">
         <table border="1" class="table">
             <thead class="thead-dark">
               <tr>
              <th></th>
              <th scope="col">Id</th>
                 <th scope="col">Name</th>
+                <th scope="col">Address</th>
+                <th scope="col">Email</th>
+                <th scope="col">Contact</th>
                 </tr>
             </thead>
             <tr *ngFor="let item of ClientList" [attr.groupId]="item.cid">
@@ -30,8 +93,12 @@
              </td>
                 <td>{{item.cid}}</td>
                 <td>{{item.cName}}</td>
+                <td>{{item.address}}</td>
+                <td>{{item.email}}</td>
+                <td>{{item.contact}}</td>
             </tr>
             </table>
+          </div>
         </div>
     </div>
  
@@ -58,8 +125,26 @@
             <div class="form-group">
                 <label for="lastName" class="col-sm-5 control-label">Pathalogy Name*</label>
                 <div class="col-sm-9">
-                    <input type="text"  name="Name" required    placeholder="Group Name" [(ngModel)]="ClientsEdit.cName"   class="form-control" autofocus>
-                    </div>
+                    <input type="text"  name="Name" required    placeholder="Pathalogy Name" [(ngModel)]="ClientsEdit.cName"   class="form-control" autofocus>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Address" class="col-sm-5 control-label">Address*</label>
+                <div class="col-sm-9">
+                    <input type="text"  name="address" required    placeholder="Address" [(ngModel)]="ClientsEdit.address" class="form-control" autofocus>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Contact" class="col-sm-5 control-label">Contact*</label>
+                <div class="col-sm-9">
+                    <input type="text"  name="contact" required    placeholder="contact" [(ngModel)]="ClientsEdit.contact" class="form-control" autofocus>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Email" class="col-sm-5 control-label">Email*</label>
+                <div class="col-sm-9">
+                    <input type="text"  name="email" required    placeholder="Email" [(ngModel)]="ClientsEdit.email" class="form-control" autofocus>
+                </div>
             </div>
        <!-- modal-footer -->
             <div class="modal-footer">

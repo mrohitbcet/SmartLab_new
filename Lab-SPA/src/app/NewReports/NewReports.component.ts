@@ -16,11 +16,13 @@ import { ReportData, Report, ReportDetails } from '../models/Report';
 export class NewReportsComponent implements OnInit {
   today = new Date();
   TestModel=false;
+  isPrivew:boolean=false;
   display='none';
   Doctors: any;
   SelectedDoctor: any;
   TestGroupId:number=0;
   DoctorId:number=0;
+  Specimen:"";
   AllTestList:TestMaster[];
   FliteredTestList:TestMaster[];
   SelectedTestList:TestMaster[];
@@ -28,6 +30,7 @@ export class NewReportsComponent implements OnInit {
   Plist:Patient[];
   selectedPatient:Patient[];
   selectedPatientCount:number=0;
+  CID:number =parseInt(localStorage.getItem('CID'));
   Report:Report={
     ReportID:0,
     PatientID:0,
@@ -36,7 +39,8 @@ export class NewReportsComponent implements OnInit {
     CreatedBy:"",
     CreatedDate:null,
     isbtnDisabled:false,
-    Status:""
+    Status:"",
+    specimen:""
 }
 ReportTest:ReportDetails={
   RptDetailsID:0,
@@ -77,7 +81,7 @@ ReportData:ReportData={
  }
  PatientinfoByName()
  {  
-   this.labService.SearchPatientbyName(this.patient.name).subscribe((PatientList:Patient[])=>{
+   this.labService.SearchPatientbyName(this.patient.name,this.CID).subscribe((PatientList:Patient[])=>{
   this.Plist=PatientList;
   });
  }
@@ -122,7 +126,7 @@ DoctorSelected(value:number){
   //let DoctorName=this.SelectedDoctor[0].doctorname;
  }
 getDoctors() {
-  this.labService.getDoctors().subscribe(Response => {
+  this.labService.getDoctors(this.CID).subscribe(Response => {
    this.Doctors = Response;
   }, error => {
     console.log(error);
@@ -132,10 +136,15 @@ getDoctors() {
 previewReport()
 {
 this.TestModel=true;
- this.openModalDialog();
+this.isPrivew=true;
+ //this.openModalDialog();
 this.SelectedTestList= this.FliteredTestList.filter(
   test => test.isSelected ==true);
 
+}
+CancelPreview()
+{
+  this.isPrivew=false;
 }
 SaveReport()
 {
@@ -150,6 +159,7 @@ SaveReport()
   this.Report.CID =parseInt(localStorage.getItem('CID'));
   this.Report.CreatedBy=localStorage.getItem('Uname');
   this.Report.Status="Pending";
+  this.Report.specimen=this.Specimen;
   this.Report.CreatedDate=new Date();
   this.ReportTestList =[];
   this.ReportTestList.length=0;

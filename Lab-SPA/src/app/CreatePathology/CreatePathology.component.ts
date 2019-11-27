@@ -15,11 +15,17 @@ export class CreatePathologyComponent implements OnInit {
   display='none'; //default Variable
   Clients: Clients = {
     cid:0,
-    cName:null
+    cName:null,
+    address:null,
+    email:null,
+    contact:null
     }
     ClientsEdit:Clients = {
     cid:0,
-    cName:null
+    cName:null,
+    address:null,
+    email:null,
+    contact:null
     }
     ClientList:Clients[];
 constructor(private alertify:AlertifyService,private auth:AuthService) { }
@@ -33,9 +39,12 @@ constructor(private alertify:AlertifyService,private auth:AuthService) { }
     this.auth.CreatePathalogy(Clients).subscribe(() => {
       this.alertify.success('Pathalogy Created succssfully!')
        this.Clients.cName="";
+       this.Clients.address="";
+       this.Clients.email="";
+       this.Clients.contact="";
        this.ngOnInit();
     }, error => {
-      this.alertify.error(error)
+      this.alertify.error(error.error)
      
     });
   }
@@ -57,8 +66,11 @@ constructor(private alertify:AlertifyService,private auth:AuthService) { }
 UpdatePathalogyByID(Clients:Clients) {
 
   this.auth.CreatePathalogy(Clients).subscribe(() => {
-    this.alertify.success('Pathalogy info updatedsuccssfully!')
-     this.Clients.cName="";
+    this.alertify.success('Pathalogy info updated succssfully!')
+    this.Clients.cName="";
+    this.Clients.address="";
+    this.Clients.email="";
+    this.Clients.contact=""
      this.ngOnInit();
      this.closeModalDialog();
   }, error => {

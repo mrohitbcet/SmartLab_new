@@ -10,15 +10,14 @@ import { LabService } from '../_services/Lab.service';
 
 @Component({
   selector: 'app-Patient',
-  templateUrl: './Patient.component.html',
-  styles: [
-    'input.ng-invalid{border-color:red}'
-  ]
+  templateUrl: './Patient.component.html'
+ 
 })
 export class PatientComponent implements OnInit {
   CurrentDatestr: string;
   MaxdateFordatePicker: string;
-
+  isbtnEnabled:boolean=true;
+  CID:number =parseInt(localStorage.getItem('CID'));
   model: any = {};
   PIN: string;
   Doctors: any;
@@ -48,14 +47,16 @@ export class PatientComponent implements OnInit {
 
   }
   Patientregister(NewPatient:Patient) {
+    this.isbtnEnabled=false;
     NewPatient.CID=parseInt(localStorage.getItem('CID'));
     this.labService.Patientregister(NewPatient).subscribe(() => {
       this.alertify.success('Patient Info added succssfully!')
+      this.isbtnEnabled=true;
       NewPatient.id=0;
       NewPatient.OPD="";
       NewPatient.name="";
       NewPatient.dateofbirth=null;
-      NewPatient.gender="";
+      NewPatient.gender="Male";
       NewPatient.DRrefby=null;
       NewPatient.email=null;
       NewPatient.address=null;
@@ -64,7 +65,7 @@ export class PatientComponent implements OnInit {
       
    }, error => {
       this.alertify.error(error)
-    
+     this.isbtnEnabled=true;
     });
   }
   cancel() {
@@ -94,7 +95,7 @@ export class PatientComponent implements OnInit {
     });
   }
   getDoctors() {
-    this.labService.getDoctors().subscribe(Response => {
+    this.labService.getDoctors(this.CID).subscribe(Response => {
      this.Doctors = Response;
     }, error => {
       console.log(error);

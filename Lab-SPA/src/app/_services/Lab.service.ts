@@ -11,7 +11,8 @@ import { ReportData, Report, ReportDetails, AllReportsInfo,ReportInfo } from '..
 })
 export class LabService {
   
-  baseUrl = 'http://bansaruli.in/api/Lab/'
+ //baseUrl = 'http://bansaruli.in/api/Lab/' 
+  baseUrl = 'http://localhost:5000/api/Lab/'
   constructor(private http: HttpClient) { }
   Patientregister(Patient:Patient)
   {
@@ -25,15 +26,15 @@ export class LabService {
   return this.http.post(this.baseUrl+'Patientregister',body,httpOptions);
   
   }
-  getDoctors()
+  getDoctors(CID:number)
   {
-    return this.http.get(this.baseUrl+'Doctors');
+    return this.http.get(this.baseUrl+"Doctors/"+CID);
   }
-  getAllPatients():Observable<Patient[]>{
-  return this.http.get<Patient[]>(this.baseUrl+"patientinfo");
+  getAllPatients(CID:number):Observable<Patient[]>{
+  return this.http.get<Patient[]>(this.baseUrl+"patientinfo/"+CID);
   }
-  SearchPatientbyName(name:string):Observable<Patient[]>{
-    return this.http.get<Patient[]>(this.baseUrl+"SearchPatientbyName/"+name);
+  SearchPatientbyName(name:string,CID:number):Observable<Patient[]>{
+    return this.http.get<Patient[]>(this.baseUrl+"SearchPatientbyName/"+name+"/"+CID);
     }
 GetPatientinfoById(Id:number):Observable<Patient>{
     return this.http.get<Patient>(this.baseUrl+"GetpatientinfobyID/"+Id);

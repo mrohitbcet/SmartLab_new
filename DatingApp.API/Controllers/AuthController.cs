@@ -8,6 +8,11 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authorization;
 
@@ -19,12 +24,13 @@ namespace DatingApp.API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IConfiguration _config;
-
+         private readonly DataContext _context;
         private readonly IAuthRepository _repo;
-        public AuthController(IAuthRepository repo, IConfiguration config)
+        public AuthController(DataContext context,IAuthRepository repo, IConfiguration config)
         {
             this._config = config;
             this._repo = repo;
+            _context = context;
 
         }
         
@@ -36,7 +42,15 @@ namespace DatingApp.API.Controllers
             UserForRegisterDto.Username = UserForRegisterDto.Username.ToLower();
 
             if (await _repo.UserExists(UserForRegisterDto.Username))
-            return BadRequest("Username alreday exists");
+            {
+           
+              return BadRequest("Username alreday exists");  
+                 
+            }
+           else
+           {
+               
+           
             var userToCreate = new User
             {
                 Username = UserForRegisterDto.Username,
@@ -46,6 +60,7 @@ namespace DatingApp.API.Controllers
             };
             var createuser = await _repo.Register(userToCreate, UserForRegisterDto.password);
             return StatusCode(201);
+            }
         }
      [AllowAnonymous]
         [HttpPost("Login")]
@@ -69,14 +84,27 @@ namespace DatingApp.API.Controllers
             };
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateToken(tokenDescriptor);
+         
+           var ClientInfo=_context.Clients.Where(xx=>xx.CID==userFromRepo.CID).SingleOrDefault();
+            
             return Ok(new{
                 token=tokenHandler.WriteToken(token),
-                cid=userFromRepo.CID
+                cid=userFromRepo.CID,
+                cname=ClientInfo != null ? ClientInfo.CName : "",
+                address=ClientInfo != null ? ClientInfo.Address : "",
+                email=ClientInfo != null ? ClientInfo.Email : "",
+                contact=ClientInfo != null ? ClientInfo.Contact : ""
                 }
 
             );
         }
 
+[HttpPost("CreateDocProfiles")]
+ public async Task<IActionResult> CreateDocProfiles( [FromBody] Doctor Doctor )
+{
+    var CreatePathalogy =await _repo.CreateDocProfiles(Doctor);
+    return StatusCode(201);
+}
 [HttpPost("CreatePathalogy")]
  public async Task<IActionResult> CreatePathalogy( [FromBody] Client Client )
 {

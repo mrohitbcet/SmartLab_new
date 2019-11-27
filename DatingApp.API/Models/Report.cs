@@ -14,6 +14,8 @@ namespace DatingApp.API.Models
         public string CreatedBy { get; set; }
         [MaxLength(50)]
         public string Status { get; set; }
+        [MaxLength(200)]
+        public string Specimen { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public Patient Patient{get;set;}
         public List<ReportDetails> ReportDetails{get;set;}

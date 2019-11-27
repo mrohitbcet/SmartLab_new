@@ -15,6 +15,7 @@ namespace DatingApp.API.DTO
       public int DoctorID {get;set;}
       public string DoctorName {get;set;}
       public string Status {get;set;}
+       public string Specimen {get;set;}
       public System.DateTime CreatedDate {get;set;}
     }
     public class ReportInfo

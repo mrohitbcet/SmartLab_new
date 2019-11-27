@@ -7,6 +7,7 @@ export class Report{
     CreatedDate :Date;
     isbtnDisabled: boolean;
     Status:string;
+    specimen:string
    }
 
 export class ReportDetails{

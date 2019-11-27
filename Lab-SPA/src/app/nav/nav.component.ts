@@ -11,25 +11,31 @@ import { throwError } from 'rxjs';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
-  public erromsg="ppp";
+  public erromsg="";
+  isbtnEnabled:boolean=true;
   model: any = {};
   LoggedUsername:string="";
   constructor(private authService: AuthService, private alertify: AlertifyService,private router: Router) { }
 
   ngOnInit() {
     this.LoggedUsername=localStorage.getItem("Uname");
-
   }
   login() {
-    
-    this.authService.login(this.model).subscribe(next => {
-      localStorage.setItem("Uname",this.model.username)
-      this.LoggedUsername=localStorage.getItem("Uname");
-      this.alertify.success('Logged in successfully')
+    this.isbtnEnabled=false;
+     this.authService.login(this.model).subscribe(next => {
+     localStorage.setItem("Uname",this.model.username);
+     this.LoggedUsername=localStorage.getItem("Uname");
+      this.alertify.success('Logged in successfully');
+     this.isbtnEnabled=true;
     }, (error) =>{
-      this.alertify.error("Invalid userName/Password")
+      if(error.status==401)
+          this.alertify.error("Invalid userName/password");
+          else
+          this.alertify.error(error) 
+         this.isbtnEnabled=true;
       }
      );
+    
   }
   loggedIn() {
     const token = localStorage.getItem('token');

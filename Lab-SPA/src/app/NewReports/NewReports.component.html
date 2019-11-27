@@ -21,7 +21,7 @@
 </form>
 
 <div *ngIf="selectedPatientCount > 0"  class="container">
-
+    <div class="table-responsive">
     <table border="1" class="table">
         <thead class="thead-dark">
           <tr>
@@ -44,6 +44,7 @@
           <td>{{item.address}}</td>
         </tr>
       </table>
+    </div>
       <div class="form-group">
         <div class="row">
           <div class="col-sm-2 control-label pull-right">
@@ -58,6 +59,16 @@
       </div>
       <div class="form-group">
           <div class="row">
+            <div class="col-sm-2 control-label pull-right">
+              Name of specimen
+          </div>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" [(ngModel)]="Specimen" > 
+          </div>
+          </div>
+        </div>
+      <div class="form-group">
+          <div class="row">
               <div class="col-sm-2 control-label pull-right">
                   Group Name
               </div>
@@ -68,14 +79,15 @@
                  </select> 
                 </div>
                 <div class="col-sm-3">
-                        <button class="btn btn-primary" (click)="previewReport()">Preview Report</button>
+                        <button *ngIf="!isPrivew" class="btn btn-primary" (click)="previewReport()">Preview Report</button>
                  </div>
                 
           </div>
       </div>
       <div class="form-group">
-          <div class="row">
+          <div *ngIf="!isPrivew" class="row">
               <div class="col-sm-12">
+                  <div class="table-responsive">
                   <table border="1" class="table">
                       <thead class="thead-dark">
                         <tr>
@@ -96,6 +108,45 @@
                           <td>{{item.price}}</td>
                       </tr>
                       </table>
+                    </div>
+              </div>
+          </div>
+          <div *ngIf="isPrivew" class="row">
+            <div class="col-sm-4">
+            </div>
+            <div class="col-sm-2">
+               <button type="button" class="btn btn-secondary  btn-block" (click)="CancelPreview()" >Cancel</button>
+               
+              </div>
+              <div class="col-sm-2" style="margin-bottom: 5px">
+                  <button class="btn btn-primary  btn-block"  [disabled]="Report.isbtnDisabled" (click)="SaveReport()">Save Report</button>
+                </div>
+          </div>
+          <div *ngIf="isPrivew"  class="row">
+           
+              <div class="col-sm-12">
+                
+<div class="table-responsive">
+
+    <table border="1" class="table">
+        <thead class="thead-dark">
+                    <tr>
+                      <th scope="col">TestName</th>
+                      <th scope="col">GroupName</th>
+                      <th scope="col">Reference Range</th>
+                      
+                      <th scope="col">price</th>
+                     </tr>
+                  </thead>
+                  <tr *ngFor="let item of SelectedTestList" [attr.groupId]="item.testId">
+                       <td>{{item.testName}}</td>
+                     <td>{{item.groupName}}</td>
+                      <td>{{item.normalRange}}</td>
+                      <td>{{item.price}}</td>
+                  </tr>
+       </table>
+  
+  </div>
               </div>
           </div>
         </div>
@@ -158,38 +209,7 @@
                 </tr>
             </table>
                 </div>
-            <h6>Test Details</h6>
-            <div class="table-responsive"></div>
-            <table border="1" class="table">
-                <thead class="thead-dark">
-                  <tr>
-                    <th scope="col">TestName</th>
-                    <th scope="col">GroupName</th>
-                    <th scope="col">Reference Range</th>
-                    
-                    <th scope="col">price</th>
-                   </tr>
-                </thead>
-                <tr *ngFor="let item of SelectedTestList" [attr.groupId]="item.testId">
-                     <td>{{item.testName}}</td>
-                   <td>{{item.groupName}}</td>
-                    <td>{{item.normalRange}}</td>
-                    <td>{{item.price}}</td>
-                </tr>
-                </table>
-            </div>
-                <div class="col-sm-4 pull-right">
-                  <table>
-                    <tr>
-                      <td><button type="button" class="btn btn-primary" (click)="closeModalDialog()" >Close</button></td>
-                      <td>
-                          <button class="btn btn-primary" [disabled]="Report.isbtnDisabled" (click)="SaveReport()">Save Report</button>
-                      </td>
-                    </tr>
-                  </table>
-                    
-                  
-           </div>
+           
          </div>
   </div>
     </div>

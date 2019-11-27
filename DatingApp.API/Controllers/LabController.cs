@@ -26,11 +26,11 @@ namespace DatingApp.API.Controllers
          }
        
      
-     [HttpGet("Doctors")]
-    public async Task<IActionResult> GetDoctors()
-        { var doc= await _context.Doctors.ToListAsync();
-          return Ok(doc);
-          }
+     [HttpGet("Doctors/{CID:int}")]
+    public async Task<IActionResult> GetDoctors(int CID)
+     {  var doc= await _context.Doctors.Where(xx=>xx.CID==CID).ToListAsync();
+        return Ok(doc);
+     }
       
         [HttpPost("Patientregister")]
         public async Task<IActionResult> Patientregister( [FromBody] Patient Patient )
@@ -45,19 +45,19 @@ namespace DatingApp.API.Controllers
             }
           
         }
- [HttpGet("patientinfo")]
- public async Task<IActionResult> patientinfo()
+ [HttpGet("patientinfo/{CID:int}")]
+ public async Task<IActionResult> patientinfo(int CID)
 {
- var patient= await _context.Patients.ToListAsync();
+ var patient= await _context.Patients.Where(xx=>xx.CID==CID).ToListAsync();
 return Ok(patient);
 
  }
 
- [HttpGet("SearchPatientbyName/{name}")]
- public async Task<IActionResult> SearchPatientbyName(string name)
+ [HttpGet("SearchPatientbyName/{name}/{CID:int}")]
+ public async Task<IActionResult> SearchPatientbyName(string name,int CID)
 {
  //var patient= await _context.Patients.ToListAsync();
- var patient= await _context.Patients.Where(xx => xx.name.Contains(name)).OrderBy(xx=>xx.name).ToListAsync();
+ var patient= await _context.Patients.Where(xx => xx.name.Contains(name)).Where(xx=>xx.CID==CID).OrderBy(xx=>xx.name).ToListAsync();
 return Ok(patient);
 }
         
