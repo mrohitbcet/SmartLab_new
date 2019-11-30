@@ -137,10 +137,10 @@ previewReport()
 {
 this.TestModel=true;
 this.isPrivew=true;
- //this.openModalDialog();
-this.SelectedTestList= this.FliteredTestList.filter(
-  test => test.isSelected ==true);
 
+this.SelectedTestList= this.AllTestList.filter(
+  test => test.isSelected ==true);
+  this.SelectedTestList.sort((a, b) => (a.groupName > b.groupName) ? 1 : -1);
 }
 CancelPreview()
 {
@@ -185,6 +185,7 @@ SaveReport()
    this.getTestMaster();
    this.closeModalDialog();
    this.Report.isbtnDisabled=false;
+   this.isPrivew=false;
  }, error => {
       this.alertify.error(error)
     

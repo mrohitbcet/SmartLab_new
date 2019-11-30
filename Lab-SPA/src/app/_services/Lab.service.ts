@@ -5,14 +5,14 @@ import { Patient } from '../models/Patient.model';
 import { GroupMaster } from '../models/GroupMaster';
 import { Observable, throwError } from 'rxjs';
 import { TestMaster } from '../models/TestMaster';
-import { ReportData, Report, ReportDetails, AllReportsInfo,ReportInfo } from '../models/Report';
+import { ReportData, Report, ReportDetails, AllReportsInfo,ReportInfo,ReportToEmail } from '../models/Report';
 @Injectable({
   providedIn: 'root'
 })
 export class LabService {
   
- //baseUrl = 'http://bansaruli.in/api/Lab/' 
-  baseUrl = 'http://localhost:5000/api/Lab/'
+baseUrl = 'http://bansaruli.in/api/Lab/' 
+//baseUrl = 'http://localhost:5000/api/Lab/'
   constructor(private http: HttpClient) { }
   Patientregister(Patient:Patient)
   {
@@ -125,9 +125,17 @@ GetPatientinfoById(Id:number):Observable<Patient>{
      })
    };
   var body = JSON.stringify(ReportData);
- 
   return this.http.post(this.baseUrl+'SaveReports',body,httpOptions);
-  
+  }
+  SendReportToEmail(ReportToEmail:ReportToEmail)
+  {
+  const httpOptions={
+     headers: new HttpHeaders({
+       'Content-Type': 'application/json'
+     })
+   };
+  var body = JSON.stringify(ReportToEmail);
+  return this.http.post(this.baseUrl+'SendReportToEmail',body,httpOptions);
   }
   UpdateReportValues(ReportDeatails:ReportDetails[])
   {

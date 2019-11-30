@@ -21,6 +21,7 @@ export class CreateuserAccountComponent implements OnInit {
     password:"",
     confirmpassword:"",
     cid:1,
+    Role:"U",
     cname:"",
     createddate:null,
     isActive:false
@@ -39,6 +40,7 @@ export class CreateuserAccountComponent implements OnInit {
   }
 
  onSubmit() {
+
    this.auth.CreateUserAccount(this.userInfo).subscribe(() => {
     this.alertify.success('User Account Created succssfully!')
    this.ngOnInit();

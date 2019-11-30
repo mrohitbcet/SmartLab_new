@@ -18,6 +18,7 @@ namespace DatingApp.API.Models
     public byte[] PasswordSalt{get;set;}
     public bool isActive { get; set; }
      public System.DateTime CreatedDate { get; set; }
+     public System.DateTime AccountExpiryDate { get; set; }
     public Client Client{get;set;}
     }
 }

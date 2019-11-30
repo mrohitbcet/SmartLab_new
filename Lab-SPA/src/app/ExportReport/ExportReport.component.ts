@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import { AllReportsInfo,ReportInfo, ReportDetails } from '../models/Report';
+import { AllReportsInfo,ReportInfo, ReportDetails,ReportToEmail, ReportDataGroupWise} from '../models/Report';
 import { AlertifyService } from '../_services/alertify.service';
 import { AuthService } from '../_services/Auth.service';
 import { LabService } from '../_services/Lab.service';
@@ -19,9 +19,21 @@ export class ExportReportComponent implements OnInit {
   display='none';
   SearchText:string="";
   PageNo:number=1;
+  GroupPageNo:number=1;
   AllReportsInfo:AllReportsInfo[]=[]
   ReportInfo:ReportInfo[]=[]
   SelectedReport:AllReportsInfo[]=[]
+  ReportToEmail:ReportToEmail={
+    ReportNo:0,
+    ClientName:"",
+    Address:"",
+    PatientName:"",
+    AgeGender:"",
+    RefBy:"",
+    CollectionDate:null,
+    Specimen:"",
+    ReportInfo:[]
+  }
   CID:number =parseInt(localStorage.getItem('CID'));
   cname:string =localStorage.getItem('cname');
   caddress:string =localStorage.getItem('caddress')+",(M)-"+localStorage.getItem('ccontact');
@@ -34,6 +46,11 @@ export class ExportReportComponent implements OnInit {
   CurrentReportList:ReportDetails[]=[]
    FilterStatus:number=0;
   CurrentDate = new Date();
+  ReportDataGroupWiseList:ReportDataGroupWise[]=[]
+  ReportDataGroupWise:ReportDataGroupWise={
+    GroupName:"",ReportInfo:null
+}
+   
   constructor(private alertify:AlertifyService,private labService:LabService,private datePipe: DatePipe) { }
 
   ngOnInit() {
@@ -45,18 +62,36 @@ export class ExportReportComponent implements OnInit {
   {
     const opt = {
       margin: 1,
-      filename: 'LaboratoryReport.pdf',
+      filename: this.SelectedReport[0].patientName+'_LaboratoryReport.pdf',
       image: { type: 'jpeg', quality: 0.98 },
       html2canvas: { scale: 2 },
       jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
     };
   const content:Element=document.getElementById('CnvasPrint');
-
   html2pdf().from(content).set(opt).save();
  
 
   }
- 
+ SendReportToEmail()
+ {
+  
+   this.ReportToEmail.ReportNo=this.CurrentReportID;
+   this.ReportToEmail.ClientName=this.cname;
+   this.ReportToEmail.Address=this.caddress;
+   this.ReportToEmail.PatientName=this.SelectedReport[0].patientName;
+  this.ReportToEmail.AgeGender=this.GetAge(this.SelectedReport[0].patientDOB) +"/"+this.SelectedReport[0].patientGender;
+  this.ReportToEmail.RefBy=this.SelectedReport[0].doctorName;
+  this.ReportToEmail.CollectionDate=this.SelectedReport[0].createdDate;
+  this.ReportToEmail.Specimen=this.SelectedReport[0].specimen;
+  this.ReportToEmail.ReportInfo=this.ReportInfo;
+     this.labService.SendReportToEmail(this.ReportToEmail).subscribe(() => {
+      this.alertify.success('Email sent succssfully!')
+      
+     }, error => {
+          this.alertify.error(error)
+        
+    });
+}
   getAllReports(CID:number) {
    this.labService.getAllReports(CID).subscribe((ReportInfo:AllReportsInfo[])=>{
    this.AllReportsInfo=ReportInfo;
@@ -68,10 +103,30 @@ export class ExportReportComponent implements OnInit {
     this.CurrentReportID=ReportID;
      this.SelectedReport= this.AllReportsInfo.filter(
       Report => Report.reportID ==ReportID);
-      console.log(this.SelectedReport);
-this.labService.getTestInfo(ReportID).subscribe((ReportInfo:ReportInfo[])=>{
+     this.labService.getTestInfo(ReportID).subscribe((ReportInfo:ReportInfo[])=>{
       this.ReportInfo=ReportInfo;
-     
+    
+    this.ReportDataGroupWiseList=[];
+  
+    
+      var lookup = {};
+      var items=this.ReportInfo;
+     for (var item, i = 0; item = items[i++];) {
+        var groupName = item.groupName;
+       if (!(groupName in lookup)) {
+          lookup[groupName] = 1;
+          var Local:ReportDataGroupWise={
+            GroupName:"",ReportInfo:null
+        }
+          Local.GroupName=groupName;
+        var localRptInfo=this.ReportInfo.filter(
+            Report => Report.groupName ==groupName);
+            Local.ReportInfo=localRptInfo;
+
+          this.ReportDataGroupWiseList.push(Local);
+        }
+      }
+
       if(status=="Completed")
       {
         this.isSubmitted=true;
@@ -82,8 +137,11 @@ this.labService.getTestInfo(ReportID).subscribe((ReportInfo:ReportInfo[])=>{
       }
       
   });
-  //let element: HTMLElement = document.getElementById('headingOne')[0] as HTMLElement;
+
   document.getElementById('btnToggle').click();
+
+
+
   }
   UpdateReportValues()
   {
@@ -107,20 +165,10 @@ this.labService.getTestInfo(ReportID).subscribe((ReportInfo:ReportInfo[])=>{
         
     });
   }
-  CompleteReport()
+  
+  ReportInfobyGroup()
   {
-    
-    if(confirm('Are you sure to complete this report?'))
-    {
-     
-    this.labService.CompleteReport(this.CurrentReportID).subscribe(() => {
-      this.alertify.success('Report Completed succssfully!')
-      this.ngOnInit()
-     }, error => {
-          this.alertify.error(error)
-        
-        });
-      }
+
   }
   GetAge(dt: any): number {
     let age = 0;

@@ -1,3 +1,44 @@
-<p>
-  UserManagement works!
-</p>
+<div class="row">
+  <div class="col-lg-4 col-xs-4"><h2>User(s) Management</h2></div>
+
+</div>
+<div class="row" >
+  <div class="col-sm-6" style="margin-bottom: 5px;">
+      <input type="text" placeholder="Enter Search Text" class="form-control pull-left" [(ngModel)]="SearchText">
+
+  </div>
+  </div>  
+
+<div class="row">
+  <div class="col-sm-12">
+    <div class="table-responsive">
+  <table border="1" class="table">
+      <thead class="thead-dark">
+        <tr>
+       <th>Action</th>
+       <th scope="col">Id</th>
+          <th scope="col">User Name</th>
+         <th scope="col">Pathalogy</th>
+          <th scope="col">Email</th>
+          <th scope="col">AccountExpiryDate</th>
+          </tr>
+      </thead>
+      <tr *ngFor="let item of UserForRegisterDtoList | filter:SearchText | paginate:{itemsPerPage:10, currentPage:PageNo};" >
+          <td>
+       <i title="Update account expiry date" class="far fa-calendar-alt" style="font-size:18px" (click)="UpdateAccountExpiryDate(item.id,item.username,item.cName,item.accountExpiryDate)"></i>
+       <i title="Change user password" class="far fa-user" style="font-size:18px; padding-left:10px;"  (click)="ChangePassword(item.id,item.username,item.cName,item.accountExpiryDate)"></i>
+      
+      </td>
+          <td>{{item.id}}</td>
+          <td>{{item.username}}</td>
+          <td>{{item.cName}}</td>
+          <td>{{item.email}}</td>
+          <td>{{item.accountExpiryDate | date: 'dd/MM/yyyy'}}
+              <input type="date"  name="Expdate" required min={{MaxdateFordatePicker}} [(ngModel)]="item.accountExpiryDate"   class="form-control">
+            </td>
+      </tr>
+      </table>
+      <pagination-controls (pageChange)="PageNo=$event"></pagination-controls>
+    </div>
+  </div>
+</div>

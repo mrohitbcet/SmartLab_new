@@ -37,7 +37,7 @@ namespace DatingApp.API.Data
         public async Task<IEnumerable<GroupMasterDto>> getAllTestGroups()
         {
          
-           var GroupMasterDto=await (_context.GroupMasters.Select(xx=>new GroupMasterDto{GroupId=xx.GroupId,GroupName=xx.GroupName})).ToListAsync();
+           var GroupMasterDto=await (_context.GroupMasters.Select(xx=>new GroupMasterDto{GroupId=xx.GroupId,GroupName=xx.GroupName}).OrderBy(xx=>xx.GroupName)).ToListAsync();
             return GroupMasterDto;
 
         }
@@ -281,6 +281,7 @@ namespace DatingApp.API.Data
                                             groupName=AllRpts.groupName,
                                             TestId=Test.TestId,
                                             testName=Test.TestName,
+                                            Unit=Test.Unit,
                                             result=AllRpts.result,
                                            normalRange=Test.NormalRange,
                                            isHighlight=AllRpts.isHighlight

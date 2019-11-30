@@ -8,6 +8,9 @@ using DatingApp.API.DTO;
 using DatingApp.API.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using System.Text;
+using System.Net;
+using System.Net.Mail;
 
 namespace DatingApp.API.Controllers
 {
@@ -189,7 +192,24 @@ return Ok(TestMaster);
  var createGroup =await _labrep.SaveReports(ReportData);
 return StatusCode(201);
 }
- [HttpPost("UpdateReportValues")]
+  [HttpPost("SendReportToEmail")]
+   public  IActionResult SendReportToEmail([FromBody] ReportToEmail ReportToEmail)
+        {
+            try
+            {
+                sendMail(ReportToEmail);
+                return StatusCode(201);
+            }
+            catch(Exception ex)
+            {
+               // return StatusCode(500);
+               return BadRequest(ex);
+
+            }
+           
+    
+    }
+  [HttpPost("UpdateReportValues")]
  public async Task<IActionResult> UpdateReportValues( [FromBody] ReportDetails[] Details)
 {
 try{
@@ -230,7 +250,43 @@ return Ok(AllReports);
 return Ok(AllReports);
 
  }
+     
 
-}
+        private   void sendMail(ReportToEmail ReportToEmail)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<table border='1'>");
+
+            sb.Append("<tr>");
+            sb.Append("<td>"+ ReportToEmail.ClientName+ "</td>");
+            sb.Append("</tr>");
+            const string subject = "Reports";
+            string body = sb.ToString();
+            MailMessage mail = new MailMessage();
+            mail.To.Add("rohit.kumar.299@gmail.com");
+            mail.From = new MailAddress("noreply.etautomation@gmail.com");
+            mail.Subject = subject;
+            mail.Body = body;
+            mail.IsBodyHtml = true;
+
+            MailMessage Custmail = new MailMessage();
+            Custmail.To.Add("rohit.kumar.299@gmail.com");
+            Custmail.From = new MailAddress("noreply.etautomation@gmail.com");
+            Custmail.Subject = "Your Inquiry";
+            Custmail.Body = "Hello,<br>Thank you for your enquiry we will get back to you as soon as possible.<br><br><br>Warmest regards,<br>E T Automation";
+            Custmail.IsBodyHtml = true;
+
+            SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
+            smtp.EnableSsl = true;
+            smtp.UseDefaultCredentials = false;
+            smtp.Credentials = new System.Net.NetworkCredential("noreply.etautomation@gmail.com", "Jhranchimuri@560100");
+            smtp.Send(mail);
+           // smtp.Send(Custmail);
+            
+
+        }
+
+    }
+ 
 
 }

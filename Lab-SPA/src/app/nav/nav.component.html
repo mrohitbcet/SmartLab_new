@@ -1,57 +1,4 @@
-<!-- <nav class="navbar navbar-expand-md navbar-dark  bg-dark">
-    <a class="navbar-brand" href="#">Smart Lab</a>
-    <ul class="navbar-nav mr-auto">
- 
-    <li *ngIf="loggedIn()" class="nav-item" routerLinkActive="active">
-      <a class="nav-link" [routerLink]="['/NewPatient']">New Patient</a>
-    </li>
-    <li *ngIf="loggedIn()" class="nav-item" routerLinkActive="active">
-      <a class="nav-link" [routerLink]="['/ModifyPatient']">Modify Patient</a>
-    </li>
-    <li *ngIf="loggedIn()" class="nav-item" routerLinkActive="active">
-      <a class="nav-link" >Doctor(s)</a>
-    </li>
-    <li *ngIf="loggedIn()" class="nav-item" routerLinkActive="active">
-      <a class="nav-link" [routerLink]="['/NewReports']" >New Reports</a>
-    </li>
-    <li *ngIf="loggedIn()" class="nav-item" routerLinkActive="active">
-      <a class="nav-link"  [routerLink]="['/AllReports']" >All Reports</a>
-    </li>
- 
-   
-  <div *ngIf="loggedIn()" class="btn-group bg-dark" dropdown>
-      <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle bg-dark nav-item"
-              aria-controls="dropdown-basic">
-               Admin<span class="caret"></span>
-      </button>
-      <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
-          role="menu" aria-labelledby="button-basic">
-          <li role="menuitem" routerLinkActive="active" ><a class="dropdown-item"  [routerLink]="['/TestMaster']">Test Master</a></li>
-        <li role="menuitem" routerLinkActive="active" ><a class="dropdown-item"  [routerLink]="['/CreatePathology']">Create Pathology Lab</a></li>
-        <li role="menuitem" routerLinkActive="active" ><a class="dropdown-item" [routerLink]="['/CreateuserAccount']" >Create user Account</a></li>
-        <li role="menuitem" routerLinkActive="active"><a class="dropdown-item" [routerLink]="['/UserManagement']" >User Management</a></li>
-      </ul>
-    </div>
-  </ul>
 
-
-
-  <div *ngIf="loggedIn()" class="btn-group" dropdown>
-    <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
-            aria-controls="dropdown-basic">
-   Welcome User: {{LoggedUsername}} <span class="caret"></span>
-    </button>
-    <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
-        role="menu" aria-labelledby="button-basic">
-      <li role="menuitem"><a class="dropdown-item" href="#">Edit Profile</a></li>
-      <li role="menuitem" (click)="logout()"><a class="dropdown-item" >Logout</a></li>
-   
-    </ul>
-  </div>
-
-
-
-</nav>  -->
 <nav class="navbar navbar-expand-lg navbar-dark  bg-dark">
   <a class="navbar-brand" href="#">SmartLab</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -80,7 +27,7 @@
           </div>
         </li>
 
-      <li *ngIf="loggedIn()"  class="nav-item dropdown">
+      <li *ngIf="loggedIn() && Role=='A'"  class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Admin
         </a>
@@ -94,6 +41,7 @@
         </div>
       </li>
   </ul>
+  <span *ngIf="loggedIn() && Role=='U'"  style="color: tomato; padding-right:10px;">Account expiry date:{{accountexpiry | date: 'short'}}</span>
    <form *ngIf="!loggedIn()" #loginForm="ngForm" class="form-inline my-2 my-lg-0"(ngSubmit)="loginForm.form.valid && login()">
       <div class="form-group"> 
         <input class="form-control mr-sm-2" type="text" name="username" placeholder="Username" required [(ngModel)]="model.username" #Username="ngModel" [ngClass]="{ 'is-invalid': loginForm.submitted && Username.invalid }">

@@ -25,21 +25,39 @@ export class ReportData
 }
 
 export class AllReportsInfo{
-
-    reportID :number; 
+     reportID :number; 
     patientName :string; 
     patientDOB :string; 
     patientGender :string; 
     doctorName :string; 
     status :string; 
     createdDate:Date;  
+    specimen:string;
 }
 export class ReportInfo{
     rptDetailsID:number; 
     groupName:string; 
     TestId:number;
+    unit:string;
     testName:string; 
     result:string; 
     normalRange:string;
     isHighlight:boolean;
    }
+
+   export class ReportToEmail{
+       ReportNo:number;
+       ClientName:string;
+       Address:string;
+       PatientName:string;
+       AgeGender:string;
+       RefBy:string;
+       CollectionDate:Date;
+       Specimen:string;
+    ReportInfo :ReportInfo[];
+   }
+   export class ReportDataGroupWise
+{
+    GroupName :string;
+    ReportInfo :ReportInfo[];
+}

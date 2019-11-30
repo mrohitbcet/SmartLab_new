@@ -81,7 +81,9 @@
                                     </div>
                                     <div class="col-sm-3">
                                       Lab No: #{{CurrentReportID}}
-                                      <i *ngIf="isSubmitted" class="fa fa-download" (click)="onExportclick()"></i>
+                                     
+                                      <i title="Download Report" *ngIf="isSubmitted" class="fa fa-download" (click)="onExportclick()"></i>
+                                      <i title="Send Email" style="padding-left:10px" *ngIf="isSubmitted" class="fa fa-inbox" (click)="SendReportToEmail()"></i>
                                         
                                       </div>
                                       <hr>
@@ -90,7 +92,7 @@
                                       <div   class="row">
                                         
                                         <div class="col-sm-12">
-                                            <table *ngIf="DispayRptDet"   class="table" border="0"  >
+                                            <table *ngIf="DispayRptDet"   class="table table-sm" border="0"  >
                                           
                                                 <tr>
                                                     <td>Patient's Name :</td>
@@ -126,7 +128,7 @@
                                           <div class="col-sm-2">
                                           </div>
                                           <div class="col-sm-8">
-                                              <h4>Report on Examination on {{SelectedReport[0].specime}}</h4>
+                                              <h4>Report on Examination on {{SelectedReport[0].specimen}}</h4>
                                             </div>
                                             <div class="col-sm-2">
                                               </div>
@@ -135,27 +137,32 @@
                                       <div   class="row">
                                          
                                           <div class="col-sm-12">
-                                             
-                                              <table *ngIf="DispayRptDet"  border="1" class="table">
+                                            <div *ngFor="let grpitem of ReportDataGroupWiseList">
+                                             <h6>{{grpitem.GroupName}}</h6> 
+                                             <table *ngIf="DispayRptDet"  class="table table-sm">
                                        
-                                                  <thead class="thead-dark">
-                                                    <tr>
-                                                        <!-- <th>SN</th> -->
-                                                      <!-- <th scope="col">Group Name</th> -->
-                                                      <th scope="col">Test</th>
-                                                      <th scope="col">Result</th>
-                                                      <th scope="col">Units/References</th>
-                                                     </tr>
-                                                  </thead>
-                                                  <tr *ngFor="let item of ReportInfo;let i = index" [attr.groupId]="item.rptDetailsID">
-                                                      <!-- <td>{{i+1}}</td>
-                                                      <td>{{item.groupName}}</td> -->
-                                                          <td *ngIf="item.isHighlight" style="background-color:yellow; font-weight: bold;">{{item.testName}}</td>
-                                                          <td *ngIf="!item.isHighlight">{{item.testName}}</td>
-                                                          <td>{{item.result}}</td>
-                                                          <td>{{item.normalRange}}</td>
-                                                   </tr>
-                                                  </table>
+                                              <thead>
+                                                <tr>
+                                                    <!-- <th>SN</th> -->
+                                                  <!-- <th scope="col">Group Name</th> -->
+                                                  <th scope="col">Test</th>
+                                                  <th scope="col">Units</th>
+                                                  <th scope="col">Results</th>
+                                                  <th scope="col">References</th>
+                                                 </tr>
+                                              </thead>
+                                              <tr *ngFor="let item of grpitem.ReportInfo;let i = index" [attr.rptDetailsID]="item.rptDetailsID">
+                                                 
+                                                      <td *ngIf="item.isHighlight" style="background-color:yellow; font-weight: bold;">
+                                                        {{item.testName}}</td>
+                                                      <td *ngIf="!item.isHighlight">{{item.testName}}</td>
+                                                      <td>{{item.unit}}</td>
+                                                      <td>{{item.result}}</td>
+                                                      <td>{{item.normalRange}}</td>
+                                               </tr>
+                                              </table>
+                                            </div>
+                                             
                                             </div>
                                            
                                       </div>

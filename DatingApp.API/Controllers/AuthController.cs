@@ -35,8 +35,7 @@ namespace DatingApp.API.Controllers
         }
         
         [HttpPost("register")]
-         [AllowAnonymous]
-        public async Task<IActionResult> Register([FromBody] UserForRegisterDto UserForRegisterDto)
+       public async Task<IActionResult> Register([FromBody] UserForRegisterDto UserForRegisterDto)
         {
             //validate request
             UserForRegisterDto.Username = UserForRegisterDto.Username.ToLower();
@@ -61,6 +60,20 @@ namespace DatingApp.API.Controllers
             var createuser = await _repo.Register(userToCreate, UserForRegisterDto.password);
             return StatusCode(201);
             }
+        }
+        [HttpPost("UpdateAccountExpiryDate")]
+       public async Task<IActionResult> UpdateAccountExpiryDate([FromBody] UserForRegisterDto UserForRegisterDto)
+        {
+            _repo.UpdateAccountExpiryDate(UserForRegisterDto);
+      
+            return StatusCode(201);
+        }
+            [HttpPost("Changepassword")]
+       public async Task<IActionResult> Changepassword([FromBody] UserForRegisterDto UserForRegisterDto)
+        {
+            _repo.Changepassword(UserForRegisterDto);
+      
+            return StatusCode(201);
         }
      [AllowAnonymous]
         [HttpPost("Login")]
@@ -90,15 +103,24 @@ namespace DatingApp.API.Controllers
             return Ok(new{
                 token=tokenHandler.WriteToken(token),
                 cid=userFromRepo.CID,
+                accountexpiry=userFromRepo.AccountExpiryDate,
+                Role=userFromRepo.Role,
                 cname=ClientInfo != null ? ClientInfo.CName : "",
                 address=ClientInfo != null ? ClientInfo.Address : "",
                 email=ClientInfo != null ? ClientInfo.Email : "",
                 contact=ClientInfo != null ? ClientInfo.Contact : ""
+                
                 }
 
             );
         }
 
+[HttpGet("GetAllUsers")]
+ public async Task<IActionResult> GetAllUsers()
+{
+var UList=await _repo.GetAllUsers();
+ return Ok(UList);
+ }
 [HttpPost("CreateDocProfiles")]
  public async Task<IActionResult> CreateDocProfiles( [FromBody] Doctor Doctor )
 {

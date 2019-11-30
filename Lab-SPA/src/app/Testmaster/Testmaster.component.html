@@ -1,10 +1,14 @@
 <h2 class="text-center">Test Master</h2>
-
+<div class="row" >
+  <div class="col-sm-6" style="margin-bottom: 5px;">
+      <input type="text" placeholder="Enter Search Text" class="form-control pull-left" [(ngModel)]="SearchText">
+     </div>
+  </div>  
 <form #AddGroup="ngForm" (ngSubmit)="AddTestGroup(GroupMaster)">
 <div class="form-group">
     <div class="row">
         <div class="col-sm-3">
-            <button type="submit" [disabled]="!AddGroup.valid" class="btn btn-primary btn-block" >Add Test Group</button>
+            <button type="submit" [disabled]="!AddGroup.valid" class="btn btn-primary btn-block" style="margin-bottom:5px;margin-top:5px;" >Add Test Group</button>
         </div>
     </div>
 
@@ -13,9 +17,10 @@
             <input type="text" required name="TestGroup" [(ngModel)]="GroupMaster.groupName"   placeholder="Enter Test Group" class="form-control">
         </div>
         <div class="col-sm-3">
-            <button type="button" (click)="OpenTestModelDialog()" class="btn btn-primary btn-block" >Add Test</button>
+            <button type="button" (click)="OpenTestModelDialog()" class="btn btn-primary btn-block" style="margin-top:5px;" >Add Test</button>
         </div>
-        
+      
+       
     </div>
     
    
@@ -28,50 +33,52 @@
     <thead class="thead-dark">
       <tr>
         <th></th>
-        <th scope="col">Id</th>
+        <th scope="col">SN</th>
         <th scope="col">Test Group Name</th>
        </tr>
     </thead>
-    <tr *ngFor="let item of Grouplist" [attr.groupId]="item.groupId">
+    <tr *ngFor="let item of Grouplist | filter:SearchText;let i = index" [attr.groupId]="item.groupId">
         <td>
             
             <i title="Edit" class="fa fa-edit" style="font-size:18px" (click)="GroupinfoById(item.groupId);"></i>
             <i title="Delete"  class="fa fa-trash" aria-hidden="true" style="font-size:18px" (click)="DeleteGroupByID(item.groupId);"></i>
             
         </td>
-        <td>{{item.groupId}}</td>
+        <td>{{i+1}}</td>
         <td>{{item.groupName}}</td>
     </tr>
     </table>
+    <!-- <pagination-controls (pageChange)="GroupPageNo=$event"></pagination-controls> -->
 </div>
 <div class="col-sm-9">
   <table border="1" class="table">
     <thead class="thead-dark">
       <tr>
         <th></th>
-        <th scope="col">TestId</th>
+        <th scope="col">SN</th>
         <th scope="col">TestName</th>
-        <!-- <th scope="col">Unit</th> -->
+        <th scope="col">Units</th>
         <th scope="col">GroupName</th>
         <th scope="col">NormalRange</th>
         <th scope="col">price</th>
        </tr>
     </thead>
-    <tr *ngFor="let item of TestList" [attr.groupId]="item.testId">
+    <tr *ngFor="let item of TestList | filter:SearchText | paginate:{itemsPerPage:10, currentPage:PageNo};let i = index" [attr.groupId]="item.testId">
         <td>
             
             <i title="Edit" class="fa fa-edit" style="font-size:18px" (click)="TestinfoById(item.testId);" ></i>
             <i title="Delete"  class="fa fa-trash" aria-hidden="true" style="font-size:18px" (click)="DeleteTestByID(item.testId);"></i>
             
         </td>
-        <td>{{item.testId}}</td>
+        <td>{{i+1}}</td>
         <td>{{item.testName}}</td>
-        <!-- <td>{{item.unit}}</td> -->
+        <td>{{item.unit}}</td> 
         <td>{{item.groupName}}</td>
         <td>{{item.normalRange}}</td>
         <td>{{item.price}}</td>
     </tr>
     </table>
+    <pagination-controls (pageChange)="PageNo=$event"></pagination-controls>
 </div>
 </div>
 
@@ -138,7 +145,11 @@
             <div class="col-sm-9">
                 <input type="text"  name="TestName" required    placeholder="Test Name" [(ngModel)]="TestInfo.testName" class="form-control" autofocus>
              </div>
-            
+             <label for="Unit" class="col-sm-5 control-label">Unit</label>
+                  <div class="col-sm-9">
+                      <input type="text"  name="Unit"  [(ngModel)]="TestInfo.unit"  class="form-control" autofocus>
+                   </div>
+
                 <label for="NormalRange" class="col-sm-5 control-label">Normal Range</label>
                   <div class="col-sm-9">
                       <input type="text"  name="NormalRange"  [(ngModel)]="TestInfo.normalRange"  class="form-control" autofocus>

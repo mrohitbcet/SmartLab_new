@@ -15,6 +15,8 @@ import { error } from 'util';
   ]
 })
 export class TestmasterComponent implements OnInit {
+  SearchText:string="";
+  PageNo:number=1;
   display='none'; //default Variable
  GroupModel=false;
  TestModel=false;

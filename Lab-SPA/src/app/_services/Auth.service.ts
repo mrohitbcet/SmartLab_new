@@ -4,7 +4,7 @@ import {map, catchError} from 'rxjs/operators';
 import { Patient } from '../models/Patient.model';
 import { Doctors } from '../models/Doctors'; 
 import { Session } from 'inspector';
-import { Clients,userInfo} from '../models/AccountSettings';
+import { Clients,userInfo, UserForRegisterDto} from '../models/AccountSettings';
 import { Observable, throwError} from 'rxjs';
 import { AppErrorHandler } from '../models/AppErrorHandler';
 
@@ -13,13 +13,11 @@ import { AppErrorHandler } from '../models/AppErrorHandler';
   providedIn: 'root'
 })
 export class AuthService {
-//baseUrl='http://bansaruli.in/api/auth/'
-baseUrl = 'http://localhost:5000/api/auth/'
+baseUrl='http://bansaruli.in/api/auth/'
+//baseUrl = 'http://localhost:5000/api/auth/'
 constructor(private http: HttpClient) { }
 CreateUserAccount(userInfo:userInfo)
-{
- 
-  const httpOptions={
+{ const httpOptions={
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
     })
@@ -29,6 +27,34 @@ CreateUserAccount(userInfo:userInfo)
  return this.http.post(this.baseUrl+'register',body,httpOptions);
                       
 }
+getAllUsers():Observable<UserForRegisterDto[]>{
+  return this.http.get<UserForRegisterDto[]>(this.baseUrl+"GetAllUsers")
+}
+UpdateAccountExpiryDate(UserForRegisterDto:UserForRegisterDto)
+{
+   const httpOptions={
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  };
+ var body = JSON.stringify(UserForRegisterDto);
+
+ return this.http.post(this.baseUrl+'UpdateAccountExpiryDate',body,httpOptions);
+                      
+}
+ChangePassword(UserForRegisterDto:UserForRegisterDto)
+{
+   const httpOptions={
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  };
+ var body = JSON.stringify(UserForRegisterDto);
+
+ return this.http.post(this.baseUrl+'ChangePassword',body,httpOptions);
+                      
+}
+   
 CreateDocProfiles(Doctors:Doctors){
   const httpOptions={
     headers: new HttpHeaders({
@@ -65,8 +91,11 @@ getAllPathalogy():Observable<Clients[]>{
    map((response:any)=>{
      const user=response;
      if(user){
+     
        localStorage.setItem('token',user.token);
        localStorage.setItem('CID',user.cid);
+       localStorage.setItem('Role',user.role);
+       localStorage.setItem('accountexpiry',user.accountexpiry);
        localStorage.setItem("cname",user.cname)
        localStorage.setItem("caddress",user.address)
        localStorage.setItem("cemail",user.email)
