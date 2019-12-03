@@ -23,12 +23,14 @@ export class TestmasterComponent implements OnInit {
   errormsg:string;
   GroupMaster: GroupMaster = {
   groupId:0,
-  groupName:null
+  groupName:null,
+  hideNormalvalue:false
   }
   GroupMasterEdit: GroupMaster = {
     groupId:0,
-    groupName:null
-    }
+    groupName:null,
+    hideNormalvalue:false
+}
   TestInfo:TestMaster={
     testId:0,
     testName:"",
@@ -73,7 +75,8 @@ export class TestmasterComponent implements OnInit {
   GroupinfoById(Id)
   {
     this.labService.GetGroupinfoById(Id).subscribe((GroupMaster: GroupMaster)=>{
-     this.GroupMasterEdit=GroupMaster;    
+     this.GroupMasterEdit=GroupMaster;   
+     console.log(this.GroupMasterEdit); 
   });
   this.GroupModel=true;
   this.TestModel=false;

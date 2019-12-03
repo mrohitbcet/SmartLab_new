@@ -10,6 +10,7 @@ namespace DatingApp.API.DTO
     public class AllReportsInfo{
       public int ReportID {get;set;}
       public string PatientName {get;set;}
+       public string email {get;set;}
       public string PatientDOB {get;set;}
        public string PatientGender {get;set;}
       public int DoctorID {get;set;}
@@ -22,6 +23,8 @@ namespace DatingApp.API.DTO
     {
     public int RptDetailsID {get;set;}
     public string groupName {get;set;}
+    public bool HideNormalvalue {get;set;}
+    public int subId {get;set;}
     public int TestId {get;set;}
     public string testName {get;set;}
     public string Unit {get;set;}
@@ -41,5 +44,12 @@ namespace DatingApp.API.DTO
         public string Specimen { get; set; }
         public ReportInfo[] ReportInfo { get; set; }
     }
+ public class HtmlToEmail
+    {
+        public string content { get; set; }
+        public string toemail { get; set; }
+    }
+
+
 
 }

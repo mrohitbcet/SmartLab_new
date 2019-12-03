@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import { AllReportsInfo,ReportInfo, ReportDetails,ReportToEmail, ReportDataGroupWise} from '../models/Report';
+import { AllReportsInfo,ReportInfo, ReportDetails,ReportToEmail, ReportDataGroupWise,HtmlToEmail} from '../models/Report';
 import { AlertifyService } from '../_services/alertify.service';
 import { AuthService } from '../_services/Auth.service';
 import { LabService } from '../_services/Lab.service';
@@ -18,6 +18,10 @@ export class ExportReportComponent implements OnInit {
 
   display='none';
   SearchText:string="";
+  HtmlToEmail: HtmlToEmail={
+  content:"",
+  toemail:""
+  }
   PageNo:number=1;
   GroupPageNo:number=1;
   AllReportsInfo:AllReportsInfo[]=[]
@@ -48,7 +52,7 @@ export class ExportReportComponent implements OnInit {
   CurrentDate = new Date();
   ReportDataGroupWiseList:ReportDataGroupWise[]=[]
   ReportDataGroupWise:ReportDataGroupWise={
-    GroupName:"",ReportInfo:null
+    GroupName:"",hideNormalvalue:false,ReportInfo:null
 }
    
   constructor(private alertify:AlertifyService,private labService:LabService,private datePipe: DatePipe) { }
@@ -68,10 +72,30 @@ export class ExportReportComponent implements OnInit {
       jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
     };
   const content:Element=document.getElementById('CnvasPrint');
+  
   html2pdf().from(content).set(opt).save();
- 
+ }
+ SendReportHTMLToEmail()
+ {
+   if(this.SelectedReport[0].email!="")
+   {
+  this.alertify.confirm("Are you sure you want to send this report to below email?<br>Patient's Email:<span style='color:green'>"+this.SelectedReport[0].email+"</span>",()=>{
+    this.HtmlToEmail.content=document.getElementById('CnvasPrint').innerHTML;
+    this.HtmlToEmail.toemail=this.SelectedReport[0].email;
+    this.labService.SendReportHTMLToEmail(this.HtmlToEmail).subscribe(() => {
+      this.alertify.success('Email sent succssfully!')
+      
+     }, error => {
+          this.alertify.error(error)
+        
+    });
+  })
+   }
+   else{
+     this.alertify.warning("Please update patient's valid email Id");
+   }
 
-  }
+}
  SendReportToEmail()
  {
   
@@ -105,20 +129,21 @@ export class ExportReportComponent implements OnInit {
       Report => Report.reportID ==ReportID);
      this.labService.getTestInfo(ReportID).subscribe((ReportInfo:ReportInfo[])=>{
       this.ReportInfo=ReportInfo;
-    
     this.ReportDataGroupWiseList=[];
-  
-    
-      var lookup = {};
+    var lookup = {};
       var items=this.ReportInfo;
+      
      for (var item, i = 0; item = items[i++];) {
         var groupName = item.groupName;
+        var hideNormalvalue=item.hideNormalvalue;
        if (!(groupName in lookup)) {
           lookup[groupName] = 1;
           var Local:ReportDataGroupWise={
-            GroupName:"",ReportInfo:null
+            GroupName:"",hideNormalvalue:false,ReportInfo:null
         }
           Local.GroupName=groupName;
+          Local.hideNormalvalue=hideNormalvalue;
+
         var localRptInfo=this.ReportInfo.filter(
             Report => Report.groupName ==groupName);
             Local.ReportInfo=localRptInfo;
@@ -139,10 +164,7 @@ export class ExportReportComponent implements OnInit {
   });
 
   document.getElementById('btnToggle').click();
-
-
-
-  }
+}
   UpdateReportValues()
   {
     this.CurrentReportList=[];
@@ -165,7 +187,8 @@ export class ExportReportComponent implements OnInit {
         
     });
   }
-  
+
+
   ReportInfobyGroup()
   {
 

@@ -7,6 +7,7 @@ import { LabService } from '../_services/Lab.service';
 import { DatePipe } from '@angular/common';
 import { Doctor } from '../Patient/Patient.component';
 import { ReportData, Report, ReportDetails } from '../models/Report';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-NewReports',
@@ -68,7 +69,7 @@ ReportData:ReportData={
     city: null,
     contactNo: null
   }
-  constructor(private alertify:AlertifyService,private labService:LabService,private datePipe: DatePipe) { 
+  constructor(private alertify:AlertifyService,private labService:LabService,private datePipe: DatePipe,private router: Router) { 
 
  }
 
@@ -186,6 +187,7 @@ SaveReport()
    this.closeModalDialog();
    this.Report.isbtnDisabled=false;
    this.isPrivew=false;
+   this.router.navigateByUrl('/AllReports');
  }, error => {
       this.alertify.error(error)
     

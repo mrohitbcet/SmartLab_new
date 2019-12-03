@@ -10,6 +10,7 @@ namespace DatingApp.API.Models
         public int GroupId{get;set;}
         [MaxLength(100)]
         public string GroupName{get;set;}
+        public bool HideNormalvalue{get;set;}
         public List<TestMaster> TestMaster{get;set;}
         public List<ReportDetails> ReportDetails{get;set;}
         

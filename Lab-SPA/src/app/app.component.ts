@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'SmartLab Lab';
+
+  loggedIn() {
+    const token = localStorage.getItem('token');
+    return !!token;
+  }
 }

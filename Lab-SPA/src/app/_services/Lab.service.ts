@@ -5,7 +5,7 @@ import { Patient } from '../models/Patient.model';
 import { GroupMaster } from '../models/GroupMaster';
 import { Observable, throwError } from 'rxjs';
 import { TestMaster } from '../models/TestMaster';
-import { ReportData, Report, ReportDetails, AllReportsInfo,ReportInfo,ReportToEmail } from '../models/Report';
+import { ReportData, Report, ReportDetails, AllReportsInfo,ReportInfo,ReportToEmail,HtmlToEmail } from '../models/Report';
 @Injectable({
   providedIn: 'root'
 })
@@ -137,6 +137,17 @@ GetPatientinfoById(Id:number):Observable<Patient>{
   var body = JSON.stringify(ReportToEmail);
   return this.http.post(this.baseUrl+'SendReportToEmail',body,httpOptions);
   }
+  SendReportHTMLToEmail(HtmlToEmail:HtmlToEmail)
+  {
+  const httpOptions={
+     headers: new HttpHeaders({
+       'Content-Type': 'application/json'
+   })
+   };
+  var body = JSON.stringify(HtmlToEmail);
+  return this.http.post(this.baseUrl+'SendReportHtmlToEmail',body,httpOptions);
+  }
+
   UpdateReportValues(ReportDeatails:ReportDetails[])
   {
     const httpOptions={

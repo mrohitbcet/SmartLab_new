@@ -8,8 +8,12 @@ import {
    } from '@angular/common/http';
    import { Observable, throwError } from 'rxjs';
    import { retry, catchError } from 'rxjs/operators';
+   import { Router } from '@angular/router';
+
    
    export class HttpErrorInterceptor implements HttpInterceptor {
+    constructor(private router: Router) { }
+
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
       return next.handle(request)
         .pipe(
@@ -26,6 +30,10 @@ import {
           
             window.alert(errorMessage);
             return throwError(error);
+            if (error.status === 401)
+            {
+              this.router.navigateByUrl('/Home');
+            }
            // return throwError(errorMessage);
           })
         )

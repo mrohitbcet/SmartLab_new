@@ -27,6 +27,7 @@ export class ReportData
 export class AllReportsInfo{
      reportID :number; 
     patientName :string; 
+    email:string;
     patientDOB :string; 
     patientGender :string; 
     doctorName :string; 
@@ -37,6 +38,8 @@ export class AllReportsInfo{
 export class ReportInfo{
     rptDetailsID:number; 
     groupName:string; 
+    HideNormalvalue:boolean;
+    subId:number;
     TestId:number;
     unit:string;
     testName:string; 
@@ -59,5 +62,10 @@ export class ReportInfo{
    export class ReportDataGroupWise
 {
     GroupName :string;
+    hideNormalvalue:boolean;
     ReportInfo :ReportInfo[];
+}
+export class HtmlToEmail{
+    content:string;
+    toemail:string;
 }

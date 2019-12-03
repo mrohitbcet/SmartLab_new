@@ -8,6 +8,7 @@ import { TestMaster } from '../models/TestMaster';
 import * as html2pdf from 'html2pdf.js'
 import * as jspdf from 'jspdf'; 
 import html2canvas from 'html2canvas';  
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-AllReports',
@@ -29,7 +30,7 @@ export class AllReportsComponent implements OnInit {
   CurrentReportList:ReportDetails[]=[]
    FilterStatus:number=0;
   CurrentDate = new Date();
-  constructor(private alertify:AlertifyService,private labService:LabService,private datePipe: DatePipe) { }
+  constructor(private alertify:AlertifyService,private labService:LabService,private datePipe: DatePipe,private router: Router) { }
 
   ngOnInit() {
     this.DispayRptDet=false;
@@ -105,17 +106,38 @@ this.labService.getTestInfo(ReportID).subscribe((ReportInfo:ReportInfo[])=>{
   CompleteReport()
   {
     
-    if(confirm('Please do not forget to save the test results  before complete it.Are you sure to complete this report?'))
+    if(confirm("After completion  you can't modify this report.Are you sure to complete this report?"))
     {
-     
+      this.CurrentReportList=[];
+      for(let i=0; i<this.ReportInfo.length; i++){
+        var local:ReportDetails={
+          ReportID:0,
+          GroupId:0,
+          TestId:0,
+          RptDetailsID:this.ReportInfo[i].rptDetailsID,
+          TestValue:this.ReportInfo[i].result,
+          isHighlight:this.ReportInfo[i].isHighlight
+        }
+        this.CurrentReportList.push(local);
+      }
+     this.labService.UpdateReportValues(this.CurrentReportList).subscribe(() => {
+       this.UpdateReportStatustoComplete();
+       this.router.navigateByUrl('/ExportReports');
+        }, error => {
+            this.alertify.error(error)
+     });
+  
+  }
+  }
+  UpdateReportStatustoComplete()
+  {
     this.labService.CompleteReport(this.CurrentReportID).subscribe(() => {
       this.alertify.success('Report Completed succssfully!')
       this.ngOnInit()
      }, error => {
           this.alertify.error(error)
         
-        });
-      }
+  });
   }
   GetAge(dt: any): number {
     let age = 0;

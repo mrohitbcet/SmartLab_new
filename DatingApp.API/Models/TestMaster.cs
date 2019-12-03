@@ -11,6 +11,7 @@ namespace DatingApp.API.Models
      [MaxLength(200)]
      public string TestName {get;set;}
      public int GroupId { get; set; }
+     public int subId { get; set; }
      [MaxLength(100)]
     public string Unit { get; set; }
     [MaxLength(100)]

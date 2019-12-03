@@ -80,10 +80,8 @@
                                       </div>
                                     </div>
                                     <div class="col-sm-3">
-                                      Lab No: #{{CurrentReportID}}
-                                     
-                                      <i title="Download Report" *ngIf="isSubmitted" class="fa fa-download" (click)="onExportclick()"></i>
-                                      <i title="Send Email" style="padding-left:10px" *ngIf="isSubmitted" class="fa fa-inbox" (click)="SendReportToEmail()"></i>
+                                     <i  *ngIf="isSubmitted" class="fa fa-download" (click)="onExportclick()"></i>
+                                      <i style="padding-left:10px" *ngIf="isSubmitted" class="fa fa-inbox" (click)="SendReportHTMLToEmail()"></i>
                                         
                                       </div>
                                       <hr>
@@ -98,7 +96,7 @@
                                                     <td>Patient's Name :</td>
                                                     <td>{{SelectedReport[0].patientName}}</td>
                                                     <td>Age/Gender:</td>
-                                                    <td>{{GetAge(SelectedReport[0].patientDOB)}}/{{SelectedReport[0].patientGender}}</td>
+                                                    <td>{{GetAge(SelectedReport[0].patientDOB)}}/{{SelectedReport[0].patientGender}} <span style="padding-left:5px;">Lab No:</span> #{{CurrentReportID}}</td>
                                                   </tr>
                                                   <tr>
                                                     <td>Referred By Dr. :</td>
@@ -124,21 +122,71 @@
                                        
                                       </div>
                                       <span layout="row"><hr style="border:.5px solid;" /></span>
-                                      <div   class="row">
-                                          <div class="col-sm-2">
-                                          </div>
-                                          <div class="col-sm-8">
-                                              <h4>Report on Examination on {{SelectedReport[0].specimen}}</h4>
-                                            </div>
-                                            <div class="col-sm-2">
-                                              </div>
-                                        
-                                      </div>
+      
                                       <div   class="row">
                                          
-                                          <div class="col-sm-12">
+                                          <div class="col-sm-12" >
                                             <div *ngFor="let grpitem of ReportDataGroupWiseList">
-                                             <h6>{{grpitem.GroupName}}</h6> 
+                                             <h6 class="text-primary">{{grpitem.GroupName}}</h6> 
+                                             <div   class="row">
+                                                <div class="col-sm-4" >
+                                               
+                                             <div *ngIf="grpitem.GroupName =='URINE EXAMINATION' && DispayRptDet ">
+                                                <table   class="table table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                          <th>TEST</th>
+                                                          <th></th>
+                                                       </tr>
+                                                       <tr>
+                                                          <td><b>PHYSICAL</b></td>
+                                                          <td></td>
+                                                       </tr>
+                                                    </thead>
+                                                    <tr *ngFor="let item of grpitem.ReportInfo">
+                                                      <td *ngIf="item.subId==1 && grpitem.GroupName =='URINE EXAMINATION'">{{item.testName}}</td>
+                                                      <td *ngIf="item.subId==1 && grpitem.GroupName =='URINE EXAMINATION'">{{item.result}}</td>
+                                                    </tr>
+                                                </table>
+                                                <table   class="table table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                          <th>TEST</th>
+                                                          <th ></th>
+                                                       </tr>
+                                                       <tr>
+                                                          <td>CHEMICAL</td>
+                                                          <td></td>
+                                                       </tr>
+                                                      
+                                                    </thead>
+                                                    <tr *ngFor="let item of grpitem.ReportInfo">
+                                                        <td *ngIf="item.subId==2 && grpitem.GroupName =='URINE EXAMINATION'">{{item.testName}}</td>
+                                                        <td *ngIf="item.subId==2 && grpitem.GroupName =='URINE EXAMINATION'">{{item.result}}</td>
+                                                      </tr>
+                                                </table>
+                                                <table   class="table table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                          <th>TEST</th>
+                                                          <th ></th>
+                                                       </tr>
+                                                       <tr>
+                                                          <td>MICROSCOPIC</td>
+                                                          <td></td>
+                                                       </tr>
+                                                    </thead>
+                                                    <tr *ngFor="let item of grpitem.ReportInfo">
+                                                        <td *ngIf="item.subId==3 && grpitem.GroupName =='URINE EXAMINATION'">{{item.testName}}</td>
+                                                        <td *ngIf="item.subId==3 && grpitem.GroupName =='URINE EXAMINATION'">{{item.result}}</td>
+                                                      </tr>
+                                                </table>
+                                             </div>
+                                            </div>
+                                          </div>
+                                             <div *ngIf="grpitem.GroupName !='URINE EXAMINATION' " class="row"> 
+                                               <div [ngClass]="{'col-sm-8':!grpitem.hideNormalvalue, 'col-sm-4': grpitem.hideNormalvalue}">
+                                               
                                              <table *ngIf="DispayRptDet"  class="table table-sm">
                                        
                                               <thead>
@@ -146,21 +194,22 @@
                                                     <!-- <th>SN</th> -->
                                                   <!-- <th scope="col">Group Name</th> -->
                                                   <th scope="col">Test</th>
-                                                  <th scope="col">Units</th>
-                                                  <th scope="col">Results</th>
-                                                  <th scope="col">References</th>
+                                                <th  scope="col"> RESULT</th>
+                                                <th  *ngIf="!grpitem.hideNormalvalue" scope="col">Units</th>
+                                                  <th *ngIf="!grpitem.hideNormalvalue" scope="col">References</th>
                                                  </tr>
                                               </thead>
                                               <tr *ngFor="let item of grpitem.ReportInfo;let i = index" [attr.rptDetailsID]="item.rptDetailsID">
-                                                 
-                                                      <td *ngIf="item.isHighlight" style="background-color:yellow; font-weight: bold;">
+                                                  <td *ngIf="item.isHighlight" style="background-color:yellow; font-weight: bold;">
                                                         {{item.testName}}</td>
                                                       <td *ngIf="!item.isHighlight">{{item.testName}}</td>
-                                                      <td>{{item.unit}}</td>
                                                       <td>{{item.result}}</td>
-                                                      <td>{{item.normalRange}}</td>
+                                                      <td *ngIf="!grpitem.hideNormalvalue" >{{item.unit}}</td>
+                                                      <td *ngIf="!grpitem.hideNormalvalue">{{item.normalRange}}</td>
                                                </tr>
                                               </table>
+                                              </div>  
+                                              </div>  
                                             </div>
                                              
                                             </div>

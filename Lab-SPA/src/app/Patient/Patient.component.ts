@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { Patient } from '../models/Patient.model'
 import { AlertifyService } from '../_services/alertify.service';
 import { LabService } from '../_services/Lab.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-Patient',
@@ -35,7 +36,7 @@ export class PatientComponent implements OnInit {
   contactNo: null
   }
 
-  constructor(private ThirdPartService: ThirdPartyService, private authService: AuthService, private datePipe: DatePipe, private http: HttpClient,private alertify:AlertifyService,private labService:LabService) {
+  constructor(private ThirdPartService: ThirdPartyService, private authService: AuthService, private datePipe: DatePipe, private http: HttpClient,private alertify:AlertifyService,private labService:LabService,private router: Router) {
 
     this.CurrentDatestr = this.datePipe.transform(new Date(), "dd-MM-yyyy");
     this.MaxdateFordatePicker = this.datePipe.transform(new Date(), "yyyy-MM-dd");
@@ -62,7 +63,7 @@ export class PatientComponent implements OnInit {
       NewPatient.address=null;
       NewPatient.city=null;
       NewPatient.contactNo=null;
-      
+      this.router.navigateByUrl('/ModifyPatient');
    }, error => {
       this.alertify.error(error)
      this.isbtnEnabled=true;
