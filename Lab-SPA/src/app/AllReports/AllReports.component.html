@@ -30,7 +30,13 @@
                          </td>
                        <td>{{item.patientName}}</td>
                         <td>{{item.doctorName}}</td>
-                        <td>{{item.status}}</td>
+                        <td *ngIf="item.status=='Completed'" >
+                            <span style="background-color:green;"> {{item.status}}</span>  
+                           </td>
+                           <td *ngIf="item.status!='Completed'">
+                               {{item.status}}
+                            </td>
+                       
                         <td>{{item.createdDate | date: 'medium'}}</td>
                     </tr>
                     </table>
@@ -81,7 +87,7 @@
                                    <td>{{item.testName}}</td>
                                    <td><input [disabled]="isSubmitted" type="checkbox" [(ngModel)]="item.isHighlight"></td>
                                    <td> <input [disabled]="isSubmitted" type="text" style="width:100px;" [(ngModel)]="item.result"></td>
-                                   <td>{{item.normalRange}}</td>
+                                   <td [innerHTML]="item.normalRange"></td>
                             </tr>
                            </table> 
         </div>

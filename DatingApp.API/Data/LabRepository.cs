@@ -159,6 +159,7 @@ namespace DatingApp.API.Data
              try
             {
             int ReportID=0;
+            ReportData.Report.CreatedDate=System.DateTime.Now;
             var ReportInfo = await _context.Reports.AddAsync(ReportData.Report);
             await _context.SaveChangesAsync();
             ReportID=ReportData.Report.ReportID;

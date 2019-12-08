@@ -9,10 +9,11 @@ import {
    import { Observable, throwError } from 'rxjs';
    import { retry, catchError } from 'rxjs/operators';
    import { Router } from '@angular/router';
+import { AuthService } from './Auth.service';
 
    
    export class HttpErrorInterceptor implements HttpInterceptor {
-    constructor(private router: Router) { }
+    constructor(private authService: AuthService) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
       return next.handle(request)
@@ -29,11 +30,12 @@ import {
             }
           
             window.alert(errorMessage);
-            return throwError(error);
-            if (error.status === 401)
+            if (error.status == 401)
             {
-              this.router.navigateByUrl('/Home');
+              this.authService.logout();
             }
+            return throwError(error);
+         
            // return throwError(errorMessage);
           })
         )

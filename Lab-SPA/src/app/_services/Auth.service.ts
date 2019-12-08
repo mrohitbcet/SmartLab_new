@@ -7,6 +7,8 @@ import { Session } from 'inspector';
 import { Clients,userInfo, UserForRegisterDto} from '../models/AccountSettings';
 import { Observable, throwError} from 'rxjs';
 import { AppErrorHandler } from '../models/AppErrorHandler';
+import { AlertifyService } from './alertify.service';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -15,7 +17,7 @@ import { AppErrorHandler } from '../models/AppErrorHandler';
 export class AuthService {
 baseUrl='http://bansaruli.in/api/auth/'
 //baseUrl = 'http://localhost:5000/api/auth/'
-constructor(private http: HttpClient) { }
+constructor(private http: HttpClient,private alertify: AlertifyService,private router: Router) { }
 CreateUserAccount(userInfo:userInfo)
 { const httpOptions={
     headers: new HttpHeaders({
@@ -107,4 +109,11 @@ getToken()
 {
   return localStorage.getItem('token');
 }
+
+logout() {
+  localStorage.removeItem('token');
+  this.alertify.message('Logged out')
+  this.router.navigateByUrl('/Home');
+}
+
 }

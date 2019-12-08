@@ -66,13 +66,13 @@ export class ExportReportComponent implements OnInit {
   {
     const opt = {
       margin: 1,
-      filename: this.SelectedReport[0].patientName+'_LaboratoryReport.pdf',
+      filename: 'LabNo-'+this.CurrentReportID+'/'+this.SelectedReport[0].patientName+'/LaboratoryReport.pdf',
       image: { type: 'jpeg', quality: 0.98 },
       html2canvas: { scale: 2 },
-      jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape',compressPDF: true }
     };
   const content:Element=document.getElementById('CnvasPrint');
-  
+
   html2pdf().from(content).set(opt).save();
  }
  SendReportHTMLToEmail()
