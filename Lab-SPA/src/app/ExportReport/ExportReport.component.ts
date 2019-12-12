@@ -8,6 +8,7 @@ import { TestMaster } from '../models/TestMaster';
 import * as html2pdf from 'html2pdf.js'
 import * as jspdf from 'jspdf'; 
 import html2canvas from 'html2canvas';  
+import {NgxPrintModule} from 'ngx-print';
 
 @Component({
   selector: 'app-ExportReport',
@@ -206,6 +207,10 @@ export class ExportReportComponent implements OnInit {
     }
     return age;
 
+  }
+  onPrintclick()
+  {
+    document.getElementById('Btnprint').click();
   }
   openModalDialog(){
     this.display='block';

@@ -63,6 +63,7 @@
 <div id="div1">
     
  <div id="CnvasPrint" class="container-fluid">
+ 
         <!-- Report Download-->
         <div class="form-group">
                       
@@ -70,24 +71,23 @@
                       <div class="col-sm-12">
                   
                               <div   class="row">
-                                  <div class="col-sm-3">
-                                  </div>
-                                  <div class="col-sm-6">
-                                      <h1>{{cname}}</h1>
-                                         <div>
-                                          <span>
-                                              <div [innerHTML]="caddress"></div>
-                                            <!-- {{caddress}} -->
-                                           
-                                          <!-- Contact No: {{ccontact}}
-                                           Email:{{cemail}} -->
-                                          </span>
-                                      </div>
+                                 
+                                  <div class="col-sm-9">
+                                    <div style="padding-left: 300px;">
+                                    
+                                        <b style="font-size: 24px;">{{cname}}</b>
+                                        <div [innerHTML]="caddress"></div>
+                                          </div>
+                                     
+                                       
                                     </div>
                                     <div class="col-sm-3">
-                                     <i  *ngIf="isSubmitted" class="fa fa-download" (click)="onExportclick()"></i>
+                                        <button id="Btnprint" printSectionId="CnvasPrint" style="display: none;" ngxPrint>print</button>
+                                        <i  *ngIf="isSubmitted" class="fa fa-print" printSectionId="CnvasPrint" ngxPrint (click)="onPrintclick()"></i>
+                                     <!-- <i style="padding-left:10px"  *ngIf="isSubmitted" class="fa fa-download" (click)="onExportclick()"></i> -->
                                       <i style="padding-left:10px" *ngIf="isSubmitted" class="fa fa-inbox" (click)="SendReportHTMLToEmail()"></i>
-                                        
+                                    
+                                    
                                       </div>
                                       <hr>
                               </div>
@@ -127,12 +127,12 @@
                                        
                                       </div>
                                       <span layout="row"><hr style="border:.5px solid;" /></span>
-      
-                                      <div   class="row">
-                                         
-                                          <div class="col-sm-12" >
+                                      
+                                      <div   class="row" >
+                                       <div class="col-sm-2"></div>
+                                          <div class="col-sm-10" >
                                             <div *ngFor="let grpitem of ReportDataGroupWiseList">
-                                             <h3 class="text-primary">{{grpitem.GroupName}}</h3> 
+                                             <h5 class="text-primary" >{{grpitem.GroupName}}</h5> 
                                              <div   class="row">
                                                 <div class="col-sm-4" >
                                                
@@ -147,7 +147,7 @@
                                                              </tr>
                                                           
                                                           <tr *ngFor="let item of grpitem.ReportInfo">
-                                                            <td  *ngIf="item.subId==1 && grpitem.GroupName =='URINE EXAMINATION'" >{{item.testName}}:</td>
+                                                            <td style="padding-left: 62px;"  *ngIf="item.subId==1 && grpitem.GroupName =='URINE EXAMINATION'" >{{item.testName}}:</td>
                                                             <td *ngIf="item.subId==1 && grpitem.GroupName =='URINE EXAMINATION'" style="text-align:left;">{{item.result}}</td>
                                                           </tr>
                                                        
@@ -159,7 +159,7 @@
                                                              
                                                           
                                                            <tr *ngFor="let item of grpitem.ReportInfo">
-                                                               <td *ngIf="item.subId==2 && grpitem.GroupName =='URINE EXAMINATION'" >{{item.testName}}:</td>
+                                                               <td style="padding-left: 68px;"  *ngIf="item.subId==2 && grpitem.GroupName =='URINE EXAMINATION'" >{{item.testName}}:</td>
                                                                <td *ngIf="item.subId==2 && grpitem.GroupName =='URINE EXAMINATION'" style="text-align:left;">{{item.result}}</td>
                                                              </tr>
                                                             
@@ -170,8 +170,13 @@
                                                                 </tr>
                                                             
                                                              <tr *ngFor="let item of grpitem.ReportInfo">
-                                                                 <td *ngIf="item.subId==3 && grpitem.GroupName =='URINE EXAMINATION'" >{{item.testName}}:</td>
+                                                                 <td style="padding-left: 80px;"  *ngIf="item.subId==3 && grpitem.GroupName =='URINE EXAMINATION'" >{{item.testName}}:</td>
                                                                  <td *ngIf="item.subId==3 && grpitem.GroupName =='URINE EXAMINATION'" style="text-align:left;">{{item.result}}</td>
+                                                               </tr>
+                                                               <tr>
+                                                                 <td colspan="4"> <b>***Report Completed***</b>
+                                                                  <p>Please correlate with the clinical conditions</p>
+                                                                </td>
                                                                </tr>
                                                       </table>
                                                
@@ -182,48 +187,56 @@
                                             </div>
                                           </div>
                                              <div *ngIf="grpitem.GroupName !='URINE EXAMINATION' " class="row"> 
+                                            
                                                <div [ngClass]="{'col-sm-8':!grpitem.hideNormalvalue, 'col-sm-4': grpitem.hideNormalvalue}">
                                                
-                                             <table *ngIf="DispayRptDet"  class="table table-sm">
+                                             <table  *ngIf="DispayRptDet"  class="table table-sm"  >
                                        
                                               <thead>
                                                 <tr>
                                                     <!-- <th>SN</th> -->
                                                   <!-- <th scope="col">Group Name</th> -->
-                                                  <th scope="col" *ngIf="grpitem.GroupName =='Bacteria Isolated:Bcoli'">Drug</th>
-                                                  <th scope="col" *ngIf="grpitem.GroupName !='Bacteria Isolated:Bcoli'">Test</th>
-                                                <th  scope="col" *ngIf="grpitem.GroupName =='Bacteria Isolated:Bcoli'"> Sensitivity</th>
-                                                <th  scope="col" *ngIf="grpitem.GroupName !='Bacteria Isolated:Bcoli'"> Result</th>
-                                                <th  *ngIf="!grpitem.hideNormalvalue" scope="col">Units</th>
-                                                  <th *ngIf="!grpitem.hideNormalvalue" scope="col">References</th>
+                                                  <td scope="col" *ngIf="grpitem.GroupName =='Bacteria Isolated:Bcoli'"> <b>Drug</b></td>
+                                                  <td scope="col" *ngIf="grpitem.GroupName !='Bacteria Isolated:Bcoli'"> <b>Test</b></td>
+                                                <td  scope="col" *ngIf="grpitem.GroupName =='Bacteria Isolated:Bcoli'"> <b>Sensitivity</b></td>
+                                                <td  scope="col" *ngIf="grpitem.GroupName !='Bacteria Isolated:Bcoli'"><b>Result</b> </td>
+                                                <td  style="padding-left:10px;"  *ngIf="!grpitem.hideNormalvalue" scope="col"><b>Units</b></td>
+                                                  <td *ngIf="!grpitem.hideNormalvalue" scope="col"><b>References</b></td>
                                                  </tr>
                                               </thead>
-                                              <tr *ngFor="let item of grpitem.ReportInfo;let i = index" [attr.rptDetailsID]="item.rptDetailsID">
-                                                  <td *ngIf="item.isHighlight" >
-                                                     <span style="background-color:yellow; font-weight: bold;">{{item.testName}}</span>   
-                                                      </td>
-                                                      <td *ngIf="!item.isHighlight">{{item.testName}}</td>
-                                                      <td>{{item.result}}</td>
-                                                      <td *ngIf="!grpitem.hideNormalvalue" >{{item.unit}}</td>
-                                                      <td *ngIf="!grpitem.hideNormalvalue" [innerHTML]="item.normalRange"> </td>
-                                               </tr>
+                                              <tbody>
+                                                  <tr *ngFor="let item of grpitem.ReportInfo;let i = index" [attr.rptDetailsID]="item.rptDetailsID">
+                                                      <td  *ngIf="item.isHighlight" >
+                                                         <span style="background-color:yellow; font-weight: bold; font-size: 12px;">{{item.testName}}</span>   
+                                                          </td>
+                                                          <td   *ngIf="!item.isHighlight">{{item.testName}}</td>
+                                                          <td >{{item.result}}</td>
+                                                          <td  style="padding-left:10px;"  *ngIf="!grpitem.hideNormalvalue" >{{item.unit}}</td>
+                                                          <td  *ngIf="!grpitem.hideNormalvalue" [innerHTML]="item.normalRange"> </td>
+                                                   </tr>
+                                                   <tr>
+                                                     <td style="padding-left: 200px;" *ngIf="!grpitem.hideNormalvalue" colspan="4">
+                                                       <b> *** Report completed***</b>
+                                                       <p>Please correlate with the clinical conditions</p>
+                                                    </td>
+                                                    <td style="text-align:center;" *ngIf="grpitem.hideNormalvalue" colspan="2">
+                                                        <b> *** Report completed***</b>
+                                                        <p>Please correlate with the clinical conditions</p>
+                                                     </td>
+                                                   </tr>
+                                              </tbody>
+                                             
                                               </table>
                                               </div>  
                                               </div>  
                                             </div>
-                                             
+                                        
                                             </div>
                                            
                                       </div>
 
                                                 
-                                      <div layout="row">
-                                          <div class="col-sm-12">
-                                              <p style="text-align: center;"><b>***Report Completed***</b></p>
-                                            </div>  
-                                         
-                                              
-                                       </div>            
+                                                
                                                
                         </div>
                         
@@ -233,3 +246,7 @@
                   </div>
       <!--End  Report Download-->
       </div>
+
+
+    
+        

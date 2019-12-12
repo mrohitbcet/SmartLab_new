@@ -27,6 +27,7 @@ import {Ng2SearchPipeModule} from 'ng2-search-filter';
 import {NgxPaginationModule} from 'ngx-pagination'
 import { ExportReportComponent } from './ExportReport/ExportReport.component';
 import { DoctorsComponent } from './doctors/doctors.component';
+import { NgxPrintModule } from 'ngx-print';
 @NgModule({
    declarations: [
       AppComponent,
@@ -51,7 +52,8 @@ import { DoctorsComponent } from './doctors/doctors.component';
       FormsModule,
       Ng2SearchPipeModule,
       NgxPaginationModule,
-      BsDropdownModule.forRoot()
+      BsDropdownModule.forRoot(),
+      NgxPrintModule
    ],
    providers: [
       AuthService,
