@@ -16,6 +16,7 @@ namespace DatingApp.API.Data
          Task <Client> GetPathalogyinfoById(int cid);
          Task<IEnumerable<UserForRegisterDto>> GetAllUsers();
          Task<bool> Changepassword(UserForRegisterDto UserForRegisterDto);
+        Task<bool> ChangePasswordbyUser(UserForRegisterDto UserForRegisterDto);
         Task<bool> UpdateAccountExpiryDate(UserForRegisterDto UserForRegisterDto);
        
     }

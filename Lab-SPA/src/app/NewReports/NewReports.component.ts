@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 })
 export class NewReportsComponent implements OnInit {
   today = new Date();
+  selectedAll: any;
   TestModel=false;
   isPrivew:boolean=false;
   display='none';
@@ -193,6 +194,16 @@ SaveReport()
     
     });
 
+}
+selectAll() {
+  for (var i = 0; i < this.FliteredTestList.length; i++) {
+    this.FliteredTestList[i].isSelected = this.selectedAll;
+  }
+}
+checkIfAllSelected() {
+  this.selectedAll = this.FliteredTestList.every(function(item:any) {
+      return item.isSelected == true;
+    })
 }
   openModalDialog(){
  this.display='block'; //Set block css

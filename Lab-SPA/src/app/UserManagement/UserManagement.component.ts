@@ -16,6 +16,7 @@ export class UserManagementComponent implements OnInit {
     id:0,
   username:"",
   password:"",
+  newpassword:"",
   cID:0,
   cName:"",
   email:"",

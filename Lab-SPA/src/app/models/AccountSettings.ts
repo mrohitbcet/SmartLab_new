@@ -24,8 +24,10 @@ export class UserForRegisterDto
     id:number;
     username:string;
     password:string;
+    newpassword:string;
    cID:number;
   cName:string;
    email:string;
    accountExpiryDate: Date;
 }
+

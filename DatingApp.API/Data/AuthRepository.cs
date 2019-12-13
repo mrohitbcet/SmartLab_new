@@ -101,6 +101,32 @@ namespace DatingApp.API.Data
                 return true;
                 }   
         }
+     public async Task<bool> ChangePasswordbyUser(UserForRegisterDto UserForRegisterDto)
+        {
+            var userInfo = await _context.Users.FirstOrDefaultAsync(xx => xx.Username == UserForRegisterDto.Username);
+            if (VerifyPasswordHash(UserForRegisterDto.password, userInfo.PasswordHash, userInfo.PasswordSalt))
+            {
+                byte[] passwordHash, passwordSalt;
+                CreatePasswordHash(UserForRegisterDto.newpassword, out passwordHash, out passwordSalt);
+                 var user= new User
+                {
+                    Id=userInfo.Id,
+                    PasswordHash = passwordHash,
+                    PasswordSalt = passwordSalt
+                   
+                };
+                _context.Entry(user).Property(x => x.PasswordHash).IsModified = true;
+                _context.Entry(user).Property(x => x.PasswordSalt).IsModified = true;
+                 await _context.SaveChangesAsync();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+              
+             
+        }
         public async Task<bool> UpdateAccountExpiryDate(UserForRegisterDto UserForRegisterDto)
         {
               var user= new User

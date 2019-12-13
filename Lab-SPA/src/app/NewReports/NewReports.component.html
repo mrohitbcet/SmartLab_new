@@ -91,7 +91,7 @@
                   <table border="1" class="table">
                       <thead class="thead-dark">
                         <tr>
-                          <th scope="col">Select</th>
+                          <th scope="col">Select <input type="checkbox" [(ngModel)]="selectedAll" (change)="selectAll();"/></th>
                           <!-- <th scope="col">TestId</th> -->
                           <th scope="col">TestName</th>
                           <th scope="col">GroupName</th>
@@ -100,7 +100,7 @@
                          </tr>
                       </thead>
                       <tr *ngFor="let item of FliteredTestList" [attr.groupId]="item.testId">
-                          <td><input type="checkbox" [(ngModel)]="item.isSelected"></td>
+                          <td><input type="checkbox" [(ngModel)]="item.isSelected" (change)="checkIfAllSelected();"></td>
                           <!-- <td>{{item.testId}}</td> -->
                           <td>{{item.testName}}</td>
                          <td>{{item.groupName}}</td>

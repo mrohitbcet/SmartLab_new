@@ -68,12 +68,21 @@ namespace DatingApp.API.Controllers
       
             return StatusCode(201);
         }
-            [HttpPost("Changepassword")]
+    [HttpPost("Changepassword")]
        public async Task<IActionResult> Changepassword([FromBody] UserForRegisterDto UserForRegisterDto)
         {
             _repo.Changepassword(UserForRegisterDto);
       
             return StatusCode(201);
+        }
+          [HttpPost("ChangePasswordbyUser")]
+       public async Task<IActionResult> ChangePasswordbyUser([FromBody] UserForRegisterDto UserForRegisterDto)
+        {
+            if(await _repo.ChangePasswordbyUser(UserForRegisterDto))
+                return StatusCode(201);
+                else
+                 return BadRequest("Invalid Current Password");
+            
         }
      [AllowAnonymous]
         [HttpPost("Login")]

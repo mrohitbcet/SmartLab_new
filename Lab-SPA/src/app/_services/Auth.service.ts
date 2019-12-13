@@ -57,6 +57,18 @@ ChangePassword(UserForRegisterDto:UserForRegisterDto)
                       
 }
    
+ChangePasswordbyUser(UserForRegisterDto:UserForRegisterDto)
+{
+   const httpOptions={
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  };
+ var body = JSON.stringify(UserForRegisterDto);
+
+ return this.http.post(this.baseUrl+'ChangePasswordbyUser',body,httpOptions);
+                      
+}
 CreateDocProfiles(Doctors:Doctors){
   const httpOptions={
     headers: new HttpHeaders({
@@ -112,6 +124,13 @@ getToken()
 
 logout() {
   localStorage.removeItem('token');
+  localStorage.removeItem('CID');
+  localStorage.removeItem('Role');
+  localStorage.removeItem('accountexpiry');
+  localStorage.removeItem("cname")
+  localStorage.removeItem("caddress")
+  localStorage.removeItem("cemail")
+  localStorage.removeItem("ccontact")
   this.alertify.message('Logged out')
   this.router.navigateByUrl('/Home');
 }

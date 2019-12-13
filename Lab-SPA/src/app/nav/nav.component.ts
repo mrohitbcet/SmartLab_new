@@ -49,7 +49,17 @@ export class NavComponent implements OnInit {
   }
 
   logout() {
-    this.authService.logout();
+    if(confirm('Are you sure to log out?'))
+    {
+      this.authService.logout();
+    }
+    
+}
+
+ChangePassword()
+{
+  this.router.navigateByUrl('/ChangePassword');
+  
 }
 
 

@@ -6,9 +6,10 @@ namespace DatingApp.API.DTO
     { public int Id { get; set; }
       public string Username { get; set; }
       public string password { get; set; }
+      public string newpassword { get; set; }
        public int CID { get; set; }
        public string CName { get; set; }
        public string Email { get; set; }
-       public System.DateTime AccountExpiryDate { get; set; }
+       public System.DateTime  AccountExpiryDate { get; set; }
  }
 }

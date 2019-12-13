@@ -12,6 +12,7 @@ import { NewReportsComponent } from './NewReports/NewReports.component';
 import { AllReportsComponent } from './AllReports/AllReports.component';
 import { ExportReportComponent } from './ExportReport/ExportReport.component';
 import { DoctorsComponent } from './doctors/doctors.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 const routes: Routes = [
   {path:'Home',component:HomeComponent},
   {path:'NewPatient',component:PatientComponent},
@@ -24,6 +25,7 @@ const routes: Routes = [
   {path:'NewReports',component:NewReportsComponent},
   {path:'AllReports',component:AllReportsComponent},
   {path:'ExportReports',component:ExportReportComponent},
+  {path:'ChangePassword',component:ChangePasswordComponent},
 {path:'**',component:HomeComponent,pathMatch:'full'}
 ];
 

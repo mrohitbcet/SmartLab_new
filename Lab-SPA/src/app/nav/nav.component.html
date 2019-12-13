@@ -59,17 +59,19 @@
 
     
     </form>
+    
   </div>
   <div *ngIf="loggedIn()">
     <ul>
         <li  class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <b>Welcome User:</b> {{LoggedUsername |titlecase}}
+                <b >Welcome User:</b> {{LoggedUsername |titlecase}}
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item">Change Password</a>
-             <a class="dropdown-item" (click)="logout()">Logout</a>
-            </div>
+              <a class="dropdown-item" (click)="ChangePassword()">Change Password</a>
+              <a class="dropdown-item" (click)="logout()">Logout</a>
+          
+           </div>
     </ul>
    
   </div>

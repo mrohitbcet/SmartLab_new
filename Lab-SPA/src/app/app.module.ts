@@ -28,6 +28,7 @@ import {NgxPaginationModule} from 'ngx-pagination'
 import { ExportReportComponent } from './ExportReport/ExportReport.component';
 import { DoctorsComponent } from './doctors/doctors.component';
 import { NgxPrintModule } from 'ngx-print';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 @NgModule({
    declarations: [
       AppComponent,
@@ -43,7 +44,8 @@ import { NgxPrintModule } from 'ngx-print';
       NewReportsComponent,
       AllReportsComponent,
       ExportReportComponent,
-      DoctorsComponent
+      DoctorsComponent,
+      ChangePasswordComponent
    ],
    imports: [
       BrowserModule,

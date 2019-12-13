@@ -71,9 +71,11 @@
                       <div class="col-sm-12">
                   
                               <div   class="row">
-                                 
-                                  <div class="col-sm-9">
-                                    <div style="padding-left: 300px;">
+                                <div class="col-sm-3">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </div>
+                                  <div class="col-sm-4">
+                                    <div style="text-align: center;">
                                     
                                         <b style="font-size: 24px;">{{cname}}</b>
                                         <div [innerHTML]="caddress"></div>
@@ -98,19 +100,41 @@
                                             <table *ngIf="DispayRptDet"   class="table table-sm" border="0"  >
                                           
                                                 <tr>
-                                                    <td>Patient's Name :</td>
+                                                <td style="color: white;">
+                                                  &nbsp;&nbsp;&nbsp;&nbsp;
+                                                  &nbsp;&nbsp;&nbsp;&nbsp;
+                                                  &nbsp;&nbsp;&nbsp;&nbsp;
+                                                    .
+                                                </td>
+                                                    <td> 
+                                                   Patient's Name :</td>
                                                     <td>{{SelectedReport[0].patientName}}</td>
                                                     <td>Age/Gender:</td>
                                                     <td>{{GetAge(SelectedReport[0].patientDOB)}}/{{SelectedReport[0].patientGender}} <span style="padding-left:5px;">Lab No:</span> #{{CurrentReportID}}</td>
                                                   </tr>
                                                   <tr>
-                                                    <td>Referred By Dr. :</td>
+                                                    <td style="color: white;">
+                                                      &nbsp;&nbsp;&nbsp;&nbsp;
+                                                      &nbsp;&nbsp;&nbsp;&nbsp;
+                                                      &nbsp;&nbsp;&nbsp;&nbsp;
+                                                        .
+                                                    </td>
+                                                    <td>
+                                                    Referred By Dr. :</td>
                                                     <td>{{SelectedReport[0].doctorName}}</td>
                                                     <td>Collection Date :</td>
                                                     <td>{{SelectedReport[0].createdDate | date: 'short'}}</td>
                                                   </tr>
                                                   <tr>
-                                                      <td>Nature Of Specimen :</td>
+                                                    <td style="color: white;">
+                                                      &nbsp;&nbsp;&nbsp;&nbsp;
+                                                      &nbsp;&nbsp;&nbsp;&nbsp;
+                                                      &nbsp;&nbsp;&nbsp;&nbsp;
+                                                        .
+                                                    </td>
+                                                      <td>
+                                                   
+                                                        Nature Of Specimen :</td>
                                                       <td>{{SelectedReport[0].specimen}}</td>
                                                       <td>Date of Report:</td>
                                                       <td>{{CurrentDate | date: 'short'}}</td>
