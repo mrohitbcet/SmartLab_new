@@ -267,6 +267,7 @@ namespace DatingApp.API.Data
             Group=>Group.GroupId,
             (Rpt,Group)=>new ReportInfo{ RptDetailsID=Rpt.RptDetailsID,
                                             groupName=Group.GroupName,
+                                            ShortName=Group.ShortName,
                                             HideNormalvalue=Group.HideNormalvalue,
                                             TestId=Rpt.TestId,
                                             result=Rpt.TestValue,
@@ -283,6 +284,7 @@ namespace DatingApp.API.Data
 
             (Test,AllRpts)=>new ReportInfo{ RptDetailsID=AllRpts.RptDetailsID,
                                             groupName=AllRpts.groupName,
+                                            ShortName=AllRpts.ShortName,
                                             HideNormalvalue=AllRpts.HideNormalvalue,
                                             TestId=Test.TestId,
                                             testName=Test.TestName,

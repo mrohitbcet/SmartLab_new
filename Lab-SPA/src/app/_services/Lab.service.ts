@@ -13,7 +13,7 @@ export class LabService {
   
 baseUrl = 'http://bansaruli.in/api/Lab/' 
 //baseUrl = 'http://localhost:5000/api/Lab/'
-  constructor(private http: HttpClient) { }
+constructor(private http: HttpClient) { }
   Patientregister(Patient:Patient)
   {
    const httpOptions={

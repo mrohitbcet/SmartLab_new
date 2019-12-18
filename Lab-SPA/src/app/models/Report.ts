@@ -38,6 +38,7 @@ export class AllReportsInfo{
 export class ReportInfo{
     rptDetailsID:number; 
     groupName:string; 
+    shortName:string;
     HideNormalvalue:boolean;
     subId:number;
     TestId:number;
@@ -62,6 +63,7 @@ export class ReportInfo{
    export class ReportDataGroupWise
 {
     GroupName :string;
+    ShortName:string;
     hideNormalvalue:boolean;
     ReportInfo :ReportInfo[];
 }

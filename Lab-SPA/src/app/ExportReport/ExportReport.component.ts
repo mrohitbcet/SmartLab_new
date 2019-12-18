@@ -53,7 +53,7 @@ export class ExportReportComponent implements OnInit {
   CurrentDate = new Date();
   ReportDataGroupWiseList:ReportDataGroupWise[]=[]
   ReportDataGroupWise:ReportDataGroupWise={
-    GroupName:"",hideNormalvalue:false,ReportInfo:null
+    GroupName:"",ShortName:"",hideNormalvalue:false,ReportInfo:null
 }
    
   constructor(private alertify:AlertifyService,private labService:LabService,private datePipe: DatePipe) { }
@@ -137,15 +137,16 @@ export class ExportReportComponent implements OnInit {
      for (var item, i = 0; item = items[i++];) {
         var groupName = item.groupName;
         var hideNormalvalue=item.hideNormalvalue;
+        var shortName=item.shortName;
        if (!(groupName in lookup)) {
           lookup[groupName] = 1;
           var Local:ReportDataGroupWise={
-            GroupName:"",hideNormalvalue:false,ReportInfo:null
+            GroupName:"",ShortName:"",hideNormalvalue:false,ReportInfo:null
         }
           Local.GroupName=groupName;
           Local.hideNormalvalue=hideNormalvalue;
-
-        var localRptInfo=this.ReportInfo.filter(
+          Local.ShortName=shortName;
+          var localRptInfo=this.ReportInfo.filter(
             Report => Report.groupName ==groupName);
             Local.ReportInfo=localRptInfo;
 
@@ -163,8 +164,7 @@ export class ExportReportComponent implements OnInit {
       }
       
   });
-
-  document.getElementById('btnToggle').click();
+ document.getElementById('btnToggle').click();
 }
   UpdateReportValues()
   {

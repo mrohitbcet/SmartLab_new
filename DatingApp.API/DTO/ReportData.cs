@@ -23,6 +23,7 @@ namespace DatingApp.API.DTO
     {
     public int RptDetailsID {get;set;}
     public string groupName {get;set;}
+    public string ShortName {get;set;}
     public bool HideNormalvalue {get;set;}
     public int subId {get;set;}
     public int TestId {get;set;}
