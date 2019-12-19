@@ -19,6 +19,7 @@ export class ExportReportComponent implements OnInit {
 
   display='none';
   SearchText:string="";
+  Verysensitive:string="ppppppppp";
   HtmlToEmail: HtmlToEmail={
   content:"",
   toemail:""

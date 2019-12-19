@@ -1,317 +1,386 @@
 <div id="accordion">
-    <div class="card">
-        <div class="card-header"  id="headingOne" style="padding:0px;">
-          <h5 class="mb-0">
-            
-            <button id="btnToggle" class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-              Export Report(s): Collapse/Expand 
-              </button>
-          </h5>
+  <div class="card">
+    <div class="card-header" id="headingOne" style="padding:0px;">
+      <h5 class="mb-0">
+
+        <button id="btnToggle" class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
+          aria-expanded="true" aria-controls="collapseOne">
+          Export Report(s): Collapse/Expand
+        </button>
+      </h5>
+    </div>
+
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion"
+      style="padding:0px;">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm-6" style="margin-bottom: 5px;">
+            <input type="text" placeholder="Enter Search Text" class="form-control pull-left" [(ngModel)]="SearchText">
+
+          </div>
         </div>
-    
-        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion" style="padding:0px;">
-          <div class="card-body">
-              <div class="row" >
-                  <div class="col-sm-6" style="margin-bottom: 5px;">
-                      <input type="text" placeholder="Enter Search Text" class="form-control pull-left" [(ngModel)]="SearchText">
-              
-                  </div>
-                  </div>  
-             
-              <div class="row" >
-                  <div class="col-sm-12">
-                          <div class="table-responsive">
-                          <table border="1" class="table">
-                                  <thead class="thead-dark">
-                                    <tr>
-                                     <th>Action</th>
-                                      <th scope="col">Lab No</th>
-                                      <th scope="col">PatientName</th>
-                                      <th scope="col">DoctorName</th>
-                                      <th scope="col">Status</th>
-                                      <th scope="col">CreatedDate</th>
-                                     </tr>
-                                  </thead>
-                                  <tr *ngFor="let item of AllReportsInfo | filter:SearchText | paginate:{itemsPerPage:10, currentPage:PageNo};let i = index" [attr.groupId]="item.reportID">
-                                      <td>
-                                      <button title="Click to view test details" type="button" class="btn btn-link" (click)="GetReportDetailsInfo(item.reportID,item.status)">Details</button>
-                                    </td>
-                                       <td>
-                                      #{{item.reportID}}
-                                       </td>
-                                     <td>{{item.patientName}}</td>
-                                      <td>{{item.doctorName}}</td>
-                                      <td *ngIf="item.status=='Completed'" >
-                                       <span style="background-color:green;"> {{item.status}}</span>  
-                                      </td>
-                                      <td *ngIf="item.status!='Completed'">
-                                          {{item.status}}
-                                       </td>
-                                      <td>{{item.createdDate | date: 'medium'}}</td>
-                                  </tr>
-                                  </table>
-                              <pagination-controls (pageChange)="PageNo=$event"></pagination-controls>
-                          </div>
-                  </div>
-                </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="table-responsive">
+              <table border="1" class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th>Action</th>
+                    <th scope="col">Lab No</th>
+                    <th scope="col">PatientName</th>
+                    <th scope="col">DoctorName</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">CreatedDate</th>
+                  </tr>
+                </thead>
+                <tr
+                  *ngFor="let item of AllReportsInfo | filter:SearchText | paginate:{itemsPerPage:10, currentPage:PageNo};let i = index"
+                  [attr.groupId]="item.reportID">
+                  <td>
+                    <button title="Click to view test details" type="button" class="btn btn-link"
+                      (click)="GetReportDetailsInfo(item.reportID,item.status)">Details</button>
+                  </td>
+                  <td>
+                    #{{item.reportID}}
+                  </td>
+                  <td>{{item.patientName}}</td>
+                  <td>{{item.doctorName}}</td>
+                  <td *ngIf="item.status=='Completed'">
+                    <span style="background-color:green;"> {{item.status}}</span>
+                  </td>
+                  <td *ngIf="item.status!='Completed'">
+                    {{item.status}}
+                  </td>
+                  <td>{{item.createdDate | date: 'medium'}}</td>
+                </tr>
+              </table>
+              <pagination-controls (pageChange)="PageNo=$event"></pagination-controls>
+            </div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
 </div>
 
 
 <div id="div1">
-    
- <div id="CnvasPrint" class="container-fluid">
- 
-        <!-- Report Download-->
-        <div class="form-group">
-                      
-              <div *ngIf="DispayRptDet"  class="row" >
-                      <div class="col-sm-12">
-                  
-                              <div   class="row">
-                                <div class="col-sm-3">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                </div>
-                                  <div class="col-sm-4">
-                                    <div style="text-align: center;">
-                                    
-                                        <b style="font-size: 24px;">{{cname}}</b>
-                                        <div [innerHTML]="caddress"></div>
-                                          </div>
-                                     
-                                       
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <button id="Btnprint" printSectionId="CnvasPrint" style="display: none;" ngxPrint>print</button>
-                                        <i  *ngIf="isSubmitted" class="fa fa-print" printSectionId="CnvasPrint" ngxPrint (click)="onPrintclick()"></i>
-                                     <!-- <i style="padding-left:10px"  *ngIf="isSubmitted" class="fa fa-download" (click)="onExportclick()"></i> -->
-                                      <i style="padding-left:10px" *ngIf="isSubmitted" class="fa fa-inbox" (click)="SendReportHTMLToEmail()"></i>
-                                    
-                                    
-                                      </div>
-                                      <hr>
-                              </div>
-                              <!-- <span layout="row"><hr style="border:.5px solid;" /></span> -->
-                                      <div   class="row">
-                                        
-                                        <div class="col-sm-12">
-                                            <table *ngIf="DispayRptDet"   class="table table-sm" border="0" style="margin: 0px;"  >
-                                          
-                                                <tr>
-                                                <td style="color: white;">
-                                                  &nbsp;&nbsp;&nbsp;&nbsp;
-                                                  &nbsp;&nbsp;&nbsp;&nbsp;
-                                                  &nbsp;&nbsp;&nbsp;&nbsp;
-                                                    .
-                                                </td>
-                                                    <td> 
-                                                   Patient's Name :</td>
-                                                    <td>{{SelectedReport[0].patientName}}</td>
-                                                    <td>Age/Gender:</td>
-                                                    <td>{{GetAge(SelectedReport[0].patientDOB)}}/{{SelectedReport[0].patientGender}} <span style="padding-left:5px;">Lab No:</span> #{{CurrentReportID}}</td>
-                                                  </tr>
-                                                  <tr>
-                                                    <td style="color: white;">
-                                                      &nbsp;&nbsp;&nbsp;&nbsp;
-                                                      &nbsp;&nbsp;&nbsp;&nbsp;
-                                                      &nbsp;&nbsp;&nbsp;&nbsp;
-                                                        .
-                                                    </td>
-                                                    <td>
-                                                    Referred By Dr. :</td>
-                                                    <td>{{SelectedReport[0].doctorName}}</td>
-                                                    <td>Collection Date :</td>
-                                                    <td>{{SelectedReport[0].createdDate | date: 'short'}}</td>
-                                                  </tr>
-                                                  <tr>
-                                                    <td style="color: white;">
-                                                      &nbsp;&nbsp;&nbsp;&nbsp;
-                                                      &nbsp;&nbsp;&nbsp;&nbsp;
-                                                      &nbsp;&nbsp;&nbsp;&nbsp;
-                                                        .
-                                                    </td>
-                                                      <td>
-                                                   
-                                                        Nature Of Specimen :</td>
-                                                      <td>{{SelectedReport[0].specimen}}</td>
-                                                      <td>Date of Report:</td>
-                                                      <td>{{CurrentDate | date: 'short'}}</td>
-                                                    </tr>
-                                                   
-                                                <!-- <tr *ngFor="let item of SelectedReport;let i = index" [attr.reportID]="item.reportID">
-                                                    <td>{{item.patientName}}</td>
-                                                    <td>{{GetAge(item.patientDOB)}}/{{item.patientGender}}</td>
-                                                    <td>{{item.doctorName}}</td>
-                                                    <td>{{item.createdDate | date: 'short'}}</td>
-                                                    <td>{{CurrentDate | date: 'short'}}</td>
-                                                </tr> -->
-                                                </table>
-                                                 <hr style="border:.3px solid;" />
-                                        </div>
-                                       
-                                      </div>
-                                     
-                                      
-                                      <div   class="row" >
-                                       <div class="col-sm-2"></div>
-                                          <div class="col-sm-10" >
-                                            <div *ngFor="let grpitem of ReportDataGroupWiseList">
-                                             <h5  class="text-primary" >{{grpitem.GroupName}}</h5>
-                                             <span style="font-weight: bold; font-size:14px;" *ngIf="grpitem.ShortName =='MECS'"> Culture & Sensitivity Test Of :Urine</span> 
-                                            
-                                             <div   class="row">
-                                                <div  style="text-align: center;" >
-                                                  <div *ngIf="grpitem.ShortName =='MECS' && DispayRptDet ">
-                                                    <table   class="table table-sm">
-                                                      <tr *ngFor="let item of grpitem.ReportInfo">
-                                                        <td style="padding-left: 62px;"  *ngIf="grpitem.ShortName =='MECS'" >{{item.testName}}:</td>
-                                                        <td *ngIf="item.subId==1 && grpitem.ShortName =='SEMEN'" style="text-align:left;">{{item.result}}</td>
-                                                      </tr>
-                                                    </table>
-                                                  </div>
-                                                  <div *ngIf="grpitem.ShortName =='SEMEN' && DispayRptDet ">
-                                              
-                                                    <table cellspacing="0" cellpadding="0">
-                                                         <tr>
-                                                             <td style="font-weight: bold;">PHYSICAL</td>
-                                                              <td></td>
-                                                           </tr>
-                                                        
-                                                        <tr *ngFor="let item of grpitem.ReportInfo">
-                                                          <td style="padding-left: 62px;"  *ngIf="item.subId==1 && grpitem.ShortName =='SEMEN'" >{{item.testName}}:</td>
-                                                          <td *ngIf="item.subId==1 && grpitem.ShortName =='SEMEN'" style="text-align:left;">{{item.result}}</td>
-                                                        </tr>
-                                                     
-                                                             
-                                                            <tr>
-                                                               <td><b>CHEMICAL</b></td>
-                                                               <td></td>
-                                                            </tr>
-                                                           
-                                                        
-                                                         <tr *ngFor="let item of grpitem.ReportInfo">
-                                                             <td style="padding-left: 68px;"  *ngIf="item.subId==2 && grpitem.ShortName =='SEMEN'" >{{item.testName}}:</td>
-                                                             <td *ngIf="item.subId==2 && grpitem.ShortName =='SEMEN'" style="text-align:left;">{{item.result}}</td>
-                                                           </tr>
-                                                          
-                                                               
-                                                              <tr>
-                                                                 <td><b>MICROSCOPIC</b></td>
-                                                                 <td></td>
-                                                              </tr>
-                                                          
-                                                           <tr *ngFor="let item of grpitem.ReportInfo">
-                                                               <td style="padding-left: 80px;"  *ngIf="item.subId==3 && grpitem.ShortName =='SEMEN'" >{{item.testName}}:</td>
-                                                               <td *ngIf="item.subId==3 && grpitem.ShortName =='SEMEN'" style="text-align:left;">{{item.result}}</td>
-                                                             </tr>
-                                                           
-                                                    </table>
-                                             
-                                         
-                                          
-                                        
-                                           </div>
-                                             <div *ngIf="grpitem.ShortName =='URINE' && DispayRptDet ">
-                                              
-                                                      <table   cellspacing="0" cellpadding="0">
-                                                           <tr>
-                                                                <td><b>PHYSICAL</b></td>
-                                                                <td></td>
-                                                             </tr>
-                                                          
-                                                          <tr *ngFor="let item of grpitem.ReportInfo">
-                                                            <td style="padding-left: 62px;"  *ngIf="item.subId==1 && grpitem.ShortName =='URINE'" >{{item.testName}}:</td>
-                                                            <td *ngIf="item.subId==1 && grpitem.ShortName =='URINE'" style="text-align:left;">{{item.result}}</td>
-                                                          </tr>
-                                                       
-                                                               
-                                                              <tr>
-                                                                 <td><b>CHEMICAL</b></td>
-                                                                 <td></td>
-                                                              </tr>
-                                                             
-                                                          
-                                                           <tr *ngFor="let item of grpitem.ReportInfo">
-                                                               <td style="padding-left: 68px;"  *ngIf="item.subId==2 && grpitem.ShortName =='URINE'" >{{item.testName}}:</td>
-                                                               <td *ngIf="item.subId==2 && grpitem.ShortName =='URINE'" style="text-align:left;">{{item.result}}</td>
-                                                             </tr>
-                                                            
-                                                                 
-                                                                <tr>
-                                                                   <td><b>MICROSCOPIC</b></td>
-                                                                   <td></td>
-                                                                </tr>
-                                                            
-                                                             <tr *ngFor="let item of grpitem.ReportInfo">
-                                                                 <td style="padding-left: 80px;"  *ngIf="item.subId==3 && grpitem.ShortName =='URINE'" >{{item.testName}}:</td>
-                                                                 <td *ngIf="item.subId==3 && grpitem.ShortName =='URINE'" style="text-align:left;">{{item.result}}</td>
-                                                               </tr>
-                                                             
-                                                      </table>
-                                               
-                                           
-                                            
-                                          
-                                             </div>
-                                            </div>
-                                          </div>
-                                             <div *ngIf="grpitem.ShortName !='URINE' && grpitem.ShortName !='SEMEN'  && grpitem.ShortName !='MECS' " class="row"> 
-                                            
-                                               <div [ngClass]="{'col-sm-8':!grpitem.hideNormalvalue, 'col-sm-4': grpitem.hideNormalvalue}">
-                                               
-                                             <table  *ngIf="DispayRptDet"   cellspacing="0" cellpadding="0"  >
-                                             <thead>
-                                                <tr>
-                                                    <!-- <th>SN</th> -->
-                                                  <!-- <th scope="col">Group Name</th> -->
-                                                  <td scope="col" *ngIf="grpitem.ShortName =='BCOLI'"> <b>Drug</b></td>
-                                                  <td scope="col" *ngIf="grpitem.ShortName !='BCOLI'"> <b>Test</b></td>
-                                                <td  scope="col" *ngIf="grpitem.ShortName =='BCOLI'"> <b>Sensitivity</b></td>
-                                                <td  scope="col" *ngIf="grpitem.ShortName !='BCOLI'"><b>Result</b> </td>
-                                                <td  style="padding-left:10px;"  *ngIf="!grpitem.hideNormalvalue" scope="col"><b>Units</b></td>
-                                                  <td *ngIf="!grpitem.hideNormalvalue" scope="col"><b>References</b></td>
-                                                 </tr>
-                                              </thead>
-                                              <tbody>
-                                                  <tr *ngFor="let item of grpitem.ReportInfo;let i = index" [attr.rptDetailsID]="item.rptDetailsID">
-                                                      <td  *ngIf="item.isHighlight" >
-                                                         <span style="background-color:yellow; font-weight: bold; font-size: 12px;">{{item.testName}}</span>   
-                                                          </td>
-                                                          <td   *ngIf="!item.isHighlight">{{item.testName}}</td>
-                                                          <td >{{item.result}}</td>
-                                                          <td  style="padding-left:10px;"  *ngIf="!grpitem.hideNormalvalue" >{{item.unit}}</td>
-                                                          <td  *ngIf="!grpitem.hideNormalvalue" [innerHTML]="item.normalRange"> </td>
-                                                   </tr>
-                                                 
-                                              </tbody>
-                                             
-                                              </table>
-                                              </div>  
-                                              </div>  
-                                            </div>
-                                        
-                                          </div>
-                                       </div>
 
-                                       <div   class="row" >
-                                        <div class="col-sm-12">
-                                          <p style="text-align: center; font-size:9px"> Report completed. <br>Please correlate with the clinical condition.</p>
-                                     </div>
-                                       
-                                       </div>          
-                                                
-                                               
-                        </div>
-                        
-                 </div>
-                  
-                     </div>
+  <div id="CnvasPrint" class="container-fluid">
+
+    <!-- Report Download-->
+    <div class="form-group">
+
+      <div *ngIf="DispayRptDet" class="row">
+        <div class="col-sm-12">
+
+          <div class="row">
+            <div class="col-sm-3">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+            <div class="col-sm-4">
+              <div style="text-align: center;">
+
+                <b style="font-size: 24px;">{{cname}}</b>
+                <div [innerHTML]="caddress"></div>
+              </div>
+
+
+            </div>
+            <div class="col-sm-3">
+              <button id="Btnprint" printSectionId="CnvasPrint" style="display: none;" ngxPrint>print</button>
+              <i *ngIf="isSubmitted" class="fa fa-print" printSectionId="CnvasPrint" ngxPrint
+                (click)="onPrintclick()"></i>
+              <!-- <i style="padding-left:10px"  *ngIf="isSubmitted" class="fa fa-download" (click)="onExportclick()"></i> -->
+              <i style="padding-left:10px" *ngIf="isSubmitted" class="fa fa-inbox"
+                (click)="SendReportHTMLToEmail()"></i>
+
+
+            </div>
+            <hr>
+          </div>
+          <!-- <span layout="row"><hr style="border:.5px solid;" /></span> -->
+          <table *ngIf="DispayRptDet" class="table" border="0" style="width: 100%;">
+            <tr>
+              <td style="color: white;">
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                .
+              </td>
+              <td>
+                Patient's Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</td>
+              <td>{{SelectedReport[0].patientName}}</td>
+              <td>Age/Gender &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</td>
+              <td>{{GetAge(SelectedReport[0].patientDOB)}}/{{SelectedReport[0].patientGender}} <span
+                  style="padding-left:5px;">Lab No:</span> #{{CurrentReportID}}</td>
+            </tr>
+            <tr>
+              <td style="color: white;">
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                .
+              </td>
+              <td>
+                Referred By Dr. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</td>
+              <td>{{SelectedReport[0].doctorName}}</td>
+              <td>Collection Date :</td>
+              <td>{{SelectedReport[0].createdDate | date: 'short'}}</td>
+            </tr>
+            <tr>
+              <td style="color: white;">
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                .
+              </td>
+              <td>
+
+                Nature Of Specimen :</td>
+              <td>{{SelectedReport[0].specimen}}</td>
+              <td>Date of Report&nbsp;&nbsp;&nbsp;:</td>
+              <td>{{CurrentDate | date: 'short'}}</td>
+            </tr>
+
+
+          </table>
+
+          <div class="row">
+
+            <div class="col-sm-12">
+
+              <hr style="border:.3px solid;" />
+            </div>
+
+          </div>
+
+
+          <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-10">
+              <div *ngFor="let grpitem of ReportDataGroupWiseList">
+                <span class="text-primary" style="font-weight: bold; font-size:22px;">{{grpitem.GroupName}}</span>
+                <span style="font-weight: bold; font-size:14px;" *ngIf="grpitem.ShortName =='MECS'"> Culture &
+                  Sensitivity Test Of :Urine</span>
+                <div>
+                  <div *ngIf="grpitem.ShortName =='MECS' && DispayRptDet ">
+                    <table class="table table-sm">
+                      <tr *ngFor="let item of grpitem.ReportInfo">
+                        <td style="padding-left: 62px;" *ngIf="grpitem.ShortName =='MECS'">{{item.testName}}:</td>
+                        <td *ngIf="item.subId==1 && grpitem.ShortName =='SEMEN'" style="text-align:left;">
+                          {{item.result}}</td>
+                      </tr>
+                    </table>
                   </div>
-      <!--End  Report Download-->
+                  <div *ngIf="grpitem.ShortName =='BCOLI' && DispayRptDet ">
+
+                    <table>
+                      <tr>
+                        <td style="vertical-align: text-top;">
+                          <table>
+                            <tr>
+                              <td style="font-weight: bold;">Drug</td>
+                              <td style="font-weight: bold;">Sensivity</td>
+                            </tr>
+                            <tr *ngFor="let item of grpitem.ReportInfo">
+                              <td *ngIf="item.subId==0 && grpitem.ShortName =='BCOLI'" >{{item.testName}}:</td>
+                              <td *ngIf="item.subId==0 && grpitem.ShortName =='BCOLI'" style="text-align:left;">{{item.result}}</td>
+                            </tr>
+                          </table>
+                        </td>
+                        <td style="color: white;">
+                          &nbsp;&nbsp;&nbsp;&nbsp;
+                          &nbsp;&nbsp;&nbsp;&nbsp;
+                          &nbsp;&nbsp;&nbsp;&nbsp;
+                          &nbsp;&nbsp;&nbsp;&nbsp;
+                          &nbsp;&nbsp;&nbsp;&nbsp;
+                          &nbsp;&nbsp;&nbsp;&nbsp;
+                          .
+                        </td>
+                        <td  style="vertical-align: text-top;">
+                          <table>
+                            <tr>
+                              <td style="font-weight: bold;">Drug</td>
+                              <td style="font-weight: bold;">Sensivity</td>
+                            </tr>
+                            <tr *ngFor="let item of grpitem.ReportInfo">
+                              <td *ngIf="item.subId==1 && grpitem.ShortName =='BCOLI'" >{{item.testName}}:</td>
+                              <td *ngIf="item.subId==1 && grpitem.ShortName =='BCOLI'" style="text-align:left;">{{item.result}}</td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+                  <br>
+                    <table border="1" style="border-collapse: collapse;">
+                      <tr>
+                        <td>+++Very sensitive</td>
+                        <td>
+                         <input type="text" [(ngModel)]="Verysensitive" style="width: 500px;">
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>++High sensitive</td>
+                        <td><input type="text" style="width: 500px;"></td>
+                      </tr>
+                      <tr>
+                        <td>++Mild sensitive</td>
+                        <td><input type="text" style="width: 500px;"></td>
+                      </tr>
+                    </table>
+                    <br>
+                  </div>
+                  <div *ngIf="grpitem.ShortName =='SEMEN' && DispayRptDet ">
+                    <table cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td style="font-weight: bold;">PHYSICAL</td>
+                        <td></td>
+                      </tr>
+
+                      <tr *ngFor="let item of grpitem.ReportInfo">
+                        <td style="padding-left: 62px;" *ngIf="item.subId==1 && grpitem.ShortName =='SEMEN'">
+                          {{item.testName}}:</td>
+                        <td *ngIf="item.subId==1 && grpitem.ShortName =='SEMEN'" style="text-align:left;">
+                          {{item.result}}</td>
+                      </tr>
+
+
+                      <tr>
+                        <td><b>CHEMICAL</b></td>
+                        <td></td>
+                      </tr>
+
+
+                      <tr *ngFor="let item of grpitem.ReportInfo">
+                        <td style="padding-left: 68px;" *ngIf="item.subId==2 && grpitem.ShortName =='SEMEN'">
+                          {{item.testName}}:</td>
+                        <td *ngIf="item.subId==2 && grpitem.ShortName =='SEMEN'" style="text-align:left;">
+                          {{item.result}}</td>
+                      </tr>
+
+
+                      <tr>
+                        <td><b>MICROSCOPIC</b></td>
+                        <td></td>
+                      </tr>
+
+                      <tr *ngFor="let item of grpitem.ReportInfo">
+                        <td style="padding-left: 80px;" *ngIf="item.subId==3 && grpitem.ShortName =='SEMEN'">
+                          {{item.testName}}:</td>
+                        <td *ngIf="item.subId==3 && grpitem.ShortName =='SEMEN'" style="text-align:left;">
+                          {{item.result}}</td>
+                      </tr>
+
+                    </table>
+                  </div>
+                  <div *ngIf="grpitem.ShortName =='URINE' && DispayRptDet ">
+
+                    <table cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td><b>PHYSICAL</b></td>
+                        <td></td>
+                      </tr>
+
+                      <tr *ngFor="let item of grpitem.ReportInfo">
+                        <td style="padding-left: 62px;" *ngIf="item.subId==1 && grpitem.ShortName =='URINE'">
+                          {{item.testName}}:</td>
+                        <td *ngIf="item.subId==1 && grpitem.ShortName =='URINE'" style="text-align:left;">
+                          {{item.result}}</td>
+                      </tr>
+
+
+                      <tr>
+                        <td><b>CHEMICAL</b></td>
+                        <td></td>
+                      </tr>
+
+
+                      <tr *ngFor="let item of grpitem.ReportInfo">
+                        <td style="padding-left: 68px;" *ngIf="item.subId==2 && grpitem.ShortName =='URINE'">
+                          {{item.testName}}:</td>
+                        <td *ngIf="item.subId==2 && grpitem.ShortName =='URINE'" style="text-align:left;">
+                          {{item.result}}</td>
+                      </tr>
+
+
+                      <tr>
+                        <td><b>MICROSCOPIC</b></td>
+                        <td></td>
+                      </tr>
+
+                      <tr *ngFor="let item of grpitem.ReportInfo">
+                        <td style="padding-left: 80px;" *ngIf="item.subId==3 && grpitem.ShortName =='URINE'">
+                          {{item.testName}}:</td>
+                        <td *ngIf="item.subId==3 && grpitem.ShortName =='URINE'" style="text-align:left;">
+                          {{item.result}}</td>
+                      </tr>
+
+                    </table>
+
+
+
+
+                  </div>
+
+                </div>
+                <div
+                  *ngIf="grpitem.ShortName !='URINE' && grpitem.ShortName !='SEMEN'  && grpitem.ShortName !='MECS' && grpitem.ShortName !='BCOLI'"
+                  class="row">
+
+                  <div [ngClass]="{'col-sm-8':!grpitem.hideNormalvalue, 'col-sm-4': grpitem.hideNormalvalue}">
+
+                    <table *ngIf="DispayRptDet" cellspacing="0" cellpadding="0">
+                      <thead>
+                        <tr>
+                          <!-- <th>SN</th> -->
+                          <!-- <th scope="col">Group Name</th> -->
+
+                          <td scope="col"> <b>Test</b></td>
+
+                          <td scope="col"><b>Result</b> </td>
+                          <td style="padding-left:10px;" *ngIf="!grpitem.hideNormalvalue" scope="col"><b>Units</b></td>
+                          <td *ngIf="!grpitem.hideNormalvalue" scope="col"><b>References</b></td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of grpitem.ReportInfo;let i = index"
+                          [attr.rptDetailsID]="item.rptDetailsID">
+                          <td *ngIf="item.isHighlight">
+                            <span
+                              style="background-color:yellow; font-weight: bold; font-size: 12px;">{{item.testName}}</span>
+                          </td>
+                          <td *ngIf="!item.isHighlight">{{item.testName}}</td>
+                          <td>{{item.result}}</td>
+                          <td style="padding-left:10px;" *ngIf="!grpitem.hideNormalvalue">{{item.unit}}</td>
+                          <td *ngIf="!grpitem.hideNormalvalue" [innerHTML]="item.normalRange"> </td>
+                        </tr>
+
+                      </tbody>
+
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12">
+              <p style="text-align: center; font-size:9px"> Report completed.</p>
+              <p style="font-size:9px">Please correlate with the clinical condition.</p>
+            </div>
+
+          </div>
+
+
+        </div>
+
       </div>
 
-
-    
-        
+    </div>
+  </div>
+  <!--End  Report Download-->
+</div>
