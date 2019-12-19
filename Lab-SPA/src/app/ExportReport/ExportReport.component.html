@@ -89,6 +89,9 @@
 
             </div>
             <div class="col-sm-3">
+              <i style="padding-right:10px" *ngIf="isSubmitted" class="fa fa-refresh" (click)="RefreshClick()"
+              ></i>
+
               <button id="Btnprint" printSectionId="CnvasPrint" style="display: none;" ngxPrint>print</button>
               <i *ngIf="isSubmitted" class="fa fa-print" printSectionId="CnvasPrint" ngxPrint
                 (click)="onPrintclick()"></i>
@@ -214,20 +217,30 @@
                       </tr>
                     </table>
                   <br>
+                  
                     <table border="1" style="border-collapse: collapse;">
                       <tr>
-                        <td>+++Very sensitive</td>
+                        <td style="font-weight:bold;">+++Very sensitive:</td>
                         <td>
-                         <input type="text" [(ngModel)]="Verysensitive" style="width: 500px;">
+                          {{Verysensitive}}
+                        </td>
+                        <td *ngIf="isBCOLI">
+                      <input  type="text" [(ngModel)]="Verysensitive" style="width: 100px;">
                         </td>
                       </tr>
                       <tr>
-                        <td>++High sensitive</td>
-                        <td><input type="text" style="width: 500px;"></td>
+                        <td style="font-weight:bold;">++High sensitive:</td>
+                        <td>
+                          {{Highsensitive}}
+                        </td>
+                        <td *ngIf="isBCOLI"><input type="text" [(ngModel)]="Highsensitive"  style="width:100px;"></td>
                       </tr>
                       <tr>
-                        <td>++Mild sensitive</td>
-                        <td><input type="text" style="width: 500px;"></td>
+                        <td style="font-weight:bold;">++Mild sensitive:</td>
+                        <td>
+                          {{Mildsensitive}}
+                        </td>
+                        <td *ngIf="isBCOLI"><input [(ngModel)]="Mildsensitive" type="text" style="width: 100px;"></td>
                       </tr>
                     </table>
                     <br>

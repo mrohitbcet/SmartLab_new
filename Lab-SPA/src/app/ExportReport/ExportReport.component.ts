@@ -19,7 +19,10 @@ export class ExportReportComponent implements OnInit {
 
   display='none';
   SearchText:string="";
-  Verysensitive:string="ppppppppp";
+  isBCOLI:boolean=true;
+Verysensitive:string="";
+Highsensitive:string="";
+Mildsensitive:string="";
   HtmlToEmail: HtmlToEmail={
   content:"",
   toemail:""
@@ -61,7 +64,10 @@ export class ExportReportComponent implements OnInit {
 
   ngOnInit() {
     this.DispayRptDet=false;
-   this.getAllReports(this.CID);
+  this.getAllReports(this.CID);
+  this.Verysensitive="";
+  this.Highsensitive="";
+  this.Mildsensitive="";
   }
 
   onExportclick()
@@ -211,8 +217,13 @@ export class ExportReportComponent implements OnInit {
   }
   onPrintclick()
   {
-    document.getElementById('Btnprint').click();
+   
+   document.getElementById('Btnprint').click();
   }
+  RefreshClick()
+  {
+this.isBCOLI=!this.isBCOLI;
+ }
   openModalDialog(){
     this.display='block';
   }
