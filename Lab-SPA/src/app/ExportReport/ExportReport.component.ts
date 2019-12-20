@@ -19,10 +19,9 @@ export class ExportReportComponent implements OnInit {
 
   display='none';
   SearchText:string="";
-  isBCOLI:boolean=true;
-Verysensitive:string="";
-Highsensitive:string="";
-Mildsensitive:string="";
+  ColonyCount:string="";
+  ReportGroupAlign:string="left";
+  ReportDetailsAlign:string="left";
   HtmlToEmail: HtmlToEmail={
   content:"",
   toemail:""
@@ -65,9 +64,7 @@ Mildsensitive:string="";
   ngOnInit() {
     this.DispayRptDet=false;
   this.getAllReports(this.CID);
-  this.Verysensitive="";
-  this.Highsensitive="";
-  this.Mildsensitive="";
+ 
   }
 
   onExportclick()
@@ -220,10 +217,33 @@ Mildsensitive:string="";
    
    document.getElementById('Btnprint').click();
   }
-  RefreshClick()
+  SetColonyCount()
   {
-this.isBCOLI=!this.isBCOLI;
- }
+   var promptValue= prompt('Enter Colony Count value', ''); 
+    if (promptValue != null)
+    {
+      this.ColonyCount = promptValue;
+    }
+    
+
+  }
+  SetReportAlign(type)
+  {
+    
+    switch(type)
+    {
+      case 1:
+       this.ReportGroupAlign='left';
+       this.ReportDetailsAlign="";
+       break;
+      case 2:
+        this.ReportGroupAlign='center';
+        this.ReportDetailsAlign="0 auto";
+        break;
+
+    }
+
+  }
   openModalDialog(){
     this.display='block';
   }

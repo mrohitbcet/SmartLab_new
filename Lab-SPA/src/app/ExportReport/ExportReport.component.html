@@ -89,9 +89,8 @@
 
             </div>
             <div class="col-sm-3">
-              <i style="padding-right:10px" *ngIf="isSubmitted" class="fa fa-refresh" (click)="RefreshClick()"
-              ></i>
-
+              <i class="fas fa-align-left" style="padding-right:10px" (click)="SetReportAlign(1)"></i>
+              <i class="fas fa-align-center" style="padding-right:10px" (click)="SetReportAlign(2)"></i>
               <button id="Btnprint" printSectionId="CnvasPrint" style="display: none;" ngxPrint>print</button>
               <i *ngIf="isSubmitted" class="fa fa-print" printSectionId="CnvasPrint" ngxPrint
                 (click)="onPrintclick()"></i>
@@ -149,23 +148,23 @@
 
 
           </table>
-
-          <div class="row">
-
-            <div class="col-sm-12">
-
-              <hr style="border:.3px solid;" />
-            </div>
-
-          </div>
-
-
-          <div class="row">
+          <hr>
+          <!-- <div class="row">
             <div class="col-sm-2"></div>
-            <div class="col-sm-10">
-              <div *ngFor="let grpitem of ReportDataGroupWiseList">
+            <div class="col-sm-10"> -->
+              
+              <div *ngFor="let grpitem of ReportDataGroupWiseList" [style.text-align]="ReportGroupAlign">
+                <table *ngIf="grpitem.ShortName =='BCOLI'" style="width: 100%;">
+                  <tr>
+
+                    <td> <span class="text-primary"> Bacteria Isolated:</span> Bcoli</td>
+                    <td title="Click to set Colony Count">
+                      <a (click)="SetColonyCount()" class="text-primary">Colony Count:</a> {{ColonyCount}}
+                    </td>
+                  </tr>
+                </table>
                 <span class="text-primary" style="font-weight: bold; font-size:22px;">{{grpitem.GroupName}}</span>
-                <span style="font-weight: bold; font-size:14px;" *ngIf="grpitem.ShortName =='MECS'"> Culture &
+                <span style="font-weight: bold; font-size:14px;" *ngIf="grpitem.ShortName =='MECS'"> <br> Culture &
                   Sensitivity Test Of :Urine</span>
                 <div>
                   <div *ngIf="grpitem.ShortName =='MECS' && DispayRptDet ">
@@ -177,9 +176,9 @@
                       </tr>
                     </table>
                   </div>
-                  <div *ngIf="grpitem.ShortName =='BCOLI' && DispayRptDet ">
-
-                    <table>
+                  <div *ngIf="grpitem.ShortName =='BCOLI' && DispayRptDet">
+                      
+                    <table [style.margin]="ReportDetailsAlign">   
                       <tr>
                         <td style="vertical-align: text-top;">
                           <table>
@@ -188,65 +187,89 @@
                               <td style="font-weight: bold;">Sensivity</td>
                             </tr>
                             <tr *ngFor="let item of grpitem.ReportInfo">
-                              <td *ngIf="item.subId==0 && grpitem.ShortName =='BCOLI'" >{{item.testName}}:</td>
-                              <td *ngIf="item.subId==0 && grpitem.ShortName =='BCOLI'" style="text-align:left;">{{item.result}}</td>
+                              <td *ngIf="item.subId==0 && grpitem.ShortName =='BCOLI'">{{item.testName}}:</td>
+                              <td *ngIf="item.subId==0 && grpitem.ShortName =='BCOLI'" style="text-align:left;">
+                                {{item.result}}</td>
                             </tr>
                           </table>
                         </td>
                         <td style="color: white;">
+                        
                           &nbsp;&nbsp;&nbsp;&nbsp;
                           &nbsp;&nbsp;&nbsp;&nbsp;
                           &nbsp;&nbsp;&nbsp;&nbsp;
                           &nbsp;&nbsp;&nbsp;&nbsp;
                           &nbsp;&nbsp;&nbsp;&nbsp;
-                          &nbsp;&nbsp;&nbsp;&nbsp;
+                         
                           .
                         </td>
-                        <td  style="vertical-align: text-top;">
+                        <td style="vertical-align: text-top;">
                           <table>
                             <tr>
                               <td style="font-weight: bold;">Drug</td>
                               <td style="font-weight: bold;">Sensivity</td>
                             </tr>
                             <tr *ngFor="let item of grpitem.ReportInfo">
-                              <td *ngIf="item.subId==1 && grpitem.ShortName =='BCOLI'" >{{item.testName}}:</td>
-                              <td *ngIf="item.subId==1 && grpitem.ShortName =='BCOLI'" style="text-align:left;">{{item.result}}</td>
+                              <td *ngIf="item.subId==1 && grpitem.ShortName =='BCOLI'">{{item.testName}}:</td>
+                              <td *ngIf="item.subId==1 && grpitem.ShortName =='BCOLI'" style="text-align:left;">
+                                {{item.result}}</td>
                             </tr>
                           </table>
                         </td>
                       </tr>
                     </table>
-                  <br>
-                  
-                    <table border="1" style="border-collapse: collapse;">
+                    <hr>
+                    <table style="width: 100%;">
                       <tr>
-                        <td style="font-weight:bold;">+++Very sensitive:</td>
-                        <td>
-                          {{Verysensitive}}
-                        </td>
-                        <td *ngIf="isBCOLI">
-                      <input  type="text" [(ngModel)]="Verysensitive" style="width: 100px;">
-                        </td>
-                      </tr>
-                      <tr>
-                        <td style="font-weight:bold;">++High sensitive:</td>
-                        <td>
-                          {{Highsensitive}}
-                        </td>
-                        <td *ngIf="isBCOLI"><input type="text" [(ngModel)]="Highsensitive"  style="width:100px;"></td>
-                      </tr>
-                      <tr>
-                        <td style="font-weight:bold;">++Mild sensitive:</td>
-                        <td>
-                          {{Mildsensitive}}
-                        </td>
-                        <td *ngIf="isBCOLI"><input [(ngModel)]="Mildsensitive" type="text" style="width: 100px;"></td>
+                        <td>+++Very sensitive</td>
+                        <td>++High sensitive</td>
+                        <td>+Mild sensitive</td>
+                        <td>Resistain</td>
                       </tr>
                     </table>
                     <br>
                   </div>
+                  <div *ngIf="grpitem.ShortName =='STOOL' && DispayRptDet ">
+                    <table cellspacing="0" cellpadding="0" [style.margin]="ReportDetailsAlign">
+                      <tr>
+                        <td style="font-weight: bold;">PHYSICAL</td>
+                        <td></td>
+                      </tr>
+
+                      <tr *ngFor="let item of grpitem.ReportInfo">
+                        <td style="padding-left: 62px;" *ngIf="item.subId==1 && grpitem.ShortName =='STOOL'">
+                          {{item.testName}}:</td>
+                        <td *ngIf="item.subId==1 && grpitem.ShortName =='STOOL'" style="text-align:left;">
+                          {{item.result}}</td>
+                      </tr>
+
+                      <tr>
+                        <td><b>MICROSCOPIC</b></td>
+                        <td></td>
+                      </tr>
+
+                      <tr *ngFor="let item of grpitem.ReportInfo">
+                        <td style="padding-left: 80px;" *ngIf="item.subId==2 && grpitem.ShortName =='STOOL'">
+                          {{item.testName}}:</td>
+                        <td *ngIf="item.subId==3 && grpitem.ShortName =='STOOL'" style="text-align:left;">
+                          {{item.result}}</td>
+                      </tr>
+
+                      <tr>
+                        <td><b>OCCULT BLOOD</b></td>
+                        <td></td>
+                      </tr>
+                      <tr *ngFor="let item of grpitem.ReportInfo">
+                        <td colspan="2" style="padding-left: 80px;"
+                          *ngIf="item.subId==3 && grpitem.ShortName =='STOOL'">
+                          {{item.result}}:</td>
+
+                      </tr>
+
+                    </table>
+                  </div>
                   <div *ngIf="grpitem.ShortName =='SEMEN' && DispayRptDet ">
-                    <table cellspacing="0" cellpadding="0">
+                    <table cellspacing="0" cellpadding="0" [style.margin]="ReportDetailsAlign">
                       <tr>
                         <td style="font-weight: bold;">PHYSICAL</td>
                         <td></td>
@@ -290,7 +313,7 @@
                   </div>
                   <div *ngIf="grpitem.ShortName =='URINE' && DispayRptDet ">
 
-                    <table cellspacing="0" cellpadding="0">
+                    <table cellspacing="0" cellpadding="0" [style.margin]="ReportDetailsAlign">
                       <tr>
                         <td><b>PHYSICAL</b></td>
                         <td></td>
@@ -338,13 +361,12 @@
                   </div>
 
                 </div>
-                <div
-                  *ngIf="grpitem.ShortName !='URINE' && grpitem.ShortName !='SEMEN'  && grpitem.ShortName !='MECS' && grpitem.ShortName !='BCOLI'"
+                <div *ngIf="grpitem.ShortName !='URINE' && grpitem.ShortName !='STOOL' && grpitem.ShortName !='SEMEN'  && grpitem.ShortName !='MECS' && grpitem.ShortName !='BCOLI'"
                   class="row">
 
-                  <div [ngClass]="{'col-sm-8':!grpitem.hideNormalvalue, 'col-sm-4': grpitem.hideNormalvalue}">
-
-                    <table *ngIf="DispayRptDet" cellspacing="0" cellpadding="0">
+                  <!-- <div [ngClass]="{'col-sm-12':!grpitem.hideNormalvalue, 'col-sm-12': grpitem.hideNormalvalue}">
+                  </div> -->
+                    <table *ngIf="DispayRptDet" [style.width.%]="!grpitem.hideNormalvalue ? '100' : '50' " cellspacing="0" cellpadding="0" [style.margin]="ReportDetailsAlign">
                       <thead>
                         <tr>
                           <!-- <th>SN</th> -->
@@ -353,7 +375,7 @@
                           <td scope="col"> <b>Test</b></td>
 
                           <td scope="col"><b>Result</b> </td>
-                          <td style="padding-left:10px;" *ngIf="!grpitem.hideNormalvalue" scope="col"><b>Units</b></td>
+                          <td  *ngIf="!grpitem.hideNormalvalue" scope="col"><b>Units</b></td>
                           <td *ngIf="!grpitem.hideNormalvalue" scope="col"><b>References</b></td>
                         </tr>
                       </thead>
@@ -373,12 +395,12 @@
                       </tbody>
 
                     </table>
-                  </div>
+                  
                 </div>
               </div>
 
-            </div>
-          </div>
+            <!-- </div>
+          </div> -->
 
           <div class="row">
             <div class="col-sm-12">
