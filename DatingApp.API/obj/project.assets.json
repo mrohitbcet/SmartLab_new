@@ -12538,23 +12538,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\mira\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\rmahto3\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "G:\\SmartLab\\DatingApp.API\\DatingApp.API.csproj",
+      "projectUniqueName": "C:\\SmartLab\\SmartLab_new\\DatingApp.API\\DatingApp.API.csproj",
       "projectName": "DatingApp.API",
-      "projectPath": "G:\\SmartLab\\DatingApp.API\\DatingApp.API.csproj",
-      "packagesPath": "C:\\Users\\mira\\.nuget\\packages\\",
-      "outputPath": "G:\\SmartLab\\DatingApp.API\\obj\\",
+      "projectPath": "C:\\SmartLab\\SmartLab_new\\DatingApp.API\\DatingApp.API.csproj",
+      "packagesPath": "C:\\Users\\rmahto3\\.nuget\\packages\\",
+      "outputPath": "C:\\SmartLab\\SmartLab_new\\DatingApp.API\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\mira\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\rmahto3\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -12617,10 +12613,16 @@
           }
         },
         "imports": [
-          "net461"
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48"
         ],
         "assetTargetFallback": true,
-        "warn": true
+        "warn": true,
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

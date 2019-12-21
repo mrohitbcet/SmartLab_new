@@ -154,18 +154,19 @@
             <div class="col-sm-10"> -->
               
               <div *ngFor="let grpitem of ReportDataGroupWiseList" [style.text-align]="ReportGroupAlign">
-                <table *ngIf="grpitem.ShortName =='BCOLI'" style="width: 100%;">
-                  <tr>
-
-                    <td> <span class="text-primary"> Bacteria Isolated:</span> Bcoli</td>
-                    <td title="Click to set Colony Count">
-                      <a (click)="SetColonyCount()" class="text-primary">Colony Count:</a> {{ColonyCount}}
-                    </td>
-                  </tr>
-                </table>
+             
                 <span class="text-primary" style="font-weight: bold; font-size:22px;">{{grpitem.GroupName}}</span>
                 <span style="font-weight: bold; font-size:14px;" *ngIf="grpitem.ShortName =='MECS'"> <br> Culture &
                   Sensitivity Test Of :Urine</span>
+                  <table *ngIf="grpitem.ShortName =='BCOLI'" style="width: 100%;">
+                    <tr>
+                  <td> <span class="text-primary"> Bacteria Isolated:</span> Bcoli</td>
+                      <td title="Click to set Colony Count">
+                        <a (click)="SetColonyCount()" class="text-primary">Colony Count:</a> {{ColonyCount}}
+                      </td>
+                    </tr>
+                  </table>
+                  
                 <div>
                   <div *ngIf="grpitem.ShortName =='MECS' && DispayRptDet ">
                     <table class="table table-sm">
@@ -251,18 +252,18 @@
                       <tr *ngFor="let item of grpitem.ReportInfo">
                         <td style="padding-left: 80px;" *ngIf="item.subId==2 && grpitem.ShortName =='STOOL'">
                           {{item.testName}}:</td>
-                        <td *ngIf="item.subId==3 && grpitem.ShortName =='STOOL'" style="text-align:left;">
+                        <td *ngIf="item.subId==2 && grpitem.ShortName =='STOOL'" style="text-align:left;">
                           {{item.result}}</td>
                       </tr>
 
-                      <tr>
-                        <td><b>OCCULT BLOOD</b></td>
-                        <td></td>
-                      </tr>
+                   
                       <tr *ngFor="let item of grpitem.ReportInfo">
-                        <td colspan="2" style="padding-left: 80px;"
-                          *ngIf="item.subId==3 && grpitem.ShortName =='STOOL'">
-                          {{item.result}}:</td>
+                        <td  *ngIf="item.subId==3 && grpitem.ShortName =='STOOL'">
+                         <b> {{item.testName}}:</b> 
+                        </td>
+                        <td  *ngIf="item.subId==3 && grpitem.ShortName =='STOOL'">
+                          {{item.result}}
+                        </td>
 
                       </tr>
 
