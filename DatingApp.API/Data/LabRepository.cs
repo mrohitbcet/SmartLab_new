@@ -295,7 +295,7 @@ namespace DatingApp.API.Data
                                            isHighlight=AllRpts.isHighlight
                                           
                                             
-            })
+            }).OrderBy(xx=>xx.groupName).ThenBy(xx=>xx.subId).ThenBy(xx=>xx.testName)
             
             ).ToListAsync();
             
